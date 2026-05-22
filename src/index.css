@@ -1,0 +1,513 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Share+Tech+Mono&display=swap');
+@import 'leaflet/dist/leaflet.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fix Leaflet map z-index issues inside modals/overlays */
+.leaflet-pane { z-index: 400 !important; }
+.leaflet-top, .leaflet-bottom { z-index: 500 !important; }
+
+/* ═══════════════════════════════════════════════
+   THEME TOKEN SYSTEM — Dark (default)
+═══════════════════════════════════════════════ */
+:root {
+  color-scheme: dark;
+
+  /* Backgrounds */
+  --bg-base:        #060913;
+  --bg-surface:     #0c1120;
+  --bg-panel:       rgba(15, 23, 42, 0.80);
+  --bg-card:        rgba(15, 23, 42, 0.60);
+  --bg-card-hover:  rgba(22, 33, 62, 0.70);
+  --bg-input:       #030609;
+  --bg-nav:         rgba(6, 9, 19, 0.92);
+  --bg-tab-bar:     rgba(10, 14, 28, 0.60);
+  --bg-overlay:     rgba(3, 5, 12, 0.80);
+
+  /* Text */
+  --text-primary:   #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted:     #475569;
+  --text-accent:    #38bdf8;
+  --text-heading:   #e2e8f0;
+
+  /* Borders */
+  --border-base:    rgba(148, 163, 184, 0.12);
+  --border-strong:  rgba(148, 163, 184, 0.20);
+  --border-accent:  rgba(56, 189, 248, 0.35);
+
+  /* Shadows */
+  --shadow-card:    0 10px 30px -10px rgba(0, 0, 0, 0.70);
+  --shadow-nav:     0 1px 20px rgba(0, 0, 0, 0.50);
+  --shadow-glow:    0 0 30px rgba(56, 189, 248, 0.08);
+
+  /* Glass */
+  --glass-bg:       rgba(15, 23, 42, 0.75);
+  --glass-border:   rgba(148, 163, 184, 0.12);
+
+  /* Map */
+  --map-bg:         #090d1a;
+  --leaflet-bar-bg: rgba(15, 23, 42, 0.92);
+  --leaflet-popup:  rgba(12, 17, 32, 0.97);
+
+  /* Cyber grid */
+  --grid-line:      rgba(56, 189, 248, 0.04);
+}
+
+/* ═══════════════════════════════════════════════
+   THEME TOKEN SYSTEM — Light
+═══════════════════════════════════════════════ */
+[data-theme="light"] {
+  color-scheme: light;
+
+  --bg-base:        #f0f4ff;
+  --bg-surface:     #ffffff;
+  --bg-panel:       rgba(255, 255, 255, 0.90);
+  --bg-card:        rgba(255, 255, 255, 0.80);
+  --bg-card-hover:  rgba(241, 245, 255, 0.95);
+  --bg-input:       #f8faff;
+  --bg-nav:         rgba(255, 255, 255, 0.95);
+  --bg-tab-bar:     rgba(240, 244, 255, 0.85);
+  --bg-overlay:     rgba(255, 255, 255, 0.85);
+
+  --text-primary:   #0f172a;
+  --text-secondary: #334155;
+  --text-muted:     #64748b;
+  --text-accent:    #0369a1;
+  --text-heading:   #0f172a;
+
+  --border-base:    rgba(15, 23, 42, 0.10);
+  --border-strong:  rgba(15, 23, 42, 0.18);
+  --border-accent:  rgba(3, 105, 161, 0.35);
+
+  --shadow-card:    0 4px 24px -4px rgba(15, 23, 42, 0.12), 0 1px 4px rgba(15, 23, 42, 0.06);
+  --shadow-nav:     0 1px 12px rgba(15, 23, 42, 0.10);
+  --shadow-glow:    0 0 30px rgba(3, 105, 161, 0.08);
+
+  --glass-bg:       rgba(255, 255, 255, 0.82);
+  --glass-border:   rgba(15, 23, 42, 0.10);
+
+  --map-bg:         #e8edf8;
+  --leaflet-bar-bg: rgba(255, 255, 255, 0.95);
+  --leaflet-popup:  rgba(255, 255, 255, 0.98);
+
+  --grid-line:      rgba(3, 105, 161, 0.04);
+}
+
+/* ═══════════════════════════════════════════════
+   BASE
+═══════════════════════════════════════════════ */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  font-size: 28px; /* Globally zoom UI elements */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Outfit', sans-serif;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+/* ═══════════════════════════════════════════════
+   THEME-AWARE UTILITY OVERRIDES
+   These patch Tailwind classes with CSS variables
+═══════════════════════════════════════════════ */
+
+/* Background surfaces */
+.theme-bg-base    { background: var(--bg-base) !important; }
+.theme-bg-surface { background: var(--bg-surface) !important; }
+.theme-bg-card    { background: var(--bg-card) !important; }
+.theme-bg-nav     { background: var(--bg-nav) !important; }
+.theme-bg-input   { background: var(--bg-input) !important; }
+
+/* Text */
+.theme-text-primary   { color: var(--text-primary) !important; }
+.theme-text-secondary { color: var(--text-secondary) !important; }
+.theme-text-muted     { color: var(--text-muted) !important; }
+.theme-text-accent    { color: var(--text-accent) !important; }
+
+/* Borders */
+.theme-border-base   { border-color: var(--border-base) !important; }
+.theme-border-strong { border-color: var(--border-strong) !important; }
+.theme-border-accent { border-color: var(--border-accent) !important; }
+
+/* ═══════════════════════════════════════════════
+   ANIMATED BACKGROUND GRID
+═══════════════════════════════════════════════ */
+.cyber-grid {
+  background-color: var(--bg-base);
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 40px 40px;
+  position: relative;
+  transition: background-color 0.35s ease;
+}
+
+.cyber-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 20%, rgba(56, 189, 248, 0.04) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 80%, rgba(139, 92, 246, 0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+[data-theme="light"] .cyber-grid::before {
+  background: radial-gradient(ellipse at 30% 20%, rgba(3, 105, 161, 0.04) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 80%, rgba(109, 40, 217, 0.03) 0%, transparent 60%);
+}
+
+/* ═══════════════════════════════════════════════
+   GLASS PANELS
+═══════════════════════════════════════════════ */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-card);
+  border-radius: 12px;
+  transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.glass-panel-alert {
+  background: rgba(239, 68, 68, 0.06);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(239, 68, 68, 0.22);
+  box-shadow: 0 10px 25px -10px rgba(239, 68, 68, 0.18);
+  border-radius: 12px;
+}
+
+.glass-panel-warning {
+  background: rgba(249, 115, 22, 0.06);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(249, 115, 22, 0.22);
+  box-shadow: 0 10px 25px -10px rgba(249, 115, 22, 0.18);
+  border-radius: 12px;
+}
+
+.glass-panel-safe {
+  background: rgba(34, 197, 94, 0.06);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(34, 197, 94, 0.22);
+  box-shadow: 0 10px 25px -10px rgba(34, 197, 94, 0.18);
+  border-radius: 12px;
+}
+
+[data-theme="light"] .glass-panel-alert  { background: rgba(239, 68, 68, 0.05); }
+[data-theme="light"] .glass-panel-warning { background: rgba(249, 115, 22, 0.05); }
+[data-theme="light"] .glass-panel-safe    { background: rgba(34, 197, 94, 0.05); }
+
+/* ═══════════════════════════════════════════════
+   SCROLLBAR
+═══════════════════════════════════════════════ */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border-accent); }
+
+/* ═══════════════════════════════════════════════
+   TAILWIND DARK SURFACE OVERRIDES → theme variables
+   These systematically remap common dark Tailwind classes
+   to use CSS vars so light mode works automatically.
+═══════════════════════════════════════════════ */
+[data-theme="light"] .bg-slate-950 {
+  background-color: var(--bg-base) !important;
+}
+
+[data-theme="light"] .bg-slate-900\/60,
+[data-theme="light"] .bg-slate-900\/40,
+[data-theme="light"] .bg-slate-900\/70,
+[data-theme="light"] .bg-slate-900\/80,
+[data-theme="light"] .bg-slate-900\/90,
+[data-theme="light"] .bg-slate-900\/95 {
+  background-color: rgba(255,255,255, 0.75) !important;
+}
+
+[data-theme="light"] .bg-slate-900 {
+  background-color: rgba(248, 250, 255, 0.95) !important;
+}
+
+[data-theme="light"] .bg-slate-950\/60,
+[data-theme="light"] .bg-slate-950\/70,
+[data-theme="light"] .bg-slate-950\/40 {
+  background-color: rgba(240, 244, 255, 0.70) !important;
+}
+
+[data-theme="light"] .bg-slate-800\/30,
+[data-theme="light"] .bg-slate-800\/50 {
+  background-color: rgba(226, 232, 248, 0.60) !important;
+}
+
+[data-theme="light"] .bg-slate-800 {
+  background-color: #e2e8f4 !important;
+}
+
+[data-theme="light"] .text-slate-100 { color: #0f172a !important; }
+[data-theme="light"] .text-slate-200 { color: #1e293b !important; }
+[data-theme="light"] .text-slate-300 { color: #334155 !important; }
+[data-theme="light"] .text-slate-350 { color: #475569 !important; }
+[data-theme="light"] .text-slate-400 { color: #64748b !important; }
+[data-theme="light"] .text-slate-500 { color: #94a3b8 !important; }
+[data-theme="light"] .text-slate-600 { color: #94a3b8 !important; }
+[data-theme="light"] .text-white     { color: #0f172a !important; }
+
+[data-theme="light"] .border-slate-800,
+[data-theme="light"] .border-slate-800\/60,
+[data-theme="light"] .border-slate-800\/80 {
+  border-color: rgba(15, 23, 42, 0.12) !important;
+}
+
+[data-theme="light"] .border-slate-700 {
+  border-color: rgba(15, 23, 42, 0.18) !important;
+}
+
+[data-theme="light"] .divide-slate-850 > * + *,
+[data-theme="light"] .divide-slate-800\/50 > * + * {
+  border-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+/* Inputs / selects */
+[data-theme="light"] select,
+[data-theme="light"] input,
+[data-theme="light"] textarea {
+  background-color: var(--bg-input) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-strong) !important;
+}
+
+[data-theme="light"] select option {
+  background-color: #ffffff;
+  color: #0f172a;
+}
+
+/* Tab bar hover */
+[data-theme="light"] .hover\:bg-slate-800:hover,
+[data-theme="light"] .hover\:bg-slate-800\/40:hover {
+  background-color: rgba(226, 232, 248, 0.80) !important;
+}
+
+[data-theme="light"] .hover\:bg-slate-800\/50:hover,
+[data-theme="light"] .hover\:bg-slate-800\/20:hover {
+  background-color: rgba(226, 232, 248, 0.60) !important;
+}
+
+/* sky accent — keep the same */
+[data-theme="light"] .text-sky-400 { color: #0284c7 !important; }
+[data-theme="light"] .text-sky-300 { color: #0369a1 !important; }
+[data-theme="light"] .border-sky-500\/30 { border-color: rgba(2, 132, 199, 0.30) !important; }
+[data-theme="light"] .bg-sky-500\/10  { background-color: rgba(2, 132, 199, 0.08) !important; }
+[data-theme="light"] .bg-sky-500\/15  { background-color: rgba(2, 132, 199, 0.12) !important; }
+[data-theme="light"] .bg-sky-500\/5   { background-color: rgba(2, 132, 199, 0.05) !important; }
+[data-theme="light"] .bg-sky-600      { background-color: #0284c7 !important; }
+[data-theme="light"] .hover\:bg-sky-500:hover { background-color: #0369a1 !important; }
+
+/* ═══════════════════════════════════════════════
+   LEAFLET MAP THEME OVERRIDES
+═══════════════════════════════════════════════ */
+.leaflet-container {
+  background: var(--map-bg) !important;
+  font-family: 'Outfit', sans-serif !important;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) !important;
+  background-size: 30px 30px !important;
+  transition: background 0.35s ease;
+}
+
+/* Light mode: bright map tile (use CartoDB Voyager) */
+[data-theme="light"] .leaflet-container {
+  background: #e8edf8 !important;
+}
+
+.leaflet-bar {
+  border: 1px solid var(--border-strong) !important;
+  background: var(--leaflet-bar-bg) !important;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s;
+}
+
+.leaflet-bar a {
+  background: var(--leaflet-bar-bg) !important;
+  color: var(--text-accent) !important;
+  border-bottom: 1px solid var(--border-base) !important;
+}
+
+.leaflet-bar a:hover {
+  background: rgba(56, 189, 248, 0.10) !important;
+}
+
+[data-theme="light"] .leaflet-bar a:hover {
+  background: rgba(3, 105, 161, 0.08) !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background: var(--leaflet-popup) !important;
+  border: 1px solid var(--border-strong) !important;
+  backdrop-filter: blur(16px);
+  color: var(--text-primary) !important;
+  box-shadow: var(--shadow-card) !important;
+  border-radius: 10px !important;
+  transition: all 0.3s;
+}
+
+.leaflet-popup-tip {
+  background: var(--leaflet-popup) !important;
+  border-left: 1px solid var(--border-strong) !important;
+  border-bottom: 1px solid var(--border-strong) !important;
+}
+
+/* ═══════════════════════════════════════════════
+   THEME TRANSITION — smooth global
+═══════════════════════════════════════════════ */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color, box-shadow;
+  transition-duration: 0.30s;
+  transition-timing-function: ease;
+}
+
+/* Don't animate transforms or other props */
+.transition-all, .transition, [class*="transition-"] {
+  transition: all 0.20s ease !important;
+}
+
+/* ═══════════════════════════════════════════════
+   PULSE MARKERS
+═══════════════════════════════════════════════ */
+.pulse-marker {
+  display: block;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  animation: pulse-marker-anim 1.5s infinite;
+}
+
+@keyframes pulse-marker-anim {
+  0%   { box-shadow: 0 0 0 0 rgba(0, 243, 255, 0.7); }
+  70%  { box-shadow: 0 0 0 15px rgba(0, 243, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 243, 255, 0); }
+}
+
+.pulse-marker-red { animation: pulse-marker-red-anim 1.5s infinite; }
+
+@keyframes pulse-marker-red-anim {
+  0%   { box-shadow: 0 0 0 0 rgba(255, 0, 85, 0.7); }
+  70%  { box-shadow: 0 0 0 15px rgba(255, 0, 85, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 0, 85, 0); }
+}
+
+/* ═══════════════════════════════════════════════
+   SOUND WAVE
+═══════════════════════════════════════════════ */
+.sound-wave-bar {
+  width: 3px;
+  background-color: #00f3ff;
+  border-radius: 2px;
+  animation: bounce 0.6s infinite alternate;
+}
+
+@keyframes bounce {
+  10%  { height: 5px; }
+  100% { height: 28px; }
+}
+
+/* ═══════════════════════════════════════════════
+   THEME TOGGLE BUTTON
+═══════════════════════════════════════════════ */
+.theme-toggle-btn {
+  position: relative;
+  width: 48px;
+  height: 26px;
+  border-radius: 9999px;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  padding: 0;
+  transition: background 0.3s ease;
+  flex-shrink: 0;
+}
+
+.theme-toggle-btn.dark-mode  { background: linear-gradient(135deg, #1e3a5f, #0f2644); }
+.theme-toggle-btn.light-mode { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+
+.theme-toggle-knob {
+  position: absolute;
+  top: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+}
+
+.theme-toggle-btn.dark-mode .theme-toggle-knob {
+  transform: translateX(3px);
+  background: #38bdf8;
+}
+
+.theme-toggle-btn.light-mode .theme-toggle-knob {
+  transform: translateX(25px);
+  background: #fff;
+}
+
+/* ═══════════════════════════════════════════════
+   GLOW SHADOWS
+═══════════════════════════════════════════════ */
+.glow-shadow-red   { box-shadow: 0 0 15px rgba(255, 0, 85, 0.6); }
+.glow-shadow-cyber { box-shadow: 0 0 15px rgba(0, 243, 255, 0.6); }
+
+/* ═══════════════════════════════════════════════
+   SCANLINES — hidden (clean professional UI)
+═══════════════════════════════════════════════ */
+.scanlines::before, .scanline-sweeper { display: none; }
+
+/* ═══════════════════════════════════════════════
+   RADAR RING — hidden (clean professional UI)
+═══════════════════════════════════════════════ */
+.radar-ring::after { display: none; }
+
+/* ═══════════════════════════════════════════════
+   FADE IN ANIMATION
+═══════════════════════════════════════════════ */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn { animation: fadeIn 0.4s ease forwards; }
+
+/* ═══════════════════════════════════════════════
+   PREMIUM MAP STYLING FOR OFFLINE LEAFLET
+═══════════════════════════════════════════════ */
+/* Ensure map container background blends with our UI */
+.leaflet-container {
+  background: #f1f5f9 !important;
+  font-family: 'Outfit', sans-serif !important;
+}
+
+/* Style the popup for dark mode */
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: rgba(15, 23, 42, 0.95) !important;
+  color: #e2e8f0 !important;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+.leaflet-popup-content {
+  font-weight: 600;
+  margin: 12px 16px;
+}

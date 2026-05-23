@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
@@ -9,6 +9,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { initKNN, classifyBase64Image, getKNNStatus, TRAINED_DISASTERS, buildRejectionMessage } from '../services/offlineKNN';
 import { ref, set, get } from 'firebase/database';
 import { database } from '../services/firebase';
+import { getOfflineChatResponse } from '../services/offlineBot';
 
 // Removed Leaflet helper
 
@@ -27,7 +28,6 @@ const PRECAUTIONS: Record<string, string[]> = {
   'Landslide': ['Evacuate immediately if cracks appear.', 'Stay away from unstable slopes.', 'Listen for falling rocks.', 'Avoid hill roads.'],
   'default': ['Stay calm and wait for the rescue team.', 'Keep your phone line free for emergency calls.', 'Follow instructions from local authorities.', 'Do not move if you are severely injured.']
 };
-
 export default function UserInterface() {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -43,6 +43,7 @@ export default function UserInterface() {
   const [address, setAddress] = useState('Fetching address...');
   const [media, setMedia] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isReleasingEscrow, setIsReleasingEscrow] = useState(false);
   const [activeReport, setActiveReport] = useState<any>(() => {
     const saved = localStorage.getItem('resqnet_active_report');
     return saved ? JSON.parse(saved) : null;
@@ -58,6 +59,7 @@ export default function UserInterface() {
     bloodGroup: '',
     medicalConditions: ''
   });
+  const [mapInstance, setMapInstance] = useState<google.maps.Map | null>(null);
 
   // Persist state
   useEffect(() => {
@@ -116,6 +118,12 @@ export default function UserInterface() {
   const audioCtxRef = React.useRef<AudioContext | null>(null);
   const oscillatorRef = React.useRef<OscillatorNode | null>(null);
   const beaconIntervalRef = React.useRef<NodeJS.Timeout | null>(null);
+
+  // Chat State
+  const [chatMessages, setChatMessages] = useState<any[]>([]);
+  const [chatInput, setChatInput] = useState('');
+  const chatEndRef = React.useRef<HTMLDivElement>(null);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   // Survival Checklist State
   const [completedTasks, setCompletedTasks] = useState<number[]>([]);
@@ -356,6 +364,10 @@ export default function UserInterface() {
         if (report.status === 'assigned' && activeReport.status !== 'assigned') {
           toast.success(`Rescue Team Dispatched: ${report.assignedTeam?.teamName}`, { duration: 5000 });
           calculateRoute(report);
+          // Join the chat room for this report
+          socket.emit('join_chat_room', `chat_${report._id}`);
+          setChatMessages([{ sender: 'team', senderName: report.assignedTeam?.teamName || 'Rescue Team', text: `Hello! This is ${report.assignedTeam?.teamName}. We are dispatched to your location and will arrive shortly. Stay calm and keep this channel open. How are you doing?`, timestamp: new Date().toISOString() }]);
+          setIsChatOpen(true);
         } else if (report.status === 'resolved') {
           toast.success('Issue marked as Resolved by Admin!');
           setStep('home');
@@ -388,11 +400,36 @@ export default function UserInterface() {
     socket.on('status_updated', handleStatusUpdated);
     socket.on('report_submitted_success', handleReportSuccess);
 
+    const handleNewMessage = (msg: any) => {
+      setChatMessages(prev => [...prev, msg]);
+      // Auto-open chat when team sends a message
+      if (msg.sender === 'team') {
+        setIsChatOpen(true);
+        toast(`💬 ${msg.senderName || 'Rescue Team'}: ${msg.text.substring(0, 60)}...`, { duration: 4000, icon: '📻' });
+      }
+    };
+    socket.on('new_message', handleNewMessage);
+
     return () => {
       socket.off('status_updated', handleStatusUpdated);
       socket.off('report_submitted_success', handleReportSuccess);
+      socket.off('new_message', handleNewMessage);
     };
   }, [activeReport]);
+
+  useEffect(() => {
+    if (mapInstance && activeReport?.coordinates) {
+      if (activeReport.status === 'assigned' && liveTeamCoords) {
+        const bounds = new window.google.maps.LatLngBounds();
+        bounds.extend(new window.google.maps.LatLng(activeReport.coordinates.lat, activeReport.coordinates.lng));
+        bounds.extend(new window.google.maps.LatLng(liveTeamCoords.lat, liveTeamCoords.lng));
+        mapInstance.fitBounds(bounds, 50); // Add 50px padding so markers don't touch the edge
+      } else {
+        mapInstance.panTo({ lat: activeReport.coordinates.lat, lng: activeReport.coordinates.lng });
+        mapInstance.setZoom(15);
+      }
+    }
+  }, [mapInstance, activeReport?.coordinates, activeReport?.status, liveTeamCoords]);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -418,6 +455,14 @@ export default function UserInterface() {
           if (prev <= 1) {
             clearInterval(interval);
             setLiveTeamCoords(activeReport.coordinates); // Snap to exact destination
+            
+            // Trigger the dramatic arrival toast just once
+            toast.success(`🚨 ${activeReport.assignedTeam.teamName} HAS ARRIVED AT YOUR LOCATION!`, { 
+              duration: 10000, 
+              icon: '🚑',
+              style: { background: '#064e3b', color: '#34d399', border: '1px solid #10b981', fontWeight: 'bold' }
+            });
+            
             return 0;
           }
           return prev - 1;
@@ -937,6 +982,14 @@ export default function UserInterface() {
                     {activeReport.status}
                   </span>
                 </div>
+
+                {liveEta === 0 && activeReport.assignedTeam && (
+                  <div className="bg-emerald-500/20 border-2 border-emerald-500 p-4 rounded-xl text-center animate-pulse shadow-[0_0_30px_rgba(16,185,129,0.3)] my-4">
+                    <CheckCircle className="w-10 h-10 text-emerald-400 mx-auto mb-2" />
+                    <h3 className="text-xl font-black text-emerald-400 uppercase tracking-widest">Rescue Team Arrived</h3>
+                    <p className="text-emerald-100 text-sm font-bold mt-1">{activeReport.assignedTeam.teamName} has reached your coordinates. Please make yourself visible.</p>
+                  </div>
+                )}
                 
                 {activeReport.status === 'assigned' && activeReport.assignedTeam ? (
                   <>
@@ -956,6 +1009,11 @@ export default function UserInterface() {
                       </div>
                     </div>
                   </>
+                ) : activeReport.bountyActive ? (
+                  <div className="text-center py-6 text-indigo-400 text-sm italic bg-indigo-900/20 border border-indigo-500/30 rounded-lg">
+                    <span className="block w-6 h-6 border-2 border-indigo-600 border-t-indigo-400 rounded-full animate-spin mx-auto mb-2 shadow-[0_0_10px_rgba(99,102,241,0.5)]"></span>
+                    Broadcasting Web3 Bounty to nearby Private Rescuers...
+                  </div>
                 ) : (
                   <div className="text-center py-6 text-slate-500 text-sm italic bg-slate-900/30 rounded-lg">
                     <span className="block w-6 h-6 border-2 border-slate-600 border-t-sky-500 rounded-full animate-spin mx-auto mb-2"></span>
@@ -974,12 +1032,21 @@ export default function UserInterface() {
                     mapContainerStyle={{ width: '100%', height: '100%' }}
                     center={{ lat: liveTeamCoords?.lat ?? activeReport.coordinates.lat, lng: liveTeamCoords?.lng ?? activeReport.coordinates.lng }}
                     zoom={15}
+                    onLoad={(map) => setMapInstance(map)}
                     options={{
                       disableDefaultUI: true,
-                      zoomControl: true
+                      zoomControl: true,
+                      mapTypeId: 'hybrid' // Realistic satellite view with roads
                     }}
                   >
-                    <GoogleMarker position={{ lat: activeReport.coordinates.lat, lng: activeReport.coordinates.lng }} />
+                    {(() => {
+                      let iconUrl = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+                      if (activeReport.disasterType.toLowerCase().includes('fire')) iconUrl = 'http://maps.google.com/mapfiles/ms/icons/orange-dot.png';
+                      if (activeReport.disasterType.toLowerCase().includes('flood') || activeReport.disasterType.toLowerCase().includes('drown')) iconUrl = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+                      if (activeReport.disasterType.toLowerCase().includes('tree') || activeReport.disasterType.toLowerCase().includes('landslide')) iconUrl = 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
+                      
+                      return <GoogleMarker position={{ lat: activeReport.coordinates.lat, lng: activeReport.coordinates.lng }} icon={iconUrl} />;
+                    })()}
                     
                     {activeReport.status === 'assigned' && liveTeamCoords && (
                       <GoogleMarker 
@@ -1006,6 +1073,193 @@ export default function UserInterface() {
                 )}
               </div>
             </div>
+
+            {/* ── WEB3 ESCROW RELEASE BUTTON ─────────────────────────────────── */}
+            {activeReport.bountyActive && (
+              <div className="bg-indigo-900/30 border border-indigo-500/50 p-5 rounded-xl text-center shadow-[0_0_20px_rgba(99,102,241,0.2)]">
+                <h3 className="text-lg font-bold text-indigo-300 mb-2">💎 Smart Contract Escrow Active</h3>
+                <p className="text-xs text-indigo-200 mb-4">A Web3 Bounty of {activeReport.bountyAmount} USDC has been locked by the Admin. Once you are safe, confirm the rescue to release the funds to the rescuer's wallet.</p>
+                <button
+                  onClick={() => {
+                    setIsReleasingEscrow(true);
+                    setTimeout(() => {
+                      socket.emit('release_bounty', { reportId: activeReport._id });
+                      setIsReleasingEscrow(false);
+                      toast.success('Funds Released! Smart Contract Executed on Blockchain.', { icon: '✅', duration: 6000 });
+                    }, 3000);
+                  }}
+                  disabled={isReleasingEscrow}
+                  className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 disabled:opacity-50 text-white font-bold py-3 rounded-xl transition-all shadow-[0_0_15px_rgba(99,102,241,0.5)]"
+                >
+                  {isReleasingEscrow ? (
+                    <span className="flex items-center justify-center">
+                      <span className="animate-spin w-5 h-5 border-2 border-white/30 border-t-white rounded-full mr-2"></span>
+                      EXECUTING SMART CONTRACT...
+                    </span>
+                  ) : 'I AM SAFE - RELEASE ESCROW FUNDS'}
+                </button>
+              </div>
+            )}
+
+            {/* ── LIVE RESCUE TEAM CHAT ──────────────────────────────────────── */}
+            {activeReport.status === 'assigned' && (
+              <div className="rounded-2xl border border-emerald-500/30 bg-slate-900/60 backdrop-blur-md overflow-hidden shadow-[0_0_30px_rgba(16,185,129,0.1)]">
+                {/* Chat Header */}
+                <button
+                  onClick={() => setIsChatOpen(!isChatOpen)}
+                  className="w-full flex items-center justify-between p-4 bg-emerald-950/40 border-b border-emerald-500/20 hover:bg-emerald-900/30 transition-colors"
+                >
+                  <div className="flex items-center space-x-3">
+                    <div className="relative">
+                      <div className="w-9 h-9 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center">
+                        <span className="text-lg">📻</span>
+                      </div>
+                      <span className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-500 rounded-full animate-pulse border-2 border-slate-900"></span>
+                    </div>
+                    <div className="text-left">
+                      <p className="text-sm font-bold text-emerald-300">{activeReport.assignedTeam?.teamName || 'Rescue Team'}</p>
+                      <p className="text-xs text-emerald-500/70">Radio Channel Open • En Route</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    {chatMessages.length > 0 && !isChatOpen && (
+                      <span className="bg-emerald-500 text-black text-xs font-black px-2 py-0.5 rounded-full">{chatMessages.length}</span>
+                    )}
+                    <span className="text-emerald-400 text-xs font-mono">{isChatOpen ? '▲ CLOSE' : '▼ OPEN RADIO'}</span>
+                  </div>
+                </button>
+
+                {isChatOpen && (
+                  <div className="flex flex-col">
+                    {/* Messages */}
+                    <div className="h-64 overflow-y-auto p-4 space-y-3 bg-slate-950/40">
+                      {chatMessages.length === 0 && (
+                        <div className="text-center text-slate-500 text-xs italic py-8">
+                          Radio channel open. Type a message to contact your rescue team.
+                        </div>
+                      )}
+                      {chatMessages.map((msg, i) => (
+                        <div key={i} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+                          <div className={`max-w-[80%] ${msg.sender === 'user'
+                            ? 'bg-sky-600/30 border border-sky-500/30 rounded-2xl rounded-br-sm'
+                            : 'bg-emerald-900/30 border border-emerald-500/20 rounded-2xl rounded-bl-sm'
+                          } px-4 py-2.5`}>
+                            {msg.sender !== 'user' && (
+                              <p className="text-[10px] font-bold text-emerald-400 mb-1 uppercase tracking-wider">{msg.senderName || 'Rescue Team'}</p>
+                            )}
+                            <p className="text-sm text-slate-100 leading-relaxed">{msg.text}</p>
+                            <p className="text-[9px] text-slate-500 mt-1 text-right">{new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                          </div>
+                        </div>
+                      ))}
+                      <div ref={chatEndRef} />
+                    </div>
+
+                    {/* Input */}
+                    <div className="p-3 border-t border-emerald-500/20 bg-slate-950/60 flex space-x-2">
+                      <input
+                        type="text"
+                        value={chatInput}
+                        onChange={e => setChatInput(e.target.value)}
+                        onKeyDown={e => {
+                          if (e.key === 'Enter' && chatInput.trim()) {
+                            const text = chatInput.trim();
+                            const msg = { sender: 'user', senderName: userProfile?.fullName || 'Victim', text, timestamp: new Date().toISOString() };
+                            
+                            // 100% Offline AI Calculation
+                            const botReplyText = getOfflineChatResponse(text, activeReport.disasterType);
+                            const botMsg = { sender: 'team', senderName: activeReport.assignedTeam?.teamName || 'Rescue Team', text: botReplyText, timestamp: new Date().toISOString() };
+
+                            if (socket.connected) {
+                              // If online, relay user message to server (admin sees it)
+                              socket.emit('send_chat_message', {
+                                room: `chat_${activeReport._id}`,
+                                message: text,
+                                sender: 'user',
+                                senderName: userProfile?.fullName || 'Victim',
+                                disasterType: activeReport.disasterType,
+                                teamName: activeReport.assignedTeam?.teamName,
+                                skipAi: true // Tell server NOT to run Gemini
+                              });
+                              
+                              // Emulate AI typing delay, then send bot reply to server
+                              setTimeout(() => {
+                                socket.emit('send_chat_message', {
+                                  room: `chat_${activeReport._id}`,
+                                  message: botReplyText,
+                                  sender: 'team',
+                                  senderName: activeReport.assignedTeam?.teamName || 'Rescue Team',
+                                  disasterType: activeReport.disasterType,
+                                  teamName: activeReport.assignedTeam?.teamName,
+                                  skipAi: true
+                                });
+                              }, 1000);
+                            } else {
+                              // Completely offline, update local UI only
+                              setChatMessages(prev => [...prev, msg]);
+                              setTimeout(() => {
+                                setChatMessages(prev => [...prev, botMsg]);
+                                setTimeout(() => chatEndRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
+                              }, 1000);
+                            }
+                            
+                            setChatInput('');
+                          }
+                        }}
+                        placeholder="Type a message to your rescue team..."
+                        className="flex-1 bg-slate-800/50 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-colors"
+                      />
+                      <button
+                        onClick={() => {
+                          if (!chatInput.trim()) return;
+                          const text = chatInput.trim();
+                          const msg = { sender: 'user', senderName: userProfile?.fullName || 'Victim', text, timestamp: new Date().toISOString() };
+                          
+                          // 100% Offline AI Calculation
+                          const botReplyText = getOfflineChatResponse(text, activeReport.disasterType);
+                          const botMsg = { sender: 'team', senderName: activeReport.assignedTeam?.teamName || 'Rescue Team', text: botReplyText, timestamp: new Date().toISOString() };
+
+                          if (socket.connected) {
+                            socket.emit('send_chat_message', {
+                              room: `chat_${activeReport._id}`,
+                              message: text,
+                              sender: 'user',
+                              senderName: userProfile?.fullName || 'Victim',
+                              disasterType: activeReport.disasterType,
+                              teamName: activeReport.assignedTeam?.teamName,
+                              skipAi: true
+                            });
+
+                            setTimeout(() => {
+                              socket.emit('send_chat_message', {
+                                room: `chat_${activeReport._id}`,
+                                message: botReplyText,
+                                sender: 'team',
+                                senderName: activeReport.assignedTeam?.teamName || 'Rescue Team',
+                                disasterType: activeReport.disasterType,
+                                teamName: activeReport.assignedTeam?.teamName,
+                                skipAi: true
+                              });
+                            }, 1000);
+                          } else {
+                            setChatMessages(prev => [...prev, msg]);
+                            setTimeout(() => {
+                              setChatMessages(prev => [...prev, botMsg]);
+                              setTimeout(() => chatEndRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
+                            }, 1000);
+                          }
+                          setChatInput('');
+                        }}
+                        className="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl font-bold text-sm transition-colors flex-shrink-0"
+                      >
+                        Send
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+            {/* ── END CHAT ──────────────────────────────────────────────────── */}
 
             <div className="bg-rose-900/20 border border-rose-500/30 p-5 rounded-xl relative overflow-hidden">
               <div className="absolute top-0 right-0 p-2 opacity-30 pointer-events-none">

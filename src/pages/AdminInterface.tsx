@@ -21,6 +21,20 @@ export default function AdminInterface() {
   const [selectedReport, setSelectedReport] = useState<any | null>(null);
   const [flyTarget, setFlyTarget] = useState<[number, number] | null>(null);
   const [firebaseUserProfile, setFirebaseUserProfile] = useState<any>(null);
+  const [chatMessages, setChatMessages] = useState<any[]>([]);
+  const [chatInput, setChatInput] = useState('');
+  const [isDeployingBounty, setIsDeployingBounty] = useState(false);
+  const chatEndRef = useRef<HTMLDivElement>(null);
+
+  const handleDeployBounty = (reportId: string) => {
+    setIsDeployingBounty(true);
+    // Simulate MetaMask/Web3 Loading Delay
+    setTimeout(() => {
+      socket.emit('deploy_bounty', { reportId, bountyAmount: 500 });
+      setIsDeployingBounty(false);
+      toast.success('Smart Contract Escrow Locked: 500 USDC', { icon: '💎' });
+    }, 2500);
+  };
 
   useEffect(() => {
     if (selectedReport && selectedReport.userId) {
@@ -35,7 +49,13 @@ export default function AdminInterface() {
     } else {
       setFirebaseUserProfile(null);
     }
-  }, [selectedReport]);
+
+    // Join the chat room for this report so admin can see messages
+    if (selectedReport?._id) {
+      setChatMessages([]);
+      socket.emit('join_chat_room', `chat_${selectedReport._id}`);
+    }
+  }, [selectedReport?._id]);
 
   useEffect(() => {
     if (mapRef.current && flyTarget) {
@@ -61,9 +81,15 @@ export default function AdminInterface() {
       fetchData(); // Refresh teams availability
     });
 
+    socket.on('new_message', (msg: any) => {
+      setChatMessages(prev => [...prev, msg]);
+      setTimeout(() => chatEndRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
+    });
+
     return () => {
       socket.off('new_disaster_alert');
       socket.off('status_updated');
+      socket.off('new_message');
     };
   }, [selectedReport]);
 
@@ -90,6 +116,9 @@ export default function AdminInterface() {
     socket.emit('assign_team', { reportId, teamId });
     toast.loading('Assigning team...', { id: 'assign' });
     setTimeout(() => toast.success('Team successfully dispatched!', { id: 'assign' }), 500);
+    // Clear old chat and join new room
+    setChatMessages([]);
+    socket.emit('join_chat_room', `chat_${reportId}`);
   };
 
   const handleResolve = (reportId: string) => {
@@ -131,10 +160,10 @@ export default function AdminInterface() {
           </div>
           
           <div className="p-2 space-y-2">
-            {reports.length === 0 ? (
-              <p className="text-slate-500 text-center py-8 text-sm">No incidents reported yet.</p>
+            {activeReports.length === 0 ? (
+              <p className="text-slate-500 text-center py-4 text-sm">No active incidents.</p>
             ) : (
-              reports.map((report) => (
+              activeReports.map((report) => (
                 <div 
                   key={report._id} 
                   onClick={() => {
@@ -146,9 +175,7 @@ export default function AdminInterface() {
                   <div className="flex justify-between items-start mb-2">
                     <span className="font-bold text-sky-400">{report.disasterType}</span>
                     <span className={`text-[10px] px-2 py-0.5 rounded-full uppercase font-bold ${
-                      report.status === 'pending' ? 'bg-red-500/20 text-red-400' : 
-                      report.status === 'assigned' ? 'bg-amber-500/20 text-amber-400' : 
-                      'bg-emerald-500/20 text-emerald-400'
+                      report.status === 'pending' ? 'bg-red-500/20 text-red-400' : 'bg-amber-500/20 text-amber-400'
                     }`}>
                       {report.status}
                     </span>
@@ -164,6 +191,44 @@ export default function AdminInterface() {
               ))
             )}
           </div>
+
+          <div className="p-4 border-b border-t border-slate-800 sticky top-0 bg-slate-950 mt-4">
+            <h2 className="font-bold text-emerald-400">Resolved Cases History</h2>
+          </div>
+
+          <div className="p-2 space-y-2 mb-4">
+            {resolvedReports.length === 0 ? (
+              <p className="text-slate-500 text-center py-4 text-sm">No resolved cases yet.</p>
+            ) : (
+              resolvedReports.map((report) => (
+                <div 
+                  key={report._id} 
+                  onClick={() => {
+                    setSelectedReport(report);
+                    setFlyTarget([report.coordinates.lat, report.coordinates.lng]);
+                  }}
+                  className="p-4 rounded-xl border bg-slate-900/50 border-emerald-900/30 cursor-pointer hover:border-emerald-700/50 transition"
+                >
+                  <div className="flex justify-between items-start mb-2">
+                    <span className="font-bold text-slate-300">{report.disasterType}</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full uppercase font-bold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                      Resolved
+                    </span>
+                  </div>
+                  <div className="text-xs text-slate-400 flex items-start mb-3">
+                    <MapPin className="w-3.5 h-3.5 mr-1 mt-0.5 flex-shrink-0" />
+                    <span className="line-clamp-2">{report.address}</span>
+                  </div>
+                  <div className="bg-emerald-950/30 p-2 rounded-lg border border-emerald-900/50">
+                    <p className="text-[10px] text-emerald-400 font-bold mb-1">Handled By: {report.assignedTeam?.teamName || 'Unknown Team'}</p>
+                    <p className="text-[10px] text-slate-500">
+                      Resolved At: {report.resolvedAt ? new Date(report.resolvedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : 'Time Unknown'}
+                    </p>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
         </div>
 
         {/* Map Area */}
@@ -172,19 +237,28 @@ export default function AdminInterface() {
             {isLoaded ? (
               <GoogleMap
                 mapContainerStyle={{ width: '100%', height: '100%' }}
-                center={{ lat: 20.5937, lng: 78.9629 }} /* Full map of India */
-                zoom={5}
+                center={{ lat: 15.2993, lng: 74.1240 }} /* Default to State of Goa */
+                zoom={10}
                 onLoad={(map) => { mapRef.current = map; }}
                 options={{
                   disableDefaultUI: true,
-                  zoomControl: true
+                  zoomControl: true,
+                  mapTypeId: 'hybrid'
                 }}
               >
                 {/* Active Disaster Markers */}
-                {activeReports.map(report => (
+                {activeReports.map(report => {
+                  // Determine special symbol based on disaster type
+                  let iconUrl = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+                  if (report.disasterType.toLowerCase().includes('fire')) iconUrl = 'http://maps.google.com/mapfiles/ms/icons/orange-dot.png';
+                  if (report.disasterType.toLowerCase().includes('flood') || report.disasterType.toLowerCase().includes('drown')) iconUrl = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+                  if (report.disasterType.toLowerCase().includes('tree') || report.disasterType.toLowerCase().includes('landslide')) iconUrl = 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
+
+                  return (
                   <React.Fragment key={report._id}>
                     <GoogleMarker
                       position={{ lat: report.coordinates.lat, lng: report.coordinates.lng }}
+                      icon={iconUrl}
                       onClick={() => { setSelectedReport(report); setFlyTarget([report.coordinates.lat, report.coordinates.lng]); }}
                     />
                     {selectedReport?._id === report._id && (
@@ -205,7 +279,8 @@ export default function AdminInterface() {
                       options={{ strokeColor: '#ef4444', fillColor: '#ef4444', fillOpacity: 0.15, strokeWeight: 2 }}
                     />
                   </React.Fragment>
-                ))}
+                  );
+                })}
 
                 {/* Rescue Team Markers */}
                 {teams.map(team => (
@@ -232,6 +307,11 @@ export default function AdminInterface() {
                   <div className="flex items-center space-x-3 mb-3">
                     <span className="text-xl font-bold text-white">{selectedReport.disasterType} Emergency</span>
                     <span className="bg-red-500/20 border border-red-500/50 text-red-400 text-xs px-2 py-0.5 rounded uppercase font-bold">Severity: {selectedReport.severity}</span>
+                    {selectedReport.bountyActive && (
+                      <span className="bg-indigo-500/20 border border-indigo-500/50 text-indigo-300 text-xs px-2 py-0.5 rounded uppercase font-bold animate-pulse shadow-[0_0_10px_rgba(99,102,241,0.5)]">
+                        💎 {selectedReport.bountyAmount} USDC BOUNTY ACTIVE
+                      </span>
+                    )}
                   </div>
                   <p className="text-sm text-slate-300 mb-4">{selectedReport.address}</p>
 
@@ -298,17 +378,122 @@ export default function AdminInterface() {
                           });
                         })()}
                       </div>
+
+                      <div className="mt-4 pt-4 border-t border-slate-700">
+                        <div className="flex justify-between items-center bg-indigo-950/40 p-3 rounded-lg border border-indigo-500/30">
+                          <div>
+                            <span className="block text-xs font-bold text-indigo-400 mb-0.5">Civilian Web3 Bounty</span>
+                            <span className="text-[10px] text-indigo-200">Incentivize private rescuers</span>
+                          </div>
+                          <button 
+                            onClick={() => handleDeployBounty(selectedReport._id)}
+                            disabled={isDeployingBounty || selectedReport.bountyActive || selectedReport.bountyReleased}
+                            className={`text-xs font-bold py-1.5 px-3 rounded flex items-center transition shadow-lg ${
+                              selectedReport.bountyReleased 
+                                ? 'bg-emerald-600 text-white cursor-default'
+                                : selectedReport.bountyActive
+                                ? 'bg-indigo-900 border border-indigo-500 text-indigo-300 cursor-default animate-pulse'
+                                : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-[0_0_15px_rgba(79,70,229,0.3)]'
+                            }`}
+                          >
+                            {isDeployingBounty ? (
+                              <span className="animate-spin w-4 h-4 border-2 border-white/30 border-t-white rounded-full mr-2"></span>
+                            ) : selectedReport.bountyReleased ? (
+                              '✅ FUNDS RELEASED'
+                            ) : selectedReport.bountyActive ? (
+                              'ESCROW LOCKED'
+                            ) : '💎 DEPLOY 500 USDC'}
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   ) : (
                     <div className="bg-emerald-900/20 border border-emerald-500/30 p-4 rounded-xl">
-                      <div className="text-emerald-400 font-bold mb-1 flex items-center">
-                        <Truck className="w-5 h-5 mr-2" /> Team Dispatched Successfully
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="text-emerald-400 font-bold flex items-center">
+                          <Truck className="w-5 h-5 mr-2" /> Team Dispatched Successfully
+                        </div>
+                        <button 
+                          onClick={() => handleResolve(selectedReport._id)} 
+                          className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] uppercase tracking-wider px-3 py-1.5 rounded shadow-lg border border-emerald-500/50 hover:shadow-[0_0_15px_rgba(16,185,129,0.4)] transition-all"
+                        >
+                          <CheckCircle className="w-3.5 h-3.5 inline mr-1" /> Mark Issue as Resolved
+                        </button>
                       </div>
                       <p className="text-sm text-emerald-200">
                         {selectedReport.assignedTeam?.teamName} is currently en route to the location. Live tracking enabled for user.
                       </p>
                     </div>
                   )}
+
+                  {/* ── ADMIN CHAT PANEL ────────────────────────────────── */}
+                  {selectedReport.status === 'assigned' && (
+                    <div className="mt-4 rounded-xl border border-sky-500/30 bg-slate-950/60 overflow-hidden">
+                      <div className="flex items-center p-3 bg-sky-950/40 border-b border-sky-500/20">
+                        <span className="text-lg mr-2">📻</span>
+                        <div>
+                          <p className="text-xs font-bold text-sky-300">Victim Radio Channel</p>
+                          <p className="text-[10px] text-sky-500/60">Replying as {selectedReport.assignedTeam?.teamName}</p>
+                        </div>
+                      </div>
+                      <div className="h-44 overflow-y-auto p-3 space-y-2 bg-slate-950/30">
+                        {chatMessages.length === 0 && (
+                          <p className="text-center text-slate-500 text-xs italic py-4">No messages yet. The victim will see your replies here.</p>
+                        )}
+                        {chatMessages.map((msg, i) => (
+                          <div key={i} className={`flex ${msg.sender !== 'user' ? 'justify-end' : 'justify-start'}`}>
+                            <div className={`max-w-[85%] px-3 py-2 rounded-xl text-xs ${
+                              msg.sender !== 'user'
+                                ? 'bg-sky-700/30 border border-sky-500/30 text-sky-100'
+                                : 'bg-slate-800 border border-slate-700 text-slate-200'
+                            }`}>
+                              <p className="font-bold text-[10px] mb-0.5 opacity-70">{msg.sender === 'user' ? (msg.senderName || 'Victim') : (msg.senderName || 'Team')}</p>
+                              <p>{msg.text}</p>
+                            </div>
+                          </div>
+                        ))}
+                        <div ref={chatEndRef} />
+                      </div>
+                      <div className="flex p-2 gap-2 border-t border-sky-500/20">
+                        <input
+                          type="text"
+                          value={chatInput}
+                          onChange={e => setChatInput(e.target.value)}
+                          onKeyDown={e => {
+                            if (e.key === 'Enter' && chatInput.trim()) {
+                              socket.emit('send_chat_message', {
+                                room: `chat_${selectedReport._id}`,
+                                message: chatInput.trim(),
+                                sender: 'team',
+                                senderName: selectedReport.assignedTeam?.teamName || 'Rescue Team',
+                                disasterType: selectedReport.disasterType,
+                                teamName: selectedReport.assignedTeam?.teamName
+                              });
+                              setChatInput('');
+                            }
+                          }}
+                          placeholder="Send instruction to victim..."
+                          className="flex-1 bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-sky-500"
+                        />
+                        <button
+                          onClick={() => {
+                            if (!chatInput.trim()) return;
+                            socket.emit('send_chat_message', {
+                              room: `chat_${selectedReport._id}`,
+                              message: chatInput.trim(),
+                              sender: 'team',
+                              senderName: selectedReport.assignedTeam?.teamName || 'Rescue Team',
+                              disasterType: selectedReport.disasterType,
+                              teamName: selectedReport.assignedTeam?.teamName
+                            });
+                            setChatInput('');
+                          }}
+                          className="bg-sky-600 hover:bg-sky-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition-colors"
+                        >Send</button>
+                      </div>
+                    </div>
+                  )}
+                  {/* ── END ADMIN CHAT ──────────────────────────────────── */}
                 </div>
 
                 <div className="w-1/3 pl-6 flex flex-col justify-center items-center h-full">

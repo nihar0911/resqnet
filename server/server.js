@@ -24,6 +24,7 @@ app.use(express.json({ limit: '20mb' }));
 app.use(express.urlencoded({ limit: '20mb', extended: true }));
 
 const PORT = process.env.PORT || 5000;
+const chatHistories = {}; // Per-room chat history — persists across reconnections
 
 // --- GEMINI AI IMAGE VERIFICATION ENDPOINT ---
 app.post('/api/verify-image', async (req, res) => {
@@ -231,11 +232,77 @@ io.on('connection', (socket) => {
         }
         
         userReports[reportIndex].status = 'resolved';
+        userReports[reportIndex].resolvedAt = new Date().toISOString();
         io.emit('status_updated', userReports[reportIndex]);
+        io.emit('clear_chat', { reportId });
         console.log(`✅ Issue ${reportId} resolved.`);
       }
     } catch (err) {
       console.error(err);
+    }
+  });
+
+  // Web3 Bounty Deployment
+  socket.on('deploy_bounty', (data) => {
+    try {
+      const { reportId, bountyAmount } = data;
+      const reportIndex = userReports.findIndex(r => r._id === reportId);
+      if (reportIndex !== -1) {
+        userReports[reportIndex].bountyActive = true;
+        userReports[reportIndex].bountyAmount = bountyAmount;
+        io.emit('status_updated', userReports[reportIndex]);
+        console.log(`💎 Bounty deployed for ${reportId}: ${bountyAmount} USDC`);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  });
+
+  // Release Bounty
+  socket.on('release_bounty', (data) => {
+    try {
+      const { reportId } = data;
+      const reportIndex = userReports.findIndex(r => r._id === reportId);
+      if (reportIndex !== -1) {
+        const report = userReports[reportIndex];
+        
+        // Free up team if one was assigned
+        if (report.assignedTeam) {
+           const teamIndex = rescueTeams.findIndex(t => t._id === report.assignedTeam._id);
+           if (teamIndex !== -1) rescueTeams[teamIndex].available = true;
+        }
+
+        userReports[reportIndex].bountyActive = false;
+        userReports[reportIndex].bountyReleased = true;
+        
+        // Auto-resolve the case since the victim confirmed they are safe!
+        userReports[reportIndex].status = 'resolved';
+        userReports[reportIndex].resolvedAt = new Date().toISOString();
+        
+        io.emit('status_updated', userReports[reportIndex]);
+        io.emit('clear_chat', { reportId });
+        console.log(`💸 Bounty released for ${reportId} to rescuer wallet. Case Auto-Resolved!`);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  });
+
+  socket.on('join_chat_room', (room) => {
+    socket.join(room);
+  });
+
+  socket.on('send_chat_message', async (data) => {
+    const { room, message, sender, senderName, disasterType, teamName, skipAi } = data;
+    const msgObj = { sender, senderName: senderName || sender, text: message, timestamp: new Date().toISOString() };
+    
+    // Server is now just a relay. The Frontend Offline NLP handles the AI logic.
+    io.to(room).emit('new_message', msgObj);
+    
+    if (sender === 'team' && senderName === 'Offline AI Bot') {
+      console.log(`🤖 [Offline Local AI → ${room}]: ${message}`);
+    } else if (skipAi) {
+      console.log(`📡 [Relay → ${room}]: ${message}`);
     }
   });
 

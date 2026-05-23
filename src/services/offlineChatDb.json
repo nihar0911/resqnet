@@ -1,0 +1,4022 @@
+{
+  "Flood": [
+    {
+      "question": "how long will it take",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "when are you coming",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "what is the eta",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "where are you",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "are you on the way",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "how much time",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "i need help now how long",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "hurry up when",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "what time will you reach",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "is anyone coming",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "i am scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i am terrified",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im panicking",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "help me im afraid",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "what do i do im scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im alone and scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "please help me im terrified",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i don't know what to do im panicking",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "calm me down",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im freaking out",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i am bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "there is blood",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i cut myself",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "im losing blood",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "how to stop bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "deep cut what to do",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "blood won't stop",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "someone is bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i have a gash",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "bleeding heavily",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i broke a bone",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "my leg is broken",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "fractured arm",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "i think my bone is broken",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "it hurts to move my leg",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "broken arm what to do",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "snapped my bone",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "fracture first aid",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "can't move my limb",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "crushed my leg",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "i am trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "i am stuck",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "can't get out",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im trapped under here",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "blocked exit",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "rubble is blocking me",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im wedged in",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "how to get out if trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im stuck in a room",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "door won't open trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im thirsty",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "need water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "can i drink this water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "im hungry",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "we have no food",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "running out of water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "should i drink flood water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "starving what to do",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "dehydrated",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "need drinking water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "my battery is low",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone dying",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "no power",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "battery about to die",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "how to save battery",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "running out of charge",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone at 5 percent",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "blackout no power to charge",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "need to save phone battery",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone switching off soon",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "water is rising",
+      "answer": "Move to the highest possible floor or the roof. Do NOT enter closed attics where you can be trapped by rising water."
+    },
+    {
+      "question": "flood water entering house",
+      "answer": "Move to the highest possible floor or the roof. Do NOT enter closed attics where you can be trapped by rising water."
+    },
+    {
+      "question": "house is flooding",
+      "answer": "Move to the highest possible floor or the roof. Do NOT enter closed attics where you can be trapped by rising water."
+    },
+    {
+      "question": "where to go in flood",
+      "answer": "Move to the highest possible floor or the roof. Do NOT enter closed attics where you can be trapped by rising water."
+    },
+    {
+      "question": "water level increasing",
+      "answer": "Move to the highest possible floor or the roof. Do NOT enter closed attics where you can be trapped by rising water."
+    },
+    {
+      "question": "my room is filling with water",
+      "answer": "Move to the highest possible floor or the roof. Do NOT enter closed attics where you can be trapped by rising water."
+    },
+    {
+      "question": "flood rising fast",
+      "answer": "Move to the highest possible floor or the roof. Do NOT enter closed attics where you can be trapped by rising water."
+    },
+    {
+      "question": "should i go to the attic",
+      "answer": "Move to the highest possible floor or the roof. Do NOT enter closed attics where you can be trapped by rising water."
+    },
+    {
+      "question": "water up to my knees",
+      "answer": "Move to the highest possible floor or the roof. Do NOT enter closed attics where you can be trapped by rising water."
+    },
+    {
+      "question": "safe place from flood",
+      "answer": "Move to the highest possible floor or the roof. Do NOT enter closed attics where you can be trapped by rising water."
+    },
+    {
+      "question": "can i swim out",
+      "answer": "Do not walk or swim through moving floodwaters. Just 6 inches of moving water can knock you down."
+    },
+    {
+      "question": "should i walk through the flood",
+      "answer": "Do not walk or swim through moving floodwaters. Just 6 inches of moving water can knock you down."
+    },
+    {
+      "question": "moving water",
+      "answer": "Do not walk or swim through moving floodwaters. Just 6 inches of moving water can knock you down."
+    },
+    {
+      "question": "crossing flood water",
+      "answer": "Do not walk or swim through moving floodwaters. Just 6 inches of moving water can knock you down."
+    },
+    {
+      "question": "is it safe to swim",
+      "answer": "Do not walk or swim through moving floodwaters. Just 6 inches of moving water can knock you down."
+    },
+    {
+      "question": "water current is strong",
+      "answer": "Do not walk or swim through moving floodwaters. Just 6 inches of moving water can knock you down."
+    },
+    {
+      "question": "walking in flood",
+      "answer": "Do not walk or swim through moving floodwaters. Just 6 inches of moving water can knock you down."
+    },
+    {
+      "question": "wading through water",
+      "answer": "Do not walk or swim through moving floodwaters. Just 6 inches of moving water can knock you down."
+    },
+    {
+      "question": "how deep is safe",
+      "answer": "Do not walk or swim through moving floodwaters. Just 6 inches of moving water can knock you down."
+    },
+    {
+      "question": "current pulling me",
+      "answer": "Do not walk or swim through moving floodwaters. Just 6 inches of moving water can knock you down."
+    },
+    {
+      "question": "electric shock risk",
+      "answer": "Turn off the main power switch if it is safe to do so. Water and electricity are extremely dangerous."
+    },
+    {
+      "question": "water touching sockets",
+      "answer": "Turn off the main power switch if it is safe to do so. Water and electricity are extremely dangerous."
+    },
+    {
+      "question": "should i turn off power",
+      "answer": "Turn off the main power switch if it is safe to do so. Water and electricity are extremely dangerous."
+    },
+    {
+      "question": "sparks in water",
+      "answer": "Turn off the main power switch if it is safe to do so. Water and electricity are extremely dangerous."
+    },
+    {
+      "question": "flooded switchboard",
+      "answer": "Turn off the main power switch if it is safe to do so. Water and electricity are extremely dangerous."
+    },
+    {
+      "question": "electrocution fear",
+      "answer": "Turn off the main power switch if it is safe to do so. Water and electricity are extremely dangerous."
+    },
+    {
+      "question": "power still on in flood",
+      "answer": "Turn off the main power switch if it is safe to do so. Water and electricity are extremely dangerous."
+    },
+    {
+      "question": "appliances in water",
+      "answer": "Turn off the main power switch if it is safe to do so. Water and electricity are extremely dangerous."
+    },
+    {
+      "question": "water near wires",
+      "answer": "Turn off the main power switch if it is safe to do so. Water and electricity are extremely dangerous."
+    },
+    {
+      "question": "turn off electricity",
+      "answer": "Turn off the main power switch if it is safe to do so. Water and electricity are extremely dangerous."
+    }
+  ],
+  "Beach Drowning": [
+    {
+      "question": "how long will it take",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "when are you coming",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "what is the eta",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "where are you",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "are you on the way",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "how much time",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "i need help now how long",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "hurry up when",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "what time will you reach",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "is anyone coming",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "i am scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i am terrified",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im panicking",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "help me im afraid",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "what do i do im scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im alone and scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "please help me im terrified",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i don't know what to do im panicking",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "calm me down",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im freaking out",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i am bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "there is blood",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i cut myself",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "im losing blood",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "how to stop bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "deep cut what to do",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "blood won't stop",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "someone is bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i have a gash",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "bleeding heavily",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i broke a bone",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "my leg is broken",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "fractured arm",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "i think my bone is broken",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "it hurts to move my leg",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "broken arm what to do",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "snapped my bone",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "fracture first aid",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "can't move my limb",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "crushed my leg",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "i am trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "i am stuck",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "can't get out",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im trapped under here",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "blocked exit",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "rubble is blocking me",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im wedged in",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "how to get out if trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im stuck in a room",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "door won't open trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im thirsty",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "need water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "can i drink this water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "im hungry",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "we have no food",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "running out of water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "should i drink flood water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "starving what to do",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "dehydrated",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "need drinking water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "my battery is low",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone dying",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "no power",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "battery about to die",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "how to save battery",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "running out of charge",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone at 5 percent",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "blackout no power to charge",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "need to save phone battery",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone switching off soon",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "rip current",
+      "answer": "Float on your back to conserve energy. Do not fight a rip current; swim parallel to the shore."
+    },
+    {
+      "question": "pulled out to sea",
+      "answer": "Float on your back to conserve energy. Do not fight a rip current; swim parallel to the shore."
+    },
+    {
+      "question": "can't swim back",
+      "answer": "Float on your back to conserve energy. Do not fight a rip current; swim parallel to the shore."
+    },
+    {
+      "question": "drowning",
+      "answer": "Float on your back to conserve energy. Do not fight a rip current; swim parallel to the shore."
+    },
+    {
+      "question": "swallowed water",
+      "answer": "Float on your back to conserve energy. Do not fight a rip current; swim parallel to the shore."
+    },
+    {
+      "question": "floating",
+      "answer": "Float on your back to conserve energy. Do not fight a rip current; swim parallel to the shore."
+    },
+    {
+      "question": "tired swimming",
+      "answer": "Float on your back to conserve energy. Do not fight a rip current; swim parallel to the shore."
+    },
+    {
+      "question": "swept away",
+      "answer": "Float on your back to conserve energy. Do not fight a rip current; swim parallel to the shore."
+    },
+    {
+      "question": "ocean current",
+      "answer": "Float on your back to conserve energy. Do not fight a rip current; swim parallel to the shore."
+    },
+    {
+      "question": "waves too big",
+      "answer": "Float on your back to conserve energy. Do not fight a rip current; swim parallel to the shore."
+    },
+    {
+      "question": "how to ask for help in water",
+      "answer": "Signal for help by raising one arm while floating."
+    },
+    {
+      "question": "nobody sees me",
+      "answer": "Signal for help by raising one arm while floating."
+    },
+    {
+      "question": "lifeguard",
+      "answer": "Signal for help by raising one arm while floating."
+    },
+    {
+      "question": "raising arm",
+      "answer": "Signal for help by raising one arm while floating."
+    },
+    {
+      "question": "shouting in water",
+      "answer": "Signal for help by raising one arm while floating."
+    },
+    {
+      "question": "swimming rescue",
+      "answer": "Signal for help by raising one arm while floating."
+    },
+    {
+      "question": "help me drowning",
+      "answer": "Signal for help by raising one arm while floating."
+    },
+    {
+      "question": "sinking",
+      "answer": "Signal for help by raising one arm while floating."
+    },
+    {
+      "question": "going under",
+      "answer": "Signal for help by raising one arm while floating."
+    },
+    {
+      "question": "need rescue boat",
+      "answer": "Signal for help by raising one arm while floating."
+    },
+    {
+      "question": "friend drowning",
+      "answer": "If someone else is drowning, throw them a flotation device. Do not jump in unless trained."
+    },
+    {
+      "question": "someone is drowning",
+      "answer": "If someone else is drowning, throw them a flotation device. Do not jump in unless trained."
+    },
+    {
+      "question": "how to save drowning person",
+      "answer": "If someone else is drowning, throw them a flotation device. Do not jump in unless trained."
+    },
+    {
+      "question": "throw rope",
+      "answer": "If someone else is drowning, throw them a flotation device. Do not jump in unless trained."
+    },
+    {
+      "question": "rescue tube",
+      "answer": "If someone else is drowning, throw them a flotation device. Do not jump in unless trained."
+    },
+    {
+      "question": "jumping in to save",
+      "answer": "If someone else is drowning, throw them a flotation device. Do not jump in unless trained."
+    },
+    {
+      "question": "drowning victim",
+      "answer": "If someone else is drowning, throw them a flotation device. Do not jump in unless trained."
+    },
+    {
+      "question": "saving someone",
+      "answer": "If someone else is drowning, throw them a flotation device. Do not jump in unless trained."
+    },
+    {
+      "question": "helping swimmer",
+      "answer": "If someone else is drowning, throw them a flotation device. Do not jump in unless trained."
+    },
+    {
+      "question": "flotation ring",
+      "answer": "If someone else is drowning, throw them a flotation device. Do not jump in unless trained."
+    }
+  ],
+  "Boat Accident": [
+    {
+      "question": "how long will it take",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "when are you coming",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "what is the eta",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "where are you",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "are you on the way",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "how much time",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "i need help now how long",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "hurry up when",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "what time will you reach",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "is anyone coming",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "i am scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i am terrified",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im panicking",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "help me im afraid",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "what do i do im scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im alone and scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "please help me im terrified",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i don't know what to do im panicking",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "calm me down",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im freaking out",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i am bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "there is blood",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i cut myself",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "im losing blood",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "how to stop bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "deep cut what to do",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "blood won't stop",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "someone is bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i have a gash",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "bleeding heavily",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i broke a bone",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "my leg is broken",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "fractured arm",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "i think my bone is broken",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "it hurts to move my leg",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "broken arm what to do",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "snapped my bone",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "fracture first aid",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "can't move my limb",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "crushed my leg",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "i am trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "i am stuck",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "can't get out",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im trapped under here",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "blocked exit",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "rubble is blocking me",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im wedged in",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "how to get out if trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im stuck in a room",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "door won't open trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im thirsty",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "need water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "can i drink this water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "im hungry",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "we have no food",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "running out of water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "should i drink flood water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "starving what to do",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "dehydrated",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "need drinking water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "my battery is low",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone dying",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "no power",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "battery about to die",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "how to save battery",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "running out of charge",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone at 5 percent",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "blackout no power to charge",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "need to save phone battery",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone switching off soon",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "boat sinking",
+      "answer": "Put on your life jacket immediately. Stay with the boat if it is still afloat."
+    },
+    {
+      "question": "capsized",
+      "answer": "Put on your life jacket immediately. Stay with the boat if it is still afloat."
+    },
+    {
+      "question": "life jacket",
+      "answer": "Put on your life jacket immediately. Stay with the boat if it is still afloat."
+    },
+    {
+      "question": "boat flipping",
+      "answer": "Put on your life jacket immediately. Stay with the boat if it is still afloat."
+    },
+    {
+      "question": "water in boat",
+      "answer": "Put on your life jacket immediately. Stay with the boat if it is still afloat."
+    },
+    {
+      "question": "abandon ship",
+      "answer": "Put on your life jacket immediately. Stay with the boat if it is still afloat."
+    },
+    {
+      "question": "stay with boat",
+      "answer": "Put on your life jacket immediately. Stay with the boat if it is still afloat."
+    },
+    {
+      "question": "sinking vessel",
+      "answer": "Put on your life jacket immediately. Stay with the boat if it is still afloat."
+    },
+    {
+      "question": "taking on water",
+      "answer": "Put on your life jacket immediately. Stay with the boat if it is still afloat."
+    },
+    {
+      "question": "boat crash",
+      "answer": "Put on your life jacket immediately. Stay with the boat if it is still afloat."
+    },
+    {
+      "question": "freezing water",
+      "answer": "If in cold water, assume the HELP position (knees to chest) to retain body heat."
+    },
+    {
+      "question": "cold water survival",
+      "answer": "If in cold water, assume the HELP position (knees to chest) to retain body heat."
+    },
+    {
+      "question": "hypothermia",
+      "answer": "If in cold water, assume the HELP position (knees to chest) to retain body heat."
+    },
+    {
+      "question": "freezing cold",
+      "answer": "If in cold water, assume the HELP position (knees to chest) to retain body heat."
+    },
+    {
+      "question": "huddling in water",
+      "answer": "If in cold water, assume the HELP position (knees to chest) to retain body heat."
+    },
+    {
+      "question": "help position",
+      "answer": "If in cold water, assume the HELP position (knees to chest) to retain body heat."
+    },
+    {
+      "question": "surviving cold sea",
+      "answer": "If in cold water, assume the HELP position (knees to chest) to retain body heat."
+    },
+    {
+      "question": "icy water",
+      "answer": "If in cold water, assume the HELP position (knees to chest) to retain body heat."
+    },
+    {
+      "question": "body going numb",
+      "answer": "If in cold water, assume the HELP position (knees to chest) to retain body heat."
+    },
+    {
+      "question": "cold shock",
+      "answer": "If in cold water, assume the HELP position (knees to chest) to retain body heat."
+    },
+    {
+      "question": "flare gun",
+      "answer": "Use flares, whistles, or mirrors to signal other vessels or aircraft."
+    },
+    {
+      "question": "how to signal boat",
+      "answer": "Use flares, whistles, or mirrors to signal other vessels or aircraft."
+    },
+    {
+      "question": "whistle",
+      "answer": "Use flares, whistles, or mirrors to signal other vessels or aircraft."
+    },
+    {
+      "question": "mirror signal",
+      "answer": "Use flares, whistles, or mirrors to signal other vessels or aircraft."
+    },
+    {
+      "question": "lost at sea",
+      "answer": "Use flares, whistles, or mirrors to signal other vessels or aircraft."
+    },
+    {
+      "question": "stranded on boat",
+      "answer": "Use flares, whistles, or mirrors to signal other vessels or aircraft."
+    },
+    {
+      "question": "calling mayday",
+      "answer": "Use flares, whistles, or mirrors to signal other vessels or aircraft."
+    },
+    {
+      "question": "radio broken",
+      "answer": "Use flares, whistles, or mirrors to signal other vessels or aircraft."
+    },
+    {
+      "question": "no signal",
+      "answer": "Use flares, whistles, or mirrors to signal other vessels or aircraft."
+    },
+    {
+      "question": "flare emergency",
+      "answer": "Use flares, whistles, or mirrors to signal other vessels or aircraft."
+    }
+  ],
+  "Tree Fall": [
+    {
+      "question": "how long will it take",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "when are you coming",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "what is the eta",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "where are you",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "are you on the way",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "how much time",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "i need help now how long",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "hurry up when",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "what time will you reach",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "is anyone coming",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "i am scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i am terrified",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im panicking",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "help me im afraid",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "what do i do im scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im alone and scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "please help me im terrified",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i don't know what to do im panicking",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "calm me down",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im freaking out",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i am bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "there is blood",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i cut myself",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "im losing blood",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "how to stop bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "deep cut what to do",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "blood won't stop",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "someone is bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i have a gash",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "bleeding heavily",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i broke a bone",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "my leg is broken",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "fractured arm",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "i think my bone is broken",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "it hurts to move my leg",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "broken arm what to do",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "snapped my bone",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "fracture first aid",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "can't move my limb",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "crushed my leg",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "i am trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "i am stuck",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "can't get out",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im trapped under here",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "blocked exit",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "rubble is blocking me",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im wedged in",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "how to get out if trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im stuck in a room",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "door won't open trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im thirsty",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "need water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "can i drink this water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "im hungry",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "we have no food",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "running out of water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "should i drink flood water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "starving what to do",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "dehydrated",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "need drinking water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "my battery is low",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone dying",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "no power",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "battery about to die",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "how to save battery",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "running out of charge",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone at 5 percent",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "blackout no power to charge",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "need to save phone battery",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone switching off soon",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "tree fell on house",
+      "answer": "Move away from the fallen tree immediately. There may be live power lines entangled in the branches."
+    },
+    {
+      "question": "tree blocking road",
+      "answer": "Move away from the fallen tree immediately. There may be live power lines entangled in the branches."
+    },
+    {
+      "question": "power lines in tree",
+      "answer": "Move away from the fallen tree immediately. There may be live power lines entangled in the branches."
+    },
+    {
+      "question": "fallen branches",
+      "answer": "Move away from the fallen tree immediately. There may be live power lines entangled in the branches."
+    },
+    {
+      "question": "crushed by tree",
+      "answer": "Move away from the fallen tree immediately. There may be live power lines entangled in the branches."
+    },
+    {
+      "question": "huge tree fell",
+      "answer": "Move away from the fallen tree immediately. There may be live power lines entangled in the branches."
+    },
+    {
+      "question": "wires and branches",
+      "answer": "Move away from the fallen tree immediately. There may be live power lines entangled in the branches."
+    },
+    {
+      "question": "live wire tree",
+      "answer": "Move away from the fallen tree immediately. There may be live power lines entangled in the branches."
+    },
+    {
+      "question": "tree struck car",
+      "answer": "Move away from the fallen tree immediately. There may be live power lines entangled in the branches."
+    },
+    {
+      "question": "tree collapsed",
+      "answer": "Move away from the fallen tree immediately. There may be live power lines entangled in the branches."
+    },
+    {
+      "question": "how to lift tree",
+      "answer": "Do not attempt to move the tree yourself. Wait for professional rescue teams with chainsaws."
+    },
+    {
+      "question": "moving branches",
+      "answer": "Do not attempt to move the tree yourself. Wait for professional rescue teams with chainsaws."
+    },
+    {
+      "question": "chainsaw",
+      "answer": "Do not attempt to move the tree yourself. Wait for professional rescue teams with chainsaws."
+    },
+    {
+      "question": "cutting tree",
+      "answer": "Do not attempt to move the tree yourself. Wait for professional rescue teams with chainsaws."
+    },
+    {
+      "question": "trapped under branch",
+      "answer": "Do not attempt to move the tree yourself. Wait for professional rescue teams with chainsaws."
+    },
+    {
+      "question": "tree too heavy",
+      "answer": "Do not attempt to move the tree yourself. Wait for professional rescue teams with chainsaws."
+    },
+    {
+      "question": "clearing road",
+      "answer": "Do not attempt to move the tree yourself. Wait for professional rescue teams with chainsaws."
+    },
+    {
+      "question": "blocked path",
+      "answer": "Do not attempt to move the tree yourself. Wait for professional rescue teams with chainsaws."
+    },
+    {
+      "question": "tree fell on me",
+      "answer": "Do not attempt to move the tree yourself. Wait for professional rescue teams with chainsaws."
+    },
+    {
+      "question": "lifting log",
+      "answer": "Do not attempt to move the tree yourself. Wait for professional rescue teams with chainsaws."
+    },
+    {
+      "question": "tree fell on car",
+      "answer": "If you are inside a vehicle crushed by a tree, stay inside unless there is immediate danger of fire."
+    },
+    {
+      "question": "trapped in car tree",
+      "answer": "If you are inside a vehicle crushed by a tree, stay inside unless there is immediate danger of fire."
+    },
+    {
+      "question": "car crushed",
+      "answer": "If you are inside a vehicle crushed by a tree, stay inside unless there is immediate danger of fire."
+    },
+    {
+      "question": "windshield smashed tree",
+      "answer": "If you are inside a vehicle crushed by a tree, stay inside unless there is immediate danger of fire."
+    },
+    {
+      "question": "can't exit car",
+      "answer": "If you are inside a vehicle crushed by a tree, stay inside unless there is immediate danger of fire."
+    },
+    {
+      "question": "stay in car",
+      "answer": "If you are inside a vehicle crushed by a tree, stay inside unless there is immediate danger of fire."
+    },
+    {
+      "question": "tree hit roof",
+      "answer": "If you are inside a vehicle crushed by a tree, stay inside unless there is immediate danger of fire."
+    },
+    {
+      "question": "trapped inside vehicle",
+      "answer": "If you are inside a vehicle crushed by a tree, stay inside unless there is immediate danger of fire."
+    },
+    {
+      "question": "car accident tree",
+      "answer": "If you are inside a vehicle crushed by a tree, stay inside unless there is immediate danger of fire."
+    },
+    {
+      "question": "driving tree fell",
+      "answer": "If you are inside a vehicle crushed by a tree, stay inside unless there is immediate danger of fire."
+    }
+  ],
+  "Fire Accident": [
+    {
+      "question": "how long will it take",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "when are you coming",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "what is the eta",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "where are you",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "are you on the way",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "how much time",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "i need help now how long",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "hurry up when",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "what time will you reach",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "is anyone coming",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "i am scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i am terrified",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im panicking",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "help me im afraid",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "what do i do im scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im alone and scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "please help me im terrified",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i don't know what to do im panicking",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "calm me down",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im freaking out",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i am bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "there is blood",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i cut myself",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "im losing blood",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "how to stop bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "deep cut what to do",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "blood won't stop",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "someone is bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i have a gash",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "bleeding heavily",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i broke a bone",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "my leg is broken",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "fractured arm",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "i think my bone is broken",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "it hurts to move my leg",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "broken arm what to do",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "snapped my bone",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "fracture first aid",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "can't move my limb",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "crushed my leg",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "i am trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "i am stuck",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "can't get out",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im trapped under here",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "blocked exit",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "rubble is blocking me",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im wedged in",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "how to get out if trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im stuck in a room",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "door won't open trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im thirsty",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "need water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "can i drink this water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "im hungry",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "we have no food",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "running out of water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "should i drink flood water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "starving what to do",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "dehydrated",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "need drinking water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "my battery is low",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone dying",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "no power",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "battery about to die",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "how to save battery",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "running out of charge",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone at 5 percent",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "blackout no power to charge",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "need to save phone battery",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone switching off soon",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "too much smoke",
+      "answer": "Stay low to the ground where the air is cleaner. Cover your nose and mouth with a damp cloth if possible."
+    },
+    {
+      "question": "can't breathe smoke",
+      "answer": "Stay low to the ground where the air is cleaner. Cover your nose and mouth with a damp cloth if possible."
+    },
+    {
+      "question": "fire smoke inhalation",
+      "answer": "Stay low to the ground where the air is cleaner. Cover your nose and mouth with a damp cloth if possible."
+    },
+    {
+      "question": "room filled with smoke",
+      "answer": "Stay low to the ground where the air is cleaner. Cover your nose and mouth with a damp cloth if possible."
+    },
+    {
+      "question": "choking on smoke",
+      "answer": "Stay low to the ground where the air is cleaner. Cover your nose and mouth with a damp cloth if possible."
+    },
+    {
+      "question": "how to crawl in fire",
+      "answer": "Stay low to the ground where the air is cleaner. Cover your nose and mouth with a damp cloth if possible."
+    },
+    {
+      "question": "protect from smoke",
+      "answer": "Stay low to the ground where the air is cleaner. Cover your nose and mouth with a damp cloth if possible."
+    },
+    {
+      "question": "smoke everywhere",
+      "answer": "Stay low to the ground where the air is cleaner. Cover your nose and mouth with a damp cloth if possible."
+    },
+    {
+      "question": "thick black smoke",
+      "answer": "Stay low to the ground where the air is cleaner. Cover your nose and mouth with a damp cloth if possible."
+    },
+    {
+      "question": "lungs hurting smoke",
+      "answer": "Stay low to the ground where the air is cleaner. Cover your nose and mouth with a damp cloth if possible."
+    },
+    {
+      "question": "should i open the door",
+      "answer": "Before opening any door, feel the doorknob. If it's hot, the fire is on the other side. Find another way out."
+    },
+    {
+      "question": "door is hot",
+      "answer": "Before opening any door, feel the doorknob. If it's hot, the fire is on the other side. Find another way out."
+    },
+    {
+      "question": "fire outside room",
+      "answer": "Before opening any door, feel the doorknob. If it's hot, the fire is on the other side. Find another way out."
+    },
+    {
+      "question": "trapped by fire",
+      "answer": "Before opening any door, feel the doorknob. If it's hot, the fire is on the other side. Find another way out."
+    },
+    {
+      "question": "how to escape fire",
+      "answer": "Before opening any door, feel the doorknob. If it's hot, the fire is on the other side. Find another way out."
+    },
+    {
+      "question": "fire in hallway",
+      "answer": "Before opening any door, feel the doorknob. If it's hot, the fire is on the other side. Find another way out."
+    },
+    {
+      "question": "doorknob hot",
+      "answer": "Before opening any door, feel the doorknob. If it's hot, the fire is on the other side. Find another way out."
+    },
+    {
+      "question": "can't exit room",
+      "answer": "Before opening any door, feel the doorknob. If it's hot, the fire is on the other side. Find another way out."
+    },
+    {
+      "question": "blocked by flames",
+      "answer": "Before opening any door, feel the doorknob. If it's hot, the fire is on the other side. Find another way out."
+    },
+    {
+      "question": "checking for fire",
+      "answer": "Before opening any door, feel the doorknob. If it's hot, the fire is on the other side. Find another way out."
+    },
+    {
+      "question": "my clothes are on fire",
+      "answer": "If your clothes catch fire: STOP, DROP to the ground, and ROLL over and over to smother the flames."
+    },
+    {
+      "question": "im burning",
+      "answer": "If your clothes catch fire: STOP, DROP to the ground, and ROLL over and over to smother the flames."
+    },
+    {
+      "question": "fire on me",
+      "answer": "If your clothes catch fire: STOP, DROP to the ground, and ROLL over and over to smother the flames."
+    },
+    {
+      "question": "stop drop and roll",
+      "answer": "If your clothes catch fire: STOP, DROP to the ground, and ROLL over and over to smother the flames."
+    },
+    {
+      "question": "caught fire",
+      "answer": "If your clothes catch fire: STOP, DROP to the ground, and ROLL over and over to smother the flames."
+    },
+    {
+      "question": "burning alive",
+      "answer": "If your clothes catch fire: STOP, DROP to the ground, and ROLL over and over to smother the flames."
+    },
+    {
+      "question": "how to put out fire on clothes",
+      "answer": "If your clothes catch fire: STOP, DROP to the ground, and ROLL over and over to smother the flames."
+    },
+    {
+      "question": "flames on my shirt",
+      "answer": "If your clothes catch fire: STOP, DROP to the ground, and ROLL over and over to smother the flames."
+    },
+    {
+      "question": "extinguish self",
+      "answer": "If your clothes catch fire: STOP, DROP to the ground, and ROLL over and over to smother the flames."
+    },
+    {
+      "question": "body on fire",
+      "answer": "If your clothes catch fire: STOP, DROP to the ground, and ROLL over and over to smother the flames."
+    }
+  ],
+  "Cyclone": [
+    {
+      "question": "how long will it take",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "when are you coming",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "what is the eta",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "where are you",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "are you on the way",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "how much time",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "i need help now how long",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "hurry up when",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "what time will you reach",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "is anyone coming",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "i am scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i am terrified",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im panicking",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "help me im afraid",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "what do i do im scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im alone and scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "please help me im terrified",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i don't know what to do im panicking",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "calm me down",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im freaking out",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i am bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "there is blood",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i cut myself",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "im losing blood",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "how to stop bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "deep cut what to do",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "blood won't stop",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "someone is bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i have a gash",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "bleeding heavily",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i broke a bone",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "my leg is broken",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "fractured arm",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "i think my bone is broken",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "it hurts to move my leg",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "broken arm what to do",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "snapped my bone",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "fracture first aid",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "can't move my limb",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "crushed my leg",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "i am trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "i am stuck",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "can't get out",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im trapped under here",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "blocked exit",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "rubble is blocking me",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im wedged in",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "how to get out if trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im stuck in a room",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "door won't open trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im thirsty",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "need water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "can i drink this water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "im hungry",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "we have no food",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "running out of water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "should i drink flood water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "starving what to do",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "dehydrated",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "need drinking water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "my battery is low",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone dying",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "no power",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "battery about to die",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "how to save battery",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "running out of charge",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone at 5 percent",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "blackout no power to charge",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "need to save phone battery",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone switching off soon",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "wind is howling",
+      "answer": "Stay indoors, away from windows and glass doors. Close all interior doors and secure external doors."
+    },
+    {
+      "question": "windows breaking",
+      "answer": "Stay indoors, away from windows and glass doors. Close all interior doors and secure external doors."
+    },
+    {
+      "question": "cyclone outside",
+      "answer": "Stay indoors, away from windows and glass doors. Close all interior doors and secure external doors."
+    },
+    {
+      "question": "staying safe in cyclone",
+      "answer": "Stay indoors, away from windows and glass doors. Close all interior doors and secure external doors."
+    },
+    {
+      "question": "storm winds",
+      "answer": "Stay indoors, away from windows and glass doors. Close all interior doors and secure external doors."
+    },
+    {
+      "question": "glass shattering",
+      "answer": "Stay indoors, away from windows and glass doors. Close all interior doors and secure external doors."
+    },
+    {
+      "question": "where to hide in cyclone",
+      "answer": "Stay indoors, away from windows and glass doors. Close all interior doors and secure external doors."
+    },
+    {
+      "question": "wind destroying house",
+      "answer": "Stay indoors, away from windows and glass doors. Close all interior doors and secure external doors."
+    },
+    {
+      "question": "hurricane winds",
+      "answer": "Stay indoors, away from windows and glass doors. Close all interior doors and secure external doors."
+    },
+    {
+      "question": "flying debris",
+      "answer": "Stay indoors, away from windows and glass doors. Close all interior doors and secure external doors."
+    },
+    {
+      "question": "storm stopped",
+      "answer": "Do not be fooled by the calm eye of the storm. The winds will return rapidly from the opposite direction."
+    },
+    {
+      "question": "wind died down",
+      "answer": "Do not be fooled by the calm eye of the storm. The winds will return rapidly from the opposite direction."
+    },
+    {
+      "question": "is the cyclone over",
+      "answer": "Do not be fooled by the calm eye of the storm. The winds will return rapidly from the opposite direction."
+    },
+    {
+      "question": "eye of the storm",
+      "answer": "Do not be fooled by the calm eye of the storm. The winds will return rapidly from the opposite direction."
+    },
+    {
+      "question": "can i go outside now",
+      "answer": "Do not be fooled by the calm eye of the storm. The winds will return rapidly from the opposite direction."
+    },
+    {
+      "question": "calm weather sudden",
+      "answer": "Do not be fooled by the calm eye of the storm. The winds will return rapidly from the opposite direction."
+    },
+    {
+      "question": "storm pause",
+      "answer": "Do not be fooled by the calm eye of the storm. The winds will return rapidly from the opposite direction."
+    },
+    {
+      "question": "cyclone eye",
+      "answer": "Do not be fooled by the calm eye of the storm. The winds will return rapidly from the opposite direction."
+    },
+    {
+      "question": "safe to leave house",
+      "answer": "Do not be fooled by the calm eye of the storm. The winds will return rapidly from the opposite direction."
+    },
+    {
+      "question": "temporary calm",
+      "answer": "Do not be fooled by the calm eye of the storm. The winds will return rapidly from the opposite direction."
+    },
+    {
+      "question": "power lines down",
+      "answer": "Turn off the main gas valve and electricity. Have your emergency kit ready in a waterproof bag."
+    },
+    {
+      "question": "gas leak cyclone",
+      "answer": "Turn off the main gas valve and electricity. Have your emergency kit ready in a waterproof bag."
+    },
+    {
+      "question": "prepare for cyclone",
+      "answer": "Turn off the main gas valve and electricity. Have your emergency kit ready in a waterproof bag."
+    },
+    {
+      "question": "cyclone kit",
+      "answer": "Turn off the main gas valve and electricity. Have your emergency kit ready in a waterproof bag."
+    },
+    {
+      "question": "turn off gas",
+      "answer": "Turn off the main gas valve and electricity. Have your emergency kit ready in a waterproof bag."
+    },
+    {
+      "question": "electric wires snapping",
+      "answer": "Turn off the main gas valve and electricity. Have your emergency kit ready in a waterproof bag."
+    },
+    {
+      "question": "what to pack",
+      "answer": "Turn off the main gas valve and electricity. Have your emergency kit ready in a waterproof bag."
+    },
+    {
+      "question": "storm preparation",
+      "answer": "Turn off the main gas valve and electricity. Have your emergency kit ready in a waterproof bag."
+    },
+    {
+      "question": "secure house",
+      "answer": "Turn off the main gas valve and electricity. Have your emergency kit ready in a waterproof bag."
+    },
+    {
+      "question": "wind blowing roof",
+      "answer": "Turn off the main gas valve and electricity. Have your emergency kit ready in a waterproof bag."
+    }
+  ],
+  "Building Collapse": [
+    {
+      "question": "how long will it take",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "when are you coming",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "what is the eta",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "where are you",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "are you on the way",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "how much time",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "i need help now how long",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "hurry up when",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "what time will you reach",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "is anyone coming",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "i am scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i am terrified",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im panicking",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "help me im afraid",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "what do i do im scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im alone and scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "please help me im terrified",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i don't know what to do im panicking",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "calm me down",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im freaking out",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i am bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "there is blood",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i cut myself",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "im losing blood",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "how to stop bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "deep cut what to do",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "blood won't stop",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "someone is bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i have a gash",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "bleeding heavily",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i broke a bone",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "my leg is broken",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "fractured arm",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "i think my bone is broken",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "it hurts to move my leg",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "broken arm what to do",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "snapped my bone",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "fracture first aid",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "can't move my limb",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "crushed my leg",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "i am trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "i am stuck",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "can't get out",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im trapped under here",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "blocked exit",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "rubble is blocking me",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im wedged in",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "how to get out if trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im stuck in a room",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "door won't open trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im thirsty",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "need water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "can i drink this water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "im hungry",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "we have no food",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "running out of water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "should i drink flood water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "starving what to do",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "dehydrated",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "need drinking water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "my battery is low",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone dying",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "no power",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "battery about to die",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "how to save battery",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "running out of charge",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone at 5 percent",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "blackout no power to charge",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "need to save phone battery",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone switching off soon",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "building falling",
+      "answer": "Stay near load-bearing walls or under sturdy furniture. Protect your head."
+    },
+    {
+      "question": "roof caved in",
+      "answer": "Stay near load-bearing walls or under sturdy furniture. Protect your head."
+    },
+    {
+      "question": "structural collapse",
+      "answer": "Stay near load-bearing walls or under sturdy furniture. Protect your head."
+    },
+    {
+      "question": "ceiling dropping",
+      "answer": "Stay near load-bearing walls or under sturdy furniture. Protect your head."
+    },
+    {
+      "question": "falling concrete",
+      "answer": "Stay near load-bearing walls or under sturdy furniture. Protect your head."
+    },
+    {
+      "question": "hiding under desk",
+      "answer": "Stay near load-bearing walls or under sturdy furniture. Protect your head."
+    },
+    {
+      "question": "load bearing wall",
+      "answer": "Stay near load-bearing walls or under sturdy furniture. Protect your head."
+    },
+    {
+      "question": "pancake collapse",
+      "answer": "Stay near load-bearing walls or under sturdy furniture. Protect your head."
+    },
+    {
+      "question": "building crumbling",
+      "answer": "Stay near load-bearing walls or under sturdy furniture. Protect your head."
+    },
+    {
+      "question": "pillars breaking",
+      "answer": "Stay near load-bearing walls or under sturdy furniture. Protect your head."
+    },
+    {
+      "question": "smell gas",
+      "answer": "Do not light matches or lighters. There may be leaking gas."
+    },
+    {
+      "question": "lighting match",
+      "answer": "Do not light matches or lighters. There may be leaking gas."
+    },
+    {
+      "question": "using lighter in dark",
+      "answer": "Do not light matches or lighters. There may be leaking gas."
+    },
+    {
+      "question": "gas explosion risk",
+      "answer": "Do not light matches or lighters. There may be leaking gas."
+    },
+    {
+      "question": "dark rubble",
+      "answer": "Do not light matches or lighters. There may be leaking gas."
+    },
+    {
+      "question": "leaking pipes",
+      "answer": "Do not light matches or lighters. There may be leaking gas."
+    },
+    {
+      "question": "gas main broken",
+      "answer": "Do not light matches or lighters. There may be leaking gas."
+    },
+    {
+      "question": "fire risk collapse",
+      "answer": "Do not light matches or lighters. There may be leaking gas."
+    },
+    {
+      "question": "flammable gas",
+      "answer": "Do not light matches or lighters. There may be leaking gas."
+    },
+    {
+      "question": "spark explosion",
+      "answer": "Do not light matches or lighters. There may be leaking gas."
+    },
+    {
+      "question": "dust everywhere",
+      "answer": "Cover your mouth with a cloth to avoid inhaling toxic dust."
+    },
+    {
+      "question": "concrete dust",
+      "answer": "Cover your mouth with a cloth to avoid inhaling toxic dust."
+    },
+    {
+      "question": "can't breathe rubble",
+      "answer": "Cover your mouth with a cloth to avoid inhaling toxic dust."
+    },
+    {
+      "question": "asbestos",
+      "answer": "Cover your mouth with a cloth to avoid inhaling toxic dust."
+    },
+    {
+      "question": "toxic air",
+      "answer": "Cover your mouth with a cloth to avoid inhaling toxic dust."
+    },
+    {
+      "question": "choking on dust",
+      "answer": "Cover your mouth with a cloth to avoid inhaling toxic dust."
+    },
+    {
+      "question": "covering mouth",
+      "answer": "Cover your mouth with a cloth to avoid inhaling toxic dust."
+    },
+    {
+      "question": "dust cloud",
+      "answer": "Cover your mouth with a cloth to avoid inhaling toxic dust."
+    },
+    {
+      "question": "breathing debris",
+      "answer": "Cover your mouth with a cloth to avoid inhaling toxic dust."
+    },
+    {
+      "question": "dirty air",
+      "answer": "Cover your mouth with a cloth to avoid inhaling toxic dust."
+    }
+  ],
+  "Coastal Flooding": [
+    {
+      "question": "how long will it take",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "when are you coming",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "what is the eta",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "where are you",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "are you on the way",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "how much time",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "i need help now how long",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "hurry up when",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "what time will you reach",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "is anyone coming",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "i am scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i am terrified",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im panicking",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "help me im afraid",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "what do i do im scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im alone and scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "please help me im terrified",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i don't know what to do im panicking",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "calm me down",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im freaking out",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i am bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "there is blood",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i cut myself",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "im losing blood",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "how to stop bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "deep cut what to do",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "blood won't stop",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "someone is bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i have a gash",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "bleeding heavily",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i broke a bone",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "my leg is broken",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "fractured arm",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "i think my bone is broken",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "it hurts to move my leg",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "broken arm what to do",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "snapped my bone",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "fracture first aid",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "can't move my limb",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "crushed my leg",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "i am trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "i am stuck",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "can't get out",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im trapped under here",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "blocked exit",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "rubble is blocking me",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im wedged in",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "how to get out if trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im stuck in a room",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "door won't open trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im thirsty",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "need water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "can i drink this water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "im hungry",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "we have no food",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "running out of water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "should i drink flood water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "starving what to do",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "dehydrated",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "need drinking water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "my battery is low",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone dying",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "no power",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "battery about to die",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "how to save battery",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "running out of charge",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone at 5 percent",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "blackout no power to charge",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "need to save phone battery",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone switching off soon",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "tsunami warning",
+      "answer": "Evacuate immediately to higher ground inland. Do not wait for the water to reach you."
+    },
+    {
+      "question": "sea level rising",
+      "answer": "Evacuate immediately to higher ground inland. Do not wait for the water to reach you."
+    },
+    {
+      "question": "waves crashing street",
+      "answer": "Evacuate immediately to higher ground inland. Do not wait for the water to reach you."
+    },
+    {
+      "question": "ocean flooding",
+      "answer": "Evacuate immediately to higher ground inland. Do not wait for the water to reach you."
+    },
+    {
+      "question": "storm surge",
+      "answer": "Evacuate immediately to higher ground inland. Do not wait for the water to reach you."
+    },
+    {
+      "question": "coastal evacuation",
+      "answer": "Evacuate immediately to higher ground inland. Do not wait for the water to reach you."
+    },
+    {
+      "question": "water entering town",
+      "answer": "Evacuate immediately to higher ground inland. Do not wait for the water to reach you."
+    },
+    {
+      "question": "running from waves",
+      "answer": "Evacuate immediately to higher ground inland. Do not wait for the water to reach you."
+    },
+    {
+      "question": "high tide flood",
+      "answer": "Evacuate immediately to higher ground inland. Do not wait for the water to reach you."
+    },
+    {
+      "question": "sea wall broken",
+      "answer": "Evacuate immediately to higher ground inland. Do not wait for the water to reach you."
+    },
+    {
+      "question": "water pulling back",
+      "answer": "Beware of reverse currents pulling debris and vehicles out to sea."
+    },
+    {
+      "question": "debris in water",
+      "answer": "Beware of reverse currents pulling debris and vehicles out to sea."
+    },
+    {
+      "question": "cars floating",
+      "answer": "Beware of reverse currents pulling debris and vehicles out to sea."
+    },
+    {
+      "question": "ocean current strong",
+      "answer": "Beware of reverse currents pulling debris and vehicles out to sea."
+    },
+    {
+      "question": "sucked into sea",
+      "answer": "Beware of reverse currents pulling debris and vehicles out to sea."
+    },
+    {
+      "question": "undertow",
+      "answer": "Beware of reverse currents pulling debris and vehicles out to sea."
+    },
+    {
+      "question": "retreating water",
+      "answer": "Beware of reverse currents pulling debris and vehicles out to sea."
+    },
+    {
+      "question": "floating away",
+      "answer": "Beware of reverse currents pulling debris and vehicles out to sea."
+    },
+    {
+      "question": "swept to sea",
+      "answer": "Beware of reverse currents pulling debris and vehicles out to sea."
+    },
+    {
+      "question": "flood current",
+      "answer": "Beware of reverse currents pulling debris and vehicles out to sea."
+    },
+    {
+      "question": "can i go back",
+      "answer": "Do not return to coastal areas until authorities give the all-clear signal."
+    },
+    {
+      "question": "returning home",
+      "answer": "Do not return to coastal areas until authorities give the all-clear signal."
+    },
+    {
+      "question": "is tsunami over",
+      "answer": "Do not return to coastal areas until authorities give the all-clear signal."
+    },
+    {
+      "question": "all clear",
+      "answer": "Do not return to coastal areas until authorities give the all-clear signal."
+    },
+    {
+      "question": "safe to return",
+      "answer": "Do not return to coastal areas until authorities give the all-clear signal."
+    },
+    {
+      "question": "coastal safe",
+      "answer": "Do not return to coastal areas until authorities give the all-clear signal."
+    },
+    {
+      "question": "checking house",
+      "answer": "Do not return to coastal areas until authorities give the all-clear signal."
+    },
+    {
+      "question": "water receded",
+      "answer": "Do not return to coastal areas until authorities give the all-clear signal."
+    },
+    {
+      "question": "going back to beach",
+      "answer": "Do not return to coastal areas until authorities give the all-clear signal."
+    },
+    {
+      "question": "warning lifted",
+      "answer": "Do not return to coastal areas until authorities give the all-clear signal."
+    }
+  ],
+  "Earthquake": [
+    {
+      "question": "how long will it take",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "when are you coming",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "what is the eta",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "where are you",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "are you on the way",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "how much time",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "i need help now how long",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "hurry up when",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "what time will you reach",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "is anyone coming",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "i am scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i am terrified",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im panicking",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "help me im afraid",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "what do i do im scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im alone and scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "please help me im terrified",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i don't know what to do im panicking",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "calm me down",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im freaking out",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i am bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "there is blood",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i cut myself",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "im losing blood",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "how to stop bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "deep cut what to do",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "blood won't stop",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "someone is bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i have a gash",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "bleeding heavily",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i broke a bone",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "my leg is broken",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "fractured arm",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "i think my bone is broken",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "it hurts to move my leg",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "broken arm what to do",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "snapped my bone",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "fracture first aid",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "can't move my limb",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "crushed my leg",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "i am trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "i am stuck",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "can't get out",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im trapped under here",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "blocked exit",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "rubble is blocking me",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im wedged in",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "how to get out if trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im stuck in a room",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "door won't open trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im thirsty",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "need water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "can i drink this water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "im hungry",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "we have no food",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "running out of water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "should i drink flood water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "starving what to do",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "dehydrated",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "need drinking water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "my battery is low",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone dying",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "no power",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "battery about to die",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "how to save battery",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "running out of charge",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone at 5 percent",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "blackout no power to charge",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "need to save phone battery",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone switching off soon",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "ground is shaking",
+      "answer": "Drop to your hands and knees. Cover your head and neck. Hold on to your shelter until the shaking stops."
+    },
+    {
+      "question": "earthquake what to do",
+      "answer": "Drop to your hands and knees. Cover your head and neck. Hold on to your shelter until the shaking stops."
+    },
+    {
+      "question": "everything is shaking",
+      "answer": "Drop to your hands and knees. Cover your head and neck. Hold on to your shelter until the shaking stops."
+    },
+    {
+      "question": "tremors happening",
+      "answer": "Drop to your hands and knees. Cover your head and neck. Hold on to your shelter until the shaking stops."
+    },
+    {
+      "question": "how to survive earthquake",
+      "answer": "Drop to your hands and knees. Cover your head and neck. Hold on to your shelter until the shaking stops."
+    },
+    {
+      "question": "should i run outside",
+      "answer": "Drop to your hands and knees. Cover your head and neck. Hold on to your shelter until the shaking stops."
+    },
+    {
+      "question": "shaking won't stop",
+      "answer": "Drop to your hands and knees. Cover your head and neck. Hold on to your shelter until the shaking stops."
+    },
+    {
+      "question": "drop cover hold on",
+      "answer": "Drop to your hands and knees. Cover your head and neck. Hold on to your shelter until the shaking stops."
+    },
+    {
+      "question": "aftershocks",
+      "answer": "Drop to your hands and knees. Cover your head and neck. Hold on to your shelter until the shaking stops."
+    },
+    {
+      "question": "room is vibrating",
+      "answer": "Drop to your hands and knees. Cover your head and neck. Hold on to your shelter until the shaking stops."
+    },
+    {
+      "question": "trapped under rubble",
+      "answer": "If you are trapped under debris, cover your mouth with clothing. Tap on a pipe or wall so rescuers can locate you."
+    },
+    {
+      "question": "building fell on me",
+      "answer": "If you are trapped under debris, cover your mouth with clothing. Tap on a pipe or wall so rescuers can locate you."
+    },
+    {
+      "question": "stuck under concrete",
+      "answer": "If you are trapped under debris, cover your mouth with clothing. Tap on a pipe or wall so rescuers can locate you."
+    },
+    {
+      "question": "can't breathe dust",
+      "answer": "If you are trapped under debris, cover your mouth with clothing. Tap on a pipe or wall so rescuers can locate you."
+    },
+    {
+      "question": "buried in earthquake",
+      "answer": "If you are trapped under debris, cover your mouth with clothing. Tap on a pipe or wall so rescuers can locate you."
+    },
+    {
+      "question": "roof collapsed on me",
+      "answer": "If you are trapped under debris, cover your mouth with clothing. Tap on a pipe or wall so rescuers can locate you."
+    },
+    {
+      "question": "crushed by wall",
+      "answer": "If you are trapped under debris, cover your mouth with clothing. Tap on a pipe or wall so rescuers can locate you."
+    },
+    {
+      "question": "how to signal under rubble",
+      "answer": "If you are trapped under debris, cover your mouth with clothing. Tap on a pipe or wall so rescuers can locate you."
+    },
+    {
+      "question": "trapped in dark",
+      "answer": "If you are trapped under debris, cover your mouth with clothing. Tap on a pipe or wall so rescuers can locate you."
+    },
+    {
+      "question": "earthquake debris",
+      "answer": "If you are trapped under debris, cover your mouth with clothing. Tap on a pipe or wall so rescuers can locate you."
+    },
+    {
+      "question": "should i use the elevator",
+      "answer": "Do not use elevators. If you are in bed, stay there and cover your head with a pillow."
+    },
+    {
+      "question": "im in bed earthquake",
+      "answer": "Do not use elevators. If you are in bed, stay there and cover your head with a pillow."
+    },
+    {
+      "question": "running down stairs",
+      "answer": "Do not use elevators. If you are in bed, stay there and cover your head with a pillow."
+    },
+    {
+      "question": "escaping tall building",
+      "answer": "Do not use elevators. If you are in bed, stay there and cover your head with a pillow."
+    },
+    {
+      "question": "elevator safe",
+      "answer": "Do not use elevators. If you are in bed, stay there and cover your head with a pillow."
+    },
+    {
+      "question": "sleeping during earthquake",
+      "answer": "Do not use elevators. If you are in bed, stay there and cover your head with a pillow."
+    },
+    {
+      "question": "stairs are broken",
+      "answer": "Do not use elevators. If you are in bed, stay there and cover your head with a pillow."
+    },
+    {
+      "question": "how to evacuate building",
+      "answer": "Do not use elevators. If you are in bed, stay there and cover your head with a pillow."
+    },
+    {
+      "question": "bed shaking",
+      "answer": "Do not use elevators. If you are in bed, stay there and cover your head with a pillow."
+    },
+    {
+      "question": "high rise earthquake",
+      "answer": "Do not use elevators. If you are in bed, stay there and cover your head with a pillow."
+    }
+  ],
+  "Landslide": [
+    {
+      "question": "how long will it take",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "when are you coming",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "what is the eta",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "where are you",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "are you on the way",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "how much time",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "i need help now how long",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "hurry up when",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "what time will you reach",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "is anyone coming",
+      "answer": "We have dispatched a team to your location. ETA is approximately 15 minutes. Stay safe."
+    },
+    {
+      "question": "i am scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i am terrified",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im panicking",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "help me im afraid",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "what do i do im scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im alone and scared",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "please help me im terrified",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i don't know what to do im panicking",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "calm me down",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "im freaking out",
+      "answer": "Please stay calm. Panic exhausts your energy. Take deep breaths; we are tracking your GPS location."
+    },
+    {
+      "question": "i am bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "there is blood",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i cut myself",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "im losing blood",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "how to stop bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "deep cut what to do",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "blood won't stop",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "someone is bleeding",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i have a gash",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "bleeding heavily",
+      "answer": "Apply direct, firm pressure to the wound with a clean cloth. Elevate the injured area if possible."
+    },
+    {
+      "question": "i broke a bone",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "my leg is broken",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "fractured arm",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "i think my bone is broken",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "it hurts to move my leg",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "broken arm what to do",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "snapped my bone",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "fracture first aid",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "can't move my limb",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "crushed my leg",
+      "answer": "Do not move the injured area. Keep it immobilized. Do not try to realign the bone."
+    },
+    {
+      "question": "i am trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "i am stuck",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "can't get out",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im trapped under here",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "blocked exit",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "rubble is blocking me",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im wedged in",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "how to get out if trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im stuck in a room",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "door won't open trapped",
+      "answer": "Do not exhaust yourself shouting. Tap rhythmically 3 times on a solid object so our sonar can detect you."
+    },
+    {
+      "question": "im thirsty",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "need water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "can i drink this water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "im hungry",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "we have no food",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "running out of water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "should i drink flood water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "starving what to do",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "dehydrated",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "need drinking water",
+      "answer": "Conserve whatever clean bottled water you have. Do NOT drink flood or unknown water. Humans can survive long without food; prioritize hydration."
+    },
+    {
+      "question": "my battery is low",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone dying",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "no power",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "battery about to die",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "how to save battery",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "running out of charge",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone at 5 percent",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "blackout no power to charge",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "need to save phone battery",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "phone switching off soon",
+      "answer": "Dim your screen brightness and turn on power-saving mode. Only use your phone for emergency communication."
+    },
+    {
+      "question": "mud sliding",
+      "answer": "Move away from the path of the landslide as quickly as possible. Run to higher ground off the path."
+    },
+    {
+      "question": "rocks falling",
+      "answer": "Move away from the path of the landslide as quickly as possible. Run to higher ground off the path."
+    },
+    {
+      "question": "hill collapsing",
+      "answer": "Move away from the path of the landslide as quickly as possible. Run to higher ground off the path."
+    },
+    {
+      "question": "mudslide",
+      "answer": "Move away from the path of the landslide as quickly as possible. Run to higher ground off the path."
+    },
+    {
+      "question": "landslide coming",
+      "answer": "Move away from the path of the landslide as quickly as possible. Run to higher ground off the path."
+    },
+    {
+      "question": "ground moving",
+      "answer": "Move away from the path of the landslide as quickly as possible. Run to higher ground off the path."
+    },
+    {
+      "question": "running from mud",
+      "answer": "Move away from the path of the landslide as quickly as possible. Run to higher ground off the path."
+    },
+    {
+      "question": "escaping rocks",
+      "answer": "Move away from the path of the landslide as quickly as possible. Run to higher ground off the path."
+    },
+    {
+      "question": "mountain falling",
+      "answer": "Move away from the path of the landslide as quickly as possible. Run to higher ground off the path."
+    },
+    {
+      "question": "debris flow",
+      "answer": "Move away from the path of the landslide as quickly as possible. Run to higher ground off the path."
+    },
+    {
+      "question": "trapped by mud",
+      "answer": "If escape is not possible, curl into a tight ball and protect your head."
+    },
+    {
+      "question": "can't outrun landslide",
+      "answer": "If escape is not possible, curl into a tight ball and protect your head."
+    },
+    {
+      "question": "mud covering me",
+      "answer": "If escape is not possible, curl into a tight ball and protect your head."
+    },
+    {
+      "question": "protecting head",
+      "answer": "If escape is not possible, curl into a tight ball and protect your head."
+    },
+    {
+      "question": "curling up",
+      "answer": "If escape is not possible, curl into a tight ball and protect your head."
+    },
+    {
+      "question": "buried in mud",
+      "answer": "If escape is not possible, curl into a tight ball and protect your head."
+    },
+    {
+      "question": "rocks hitting me",
+      "answer": "If escape is not possible, curl into a tight ball and protect your head."
+    },
+    {
+      "question": "stuck in mudslide",
+      "answer": "If escape is not possible, curl into a tight ball and protect your head."
+    },
+    {
+      "question": "overtaken by debris",
+      "answer": "If escape is not possible, curl into a tight ball and protect your head."
+    },
+    {
+      "question": "survival position",
+      "answer": "If escape is not possible, curl into a tight ball and protect your head."
+    },
+    {
+      "question": "rumbling sound",
+      "answer": "Listen for unusual sounds like trees cracking or boulders knocking together, which indicate moving debris."
+    },
+    {
+      "question": "trees snapping",
+      "answer": "Listen for unusual sounds like trees cracking or boulders knocking together, which indicate moving debris."
+    },
+    {
+      "question": "rocks crashing",
+      "answer": "Listen for unusual sounds like trees cracking or boulders knocking together, which indicate moving debris."
+    },
+    {
+      "question": "warning signs landslide",
+      "answer": "Listen for unusual sounds like trees cracking or boulders knocking together, which indicate moving debris."
+    },
+    {
+      "question": "hearing rocks",
+      "answer": "Listen for unusual sounds like trees cracking or boulders knocking together, which indicate moving debris."
+    },
+    {
+      "question": "loud roar mountain",
+      "answer": "Listen for unusual sounds like trees cracking or boulders knocking together, which indicate moving debris."
+    },
+    {
+      "question": "ground shaking",
+      "answer": "Listen for unusual sounds like trees cracking or boulders knocking together, which indicate moving debris."
+    },
+    {
+      "question": "moving earth",
+      "answer": "Listen for unusual sounds like trees cracking or boulders knocking together, which indicate moving debris."
+    },
+    {
+      "question": "cracking noise",
+      "answer": "Listen for unusual sounds like trees cracking or boulders knocking together, which indicate moving debris."
+    },
+    {
+      "question": "boulders falling",
+      "answer": "Listen for unusual sounds like trees cracking or boulders knocking together, which indicate moving debris."
+    }
+  ]
+}

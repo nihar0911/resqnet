@@ -144,8 +144,9 @@ io.on('connection', (socket) => {
     try {
       const newReport = {
         _id: 'rep_' + Date.now().toString(),
-        userId: socket.id,
+        userId: data.userId || socket.id,
         userName: data.userName || 'Civilian',
+        userProfile: data.userProfile || null,
         disasterType: data.disasterType,
         coordinates: data.coordinates,
         address: data.address,

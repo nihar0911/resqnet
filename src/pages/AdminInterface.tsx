@@ -1,36 +1,48 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { socket } from '../services/socketClient';
-import { MapContainer, TileLayer, Marker, Circle, Popup, useMap } from 'react-leaflet';
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
-import { AlertTriangle, MapPin, Truck, CheckCircle, Navigation } from 'lucide-react';
-
-// Leaflet icons
-const redIcon = new L.Icon({
-  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-  iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34],
-});
-const greenIcon = new L.Icon({
-  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-  iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34],
-});
-
-// Helper: pan map to coordinates when selectedReport changes
-function MapController({ center }: { center: [number, number] | null }) {
-  const map = useMap();
-  useEffect(() => { if (center) map.flyTo(center, 14, { duration: 1 }); }, [center]);
-  return null;
-}
+import { GoogleMap, useJsApiLoader, Marker as GoogleMarker, Circle as GoogleCircle, InfoWindow as GoogleInfoWindow } from '@react-google-maps/api';
+import { AlertTriangle, MapPin, Truck, CheckCircle, Navigation, ExternalLink, Droplet } from 'lucide-react';
+import { ref, get } from 'firebase/database';
+import { database } from '../services/firebase';
 
 export default function AdminInterface() {
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY || ''
+  });
+  const mapRef = useRef<google.maps.Map | null>(null);
+
+  const navigate = useNavigate();
   const [reports, setReports] = useState<any[]>([]);
   const [teams, setTeams] = useState<any[]>([]);
   const [selectedReport, setSelectedReport] = useState<any | null>(null);
   const [flyTarget, setFlyTarget] = useState<[number, number] | null>(null);
+  const [firebaseUserProfile, setFirebaseUserProfile] = useState<any>(null);
+
+  useEffect(() => {
+    if (selectedReport && selectedReport.userId) {
+      const userRef = ref(database, 'users/' + selectedReport.userId);
+      get(userRef).then((snapshot) => {
+        if (snapshot.exists()) {
+          setFirebaseUserProfile(snapshot.val());
+        } else {
+          setFirebaseUserProfile(null);
+        }
+      }).catch((err) => console.error("Firebase fetch error:", err));
+    } else {
+      setFirebaseUserProfile(null);
+    }
+  }, [selectedReport]);
+
+  useEffect(() => {
+    if (mapRef.current && flyTarget) {
+      mapRef.current.panTo({ lat: flyTarget[0], lng: flyTarget[1] });
+      mapRef.current.setZoom(14);
+    }
+  }, [flyTarget]);
 
   useEffect(() => {
     fetchData();
@@ -101,10 +113,13 @@ export default function AdminInterface() {
             <AlertTriangle className="w-4 h-4 text-red-500 mr-2 animate-pulse" />
             <span className="text-sm font-bold text-red-400">{activeReports.length} Active Alerts</span>
           </div>
-          <span className="text-sm bg-sky-500/20 text-sky-400 px-3 py-1.5 rounded-lg flex items-center border border-sky-500/20">
+          <span className="text-sm bg-sky-500/20 text-sky-400 px-3 py-1.5 rounded-lg items-center border border-sky-500/20 hidden sm:flex">
             <span className="w-2 h-2 bg-sky-500 rounded-full mr-2"></span>
             Socket.IO Synced
           </span>
+          <button onClick={() => navigate('/user')} className="text-sm font-bold text-emerald-400 hover:text-emerald-300 flex items-center transition-colors border border-emerald-500/30 px-3 py-1.5 rounded-lg bg-emerald-500/10">
+            User Portal <ExternalLink className="w-4 h-4 ml-2" />
+          </button>
         </div>
       </header>
 
@@ -154,57 +169,59 @@ export default function AdminInterface() {
         {/* Map Area */}
         <div className="w-2/3 flex flex-col relative h-full bg-slate-900">
           <div className="flex-1 relative z-0">
-            <MapContainer
-              center={[15.4909, 73.8278]}
-              zoom={10}
-              style={{ width: '100%', height: '100%' }}
-              zoomControl={true}
-              scrollWheelZoom={true}
-            >
-              <TileLayer
-                url="http://localhost:8082/data/goa/{z}/{x}/{y}.png"
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | ResqNet Offline Maps'
-                errorTileUrl="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                maxZoom={16}
-                minZoom={8}
-              />
-              <MapController center={flyTarget} />
+            {isLoaded ? (
+              <GoogleMap
+                mapContainerStyle={{ width: '100%', height: '100%' }}
+                center={{ lat: 20.5937, lng: 78.9629 }} /* Full map of India */
+                zoom={5}
+                onLoad={(map) => { mapRef.current = map; }}
+                options={{
+                  disableDefaultUI: true,
+                  zoomControl: true
+                }}
+              >
+                {/* Active Disaster Markers */}
+                {activeReports.map(report => (
+                  <React.Fragment key={report._id}>
+                    <GoogleMarker
+                      position={{ lat: report.coordinates.lat, lng: report.coordinates.lng }}
+                      onClick={() => { setSelectedReport(report); setFlyTarget([report.coordinates.lat, report.coordinates.lng]); }}
+                    />
+                    {selectedReport?._id === report._id && (
+                      <GoogleInfoWindow
+                        position={{ lat: report.coordinates.lat, lng: report.coordinates.lng }}
+                        onCloseClick={() => setSelectedReport(null)}
+                      >
+                        <div style={{ minWidth: 160, color: '#000' }}>
+                          <p style={{ fontWeight: 'bold', marginBottom: 4 }}>🚨 {report.disasterType}</p>
+                          <p style={{ fontSize: 11, color: '#555' }}>{report.address}</p>
+                          {report.media && <img src={report.media} alt="Evidence" style={{ width: '100%', marginTop: 6, borderRadius: 4 }} />}
+                        </div>
+                      </GoogleInfoWindow>
+                    )}
+                    <GoogleCircle
+                      center={{ lat: report.coordinates.lat, lng: report.coordinates.lng }}
+                      radius={3000}
+                      options={{ strokeColor: '#ef4444', fillColor: '#ef4444', fillOpacity: 0.15, strokeWeight: 2 }}
+                    />
+                  </React.Fragment>
+                ))}
 
-              {/* Active Disaster Markers */}
-              {activeReports.map(report => (
-                <React.Fragment key={report._id}>
-                  <Marker
-                    position={[report.coordinates.lat, report.coordinates.lng]}
-                    icon={redIcon}
-                    eventHandlers={{ click: () => { setSelectedReport(report); setFlyTarget([report.coordinates.lat, report.coordinates.lng]); } }}
-                  >
-                    <Popup>
-                      <div style={{ minWidth: 160 }}>
-                        <p style={{ fontWeight: 'bold', marginBottom: 4 }}>🚨 {report.disasterType}</p>
-                        <p style={{ fontSize: 11, color: '#555' }}>{report.address}</p>
-                        {report.media && <img src={report.media} alt="Evidence" style={{ width: '100%', marginTop: 6, borderRadius: 4 }} />}
-                      </div>
-                    </Popup>
-                  </Marker>
-                  <Circle
-                    center={[report.coordinates.lat, report.coordinates.lng]}
-                    radius={3000}
-                    pathOptions={{ color: '#ef4444', fillColor: '#ef4444', fillOpacity: 0.15, weight: 2 }}
+                {/* Rescue Team Markers */}
+                {teams.map(team => (
+                  <GoogleMarker
+                    key={team._id}
+                    position={{ lat: team.coordinates.lat, lng: team.coordinates.lng }}
+                    icon="http://maps.google.com/mapfiles/ms/icons/green-dot.png"
                   />
-                </React.Fragment>
-              ))}
-
-              {/* Rescue Team Markers */}
-              {teams.map(team => (
-                <Marker
-                  key={team._id}
-                  position={[team.coordinates.lat, team.coordinates.lng]}
-                  icon={greenIcon}
-                >
-                  <Popup>🚑 {team.teamName} — {team.available ? 'Available' : 'Deployed'}</Popup>
-                </Marker>
-              ))}
-            </MapContainer>
+                ))}
+              </GoogleMap>
+            ) : (
+              <div className="w-full h-full bg-slate-900 flex flex-col items-center justify-center">
+                <span className="w-12 h-12 border-4 border-sky-500/20 border-t-sky-500 rounded-full animate-spin mb-4"></span>
+                <span className="text-sky-500 font-mono tracking-widest text-xs uppercase animate-pulse">Establishing Satellite Uplink...</span>
+              </div>
+            )}
           </div>
 
           {/* Bottom Dispatch Panel */}
@@ -217,6 +234,16 @@ export default function AdminInterface() {
                     <span className="bg-red-500/20 border border-red-500/50 text-red-400 text-xs px-2 py-0.5 rounded uppercase font-bold">Severity: {selectedReport.severity}</span>
                   </div>
                   <p className="text-sm text-slate-300 mb-4">{selectedReport.address}</p>
+
+                  {(() => {
+                    const displayProfile = firebaseUserProfile || selectedReport.userProfile;
+                    return displayProfile ? (
+                    <div className="mb-4 bg-slate-950 border border-slate-800 p-3 rounded-lg flex flex-wrap gap-4 items-center shadow-inner">
+                      <div><span className="text-[10px] text-slate-500 block uppercase tracking-wider">Victim</span><span className="text-sm font-bold text-sky-400">{displayProfile.fullName} ({displayProfile.age}y)</span></div>
+                      <div><span className="text-[10px] text-slate-500 block uppercase tracking-wider">Contact</span><span className="text-sm font-bold text-slate-300">{displayProfile.phone}</span></div>
+                    </div>
+                  ) : null;
+                  })()}
                   
                   {selectedReport.status === 'pending' ? (
                     <div>

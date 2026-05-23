@@ -1,39 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { socket } from '../services/socketClient';
-import { MapContainer, TileLayer, Marker, Polyline, Popup, useMap } from 'react-leaflet';
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
-import { AlertTriangle, MapPin, Camera, CheckCircle, Navigation, ShieldAlert } from 'lucide-react';
+import { GoogleMap, useJsApiLoader, Marker as GoogleMarker, Polyline as GooglePolyline } from '@react-google-maps/api';
+import { AlertTriangle, MapPin, Camera, CheckCircle, Navigation, ShieldAlert, Mic, MicOff, Loader2, Volume2, VolumeX, ArrowLeft, ExternalLink, Home, LogOut } from 'lucide-react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { initKNN, classifyBase64Image, getKNNStatus, TRAINED_DISASTERS, buildRejectionMessage } from '../services/offlineKNN';
+import { ref, set, get } from 'firebase/database';
+import { database } from '../services/firebase';
 
-// Fix Leaflet default marker icons
-delete (L.Icon.Default.prototype as any)._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-});
+// Removed Leaflet helper
 
-const redIcon = new L.Icon({
-  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-  iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34],
-});
-const greenIcon = new L.Icon({
-  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-  iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34],
-});
-
-// Helper to re-center map when coordinates change
-function MapRecenter({ lat, lng }: { lat: number; lng: number }) {
-  const map = useMap();
-  useEffect(() => { map.setView([lat, lng], map.getZoom()); }, [lat, lng]);
-  return null;
-}
 
 const GOA_DISASTERS = [
   'Flood', 'Coastal Flooding', 'Cyclone', 'Tree Fall', 'Landslide',
@@ -51,14 +29,80 @@ const PRECAUTIONS: Record<string, string[]> = {
 };
 
 export default function UserInterface() {
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY || ''
+  });
+  const navigate = useNavigate();
 
-  const [step, setStep] = useState<'home' | 'report' | 'tracking'>('home');
+  const [step, setStep] = useState<'home' | 'report' | 'tracking' | 'voice_sos'>(() => {
+    return (localStorage.getItem('resqnet_step') as any) || 'home';
+  });
   const [disasterType, setDisasterType] = useState('');
   const [location, setLocation] = useState<{ lat: number, lng: number } | null>(null);
   const [address, setAddress] = useState('Fetching address...');
   const [media, setMedia] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [activeReport, setActiveReport] = useState<any>(null);
+  const [activeReport, setActiveReport] = useState<any>(() => {
+    const saved = localStorage.getItem('resqnet_active_report');
+    return saved ? JSON.parse(saved) : null;
+  });
+  const [userProfile, setUserProfile] = useState<any>(() => {
+    const saved = localStorage.getItem('resqnet_user_profile');
+    return saved ? JSON.parse(saved) : null;
+  });
+  const [profileForm, setProfileForm] = useState({
+    fullName: '',
+    phone: '',
+    age: '',
+    bloodGroup: '',
+    medicalConditions: ''
+  });
+
+  // Persist state
+  useEffect(() => {
+    localStorage.setItem('resqnet_step', step);
+  }, [step]);
+
+  useEffect(() => {
+    if (activeReport) {
+      localStorage.setItem('resqnet_active_report', JSON.stringify(activeReport));
+    } else {
+      localStorage.removeItem('resqnet_active_report');
+    }
+  }, [activeReport]);
+
+  // Sync with server on mount in case we missed a socket event while in the Admin portal
+  useEffect(() => {
+    if (activeReport && activeReport._id) {
+      axios.get('http://localhost:5000/api/reports')
+        .then(res => {
+          const liveReport = res.data.find((r: any) => r._id === activeReport._id);
+          if (liveReport) {
+            if (liveReport.status === 'resolved') {
+              toast.success('Your emergency has been resolved by the Admin!');
+              setStep('home');
+              setDirectionsResponse(null);
+              setLiveEta(null);
+              setLiveTeamCoords(null);
+              localStorage.removeItem('resqnet_active_report');
+              localStorage.setItem('resqnet_step', 'home');
+              setActiveReport(null);
+            } else {
+              setActiveReport(liveReport);
+            }
+          }
+        })
+        .catch(err => console.error('Failed to sync live report', err));
+    }
+  }, []);
+  
+  // Voice SOS State
+  const [isListening, setIsListening] = useState(false);
+  const [voiceTranscript, setVoiceTranscript] = useState('');
+  const recognitionRef = React.useRef<any>(null);
+  const waveIntervalRef = React.useRef<any>(null);
+  const [waveHeights, setWaveHeights] = useState<number[]>(Array(10).fill(5));
   
   const [directionsResponse, setDirectionsResponse] = useState<any>(null);
   const [liveEta, setLiveEta] = useState<number | null>(null);
@@ -66,6 +110,15 @@ export default function UserInterface() {
   const [userState, setUserState] = useState('Goa');
   const [dynamicPrecautions, setDynamicPrecautions] = useState<string[] | null>(null);
   const [knnReady, setKnnReady] = useState(false);
+
+  // Rubble Beacon State
+  const [isBeaconActive, setIsBeaconActive] = useState(false);
+  const audioCtxRef = React.useRef<AudioContext | null>(null);
+  const oscillatorRef = React.useRef<OscillatorNode | null>(null);
+  const beaconIntervalRef = React.useRef<NodeJS.Timeout | null>(null);
+
+  // Survival Checklist State
+  const [completedTasks, setCompletedTasks] = useState<number[]>([]);
 
   // Initialise offline KNN classifier silently on app load
   useEffect(() => {
@@ -75,7 +128,160 @@ export default function UserInterface() {
         console.log('✅ Offline KNN ready for:', TRAINED_DISASTERS);
       })
       .catch((e) => console.warn('KNN init failed (will use Gemini only):', e));
+
+    // Setup Web Speech Recognition for Voice SOS
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      const rec = new SpeechRecognition();
+      rec.continuous = false;
+      rec.interimResults = false;
+      rec.lang = 'en-US';
+
+      rec.onstart = () => {
+        setIsListening(true);
+        setVoiceTranscript('');
+        waveIntervalRef.current = setInterval(() => {
+          setWaveHeights(Array(12).fill(0).map(() => 4 + Math.floor(Math.random() * 24)));
+        }, 100);
+      };
+
+      rec.onresult = (event: any) => {
+        const transcript = event.results[0][0].transcript.toLowerCase();
+        setVoiceTranscript(transcript);
+        
+        // Auto-detect disaster from transcript
+        let detectedType = 'Other';
+        if (transcript.includes('flood') || transcript.includes('water') || transcript.includes('drown')) detectedType = 'Flood';
+        else if (transcript.includes('earthquake') || transcript.includes('shak') || transcript.includes('collapse')) detectedType = 'Earthquake';
+        else if (transcript.includes('fire') || transcript.includes('burn') || transcript.includes('smoke')) detectedType = 'Fire Accident';
+        else if (transcript.includes('landslide') || transcript.includes('mud')) detectedType = 'Landslide';
+        else if (transcript.includes('cyclone') || transcript.includes('wind') || transcript.includes('storm')) detectedType = 'Cyclone';
+
+        setDisasterType(detectedType);
+        
+        // Auto-fetch location and submit
+        if (navigator.geolocation) {
+          toast.loading('Voice SOS triggered! Fetching GPS...', { id: 'voice-sos' });
+          navigator.geolocation.getCurrentPosition(
+            (pos) => {
+              const loc = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+              setLocation(loc);
+              
+              // Reverse geocode
+              const reverseGeocode = navigator.onLine
+                ? fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${loc.lat}&lon=${loc.lng}`).then(res => res.json())
+                : Promise.reject(new Error('Offline mode'));
+
+              reverseGeocode
+                .then(data => {
+                  const state = data.address?.state || 'Goa';
+                  setUserState(state);
+                  
+                  // Auto-Submit bypassing photo
+                  const payload = {
+                    userId: 'usr_live_' + Math.floor(Math.random() * 1000000),
+                    disasterType: detectedType,
+                    coordinates: loc,
+                    address: data.display_name || 'Emergency Location',
+                    state: state,
+                    imageUrl: null,
+                    aiAnalysis: {
+                      match: true,
+                      detected: detectedType,
+                      severity: 'Critical',
+                      casualties: 'Unknown',
+                      analysis: `[VOICE SOS TRANSCRIPT]: "${transcript}"`,
+                      offline: true
+                    },
+                    status: 'pending',
+                    timestamp: new Date().toISOString()
+                  };
+
+                  socket.emit('submit_report', payload);
+                  toast.success('Hands-free Emergency Report dispatched!', { id: 'voice-sos' });
+                })
+                .catch(() => {
+                  // Fallback without address
+                  const payload = {
+                    userId: userProfile.phone || 'usr_live_' + Math.floor(Math.random() * 1000000),
+                    userName: userProfile.fullName,
+                    userProfile: userProfile,
+                    disasterType: detectedType,
+                    coordinates: loc,
+                    address: 'GPS Coordinate Location',
+                    state: 'Goa',
+                    imageUrl: null,
+                    aiAnalysis: {
+                      match: true,
+                      detected: detectedType,
+                      severity: 'Critical',
+                      casualties: 'Unknown',
+                      analysis: `[VOICE SOS TRANSCRIPT]: "${transcript}"`,
+                      offline: true
+                    },
+                    status: 'pending',
+                    timestamp: new Date().toISOString()
+                  };
+                  socket.emit('submit_report', payload);
+                  toast.success('Emergency Report dispatched with GPS only!', { id: 'voice-sos' });
+                });
+            },
+            () => {
+              const fallbackLoc = { lat: 15.6322, lng: 73.8569 };
+              setLocation(fallbackLoc);
+              setUserState('Goa');
+              
+              const payload = {
+                userId: userProfile.phone || 'usr_live_' + Math.floor(Math.random() * 1000000),
+                userName: userProfile.fullName,
+                userProfile: userProfile,
+                disasterType: detectedType,
+                coordinates: fallbackLoc,
+                address: 'Offline Mode: Revora, Goa (Emergency Node)',
+                state: 'Goa',
+                imageUrl: null,
+                aiAnalysis: {
+                  match: true,
+                  detected: detectedType,
+                  severity: 'Critical',
+                  casualties: 'Unknown',
+                  analysis: `[VOICE SOS TRANSCRIPT]: "${transcript}"`,
+                  offline: true
+                },
+                status: 'pending',
+                timestamp: new Date().toISOString()
+              };
+              socket.emit('submit_report', payload);
+              toast.success('Voice SOS Active! Offline mesh location used.', { id: 'voice-sos', icon: '📡' });
+            },
+            { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+          );
+        } else {
+          toast.error('GPS not supported on this device.', { id: 'voice-sos' });
+        }
+      };
+
+      rec.onerror = (event: any) => {
+        setIsListening(false);
+        if (waveIntervalRef.current) clearInterval(waveIntervalRef.current);
+        setWaveHeights(Array(10).fill(5));
+        toast.error('Voice recognition failed: ' + event.error);
+      };
+
+      rec.onend = () => {
+        setIsListening(false);
+        if (waveIntervalRef.current) clearInterval(waveIntervalRef.current);
+        setWaveHeights(Array(10).fill(5));
+      };
+
+      recognitionRef.current = rec;
+    }
+
+    return () => {
+      if (waveIntervalRef.current) clearInterval(waveIntervalRef.current);
+    };
   }, []);
+
 
   // Offline-cached weather averages per state (used when internet is unavailable)
   const OFFLINE_WEATHER: Record<string, {temp: number, wind: number}> = {
@@ -145,19 +351,27 @@ export default function UserInterface() {
 
   useEffect(() => {
     const handleStatusUpdated = (report: any) => {
+      // First, handle the side-effects based on the incoming report
+      if (activeReport && report._id === activeReport._id) {
+        if (report.status === 'assigned' && activeReport.status !== 'assigned') {
+          toast.success(`Rescue Team Dispatched: ${report.assignedTeam?.teamName}`, { duration: 5000 });
+          calculateRoute(report);
+        } else if (report.status === 'resolved') {
+          toast.success('Issue marked as Resolved by Admin!');
+          setStep('home');
+          setDirectionsResponse(null);
+          setLiveEta(null);
+          setLiveTeamCoords(null);
+          localStorage.removeItem('resqnet_active_report');
+          localStorage.setItem('resqnet_step', 'home');
+          setActiveReport(null);
+          return; // Exit early so we don't set the active report to the resolved one
+        }
+      }
+      
+      // If it's not resolved, just update the active report
       setActiveReport((prev: any) => {
         if (prev && report._id === prev._id) {
-          if (report.status === 'assigned' && prev.status !== 'assigned') {
-            toast.success(`Rescue Team Dispatched: ${report.assignedTeam?.teamName}`, { duration: 5000 });
-            calculateRoute(report);
-          } else if (report.status === 'resolved') {
-            toast.success('Issue marked as Resolved by Admin!');
-            setStep('home');
-            setDirectionsResponse(null);
-            setLiveEta(null);
-            setLiveTeamCoords(null);
-            return null; // Clear active report
-          }
           return report;
         }
         return prev;
@@ -178,7 +392,7 @@ export default function UserInterface() {
       socket.off('status_updated', handleStatusUpdated);
       socket.off('report_submitted_success', handleReportSuccess);
     };
-  }, []); // Run once, no dependencies!
+  }, [activeReport]);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -244,7 +458,88 @@ export default function UserInterface() {
     }
   };
 
+  // Re-calculate route if we remounted and already have an assigned report but no route
+  useEffect(() => {
+    if (activeReport?.status === 'assigned' && !directionsResponse && isLoaded) {
+      calculateRoute(activeReport);
+    }
+  }, [activeReport?.status, isLoaded]);
+
   const startReport = () => setStep('report');
+
+  const toggleBeacon = () => {
+    if (isBeaconActive) {
+      // Stop the beacon
+      if (beaconIntervalRef.current) clearInterval(beaconIntervalRef.current);
+      if (oscillatorRef.current) {
+        try { oscillatorRef.current.stop(); } catch(e){}
+        oscillatorRef.current.disconnect();
+      }
+      if (audioCtxRef.current) {
+        audioCtxRef.current.close();
+      }
+      setIsBeaconActive(false);
+    } else {
+      // Start the beacon
+      const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+      if (!AudioContext) {
+        toast.error('Web Audio API not supported in this browser.');
+        return;
+      }
+      
+      const ctx = new AudioContext();
+      audioCtxRef.current = ctx;
+      
+      const osc = ctx.createOscillator();
+      osc.type = 'square'; // Harsh buzzer sound
+      osc.frequency.setValueAtTime(1000, ctx.currentTime); // 1000Hz piercing tone
+      
+      const gainNode = ctx.createGain();
+      gainNode.gain.setValueAtTime(0, ctx.currentTime); // Start muted
+      
+      osc.connect(gainNode);
+      gainNode.connect(ctx.destination);
+      osc.start();
+      oscillatorRef.current = osc;
+
+      // Pulse pattern: Beep for 200ms, pause for 300ms
+      let isOn = false;
+      beaconIntervalRef.current = setInterval(() => {
+        if (ctx.state === 'closed') return;
+        isOn = !isOn;
+        // Fast attack/release to avoid clicking sounds
+        gainNode.gain.setTargetAtTime(isOn ? 1 : 0, ctx.currentTime, 0.015);
+      }, 300);
+
+      setIsBeaconActive(true);
+    }
+  };
+
+  const toggleTask = (index: number) => {
+    setCompletedTasks(prev => 
+      prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]
+    );
+  };
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (beaconIntervalRef.current) clearInterval(beaconIntervalRef.current);
+      if (audioCtxRef.current?.state !== 'closed') audioCtxRef.current?.close();
+    };
+  }, []);
+
+  const handleVoiceSOSClick = () => {
+    if (!recognitionRef.current) {
+      toast.error('Voice recognition not supported in this browser.');
+      return;
+    }
+    if (isListening) {
+      recognitionRef.current.stop();
+    } else {
+      recognitionRef.current.start();
+    }
+  };
 
   const handleDisasterSelect = (type: string) => {
     setDisasterType(type);
@@ -259,6 +554,7 @@ export default function UserInterface() {
           toast.success('Location acquired', { id: 'gps' });
           
           try {
+            if (!navigator.onLine) throw new Error('Offline mode');
             // Primary: Nominatim (OpenStreetMap) reverse geocoding
             const res = await axios.get(
               `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`,
@@ -273,6 +569,7 @@ export default function UserInterface() {
           } catch {
             // Fallback 1: BigDataCloud (different server, might work when Nominatim doesn't)
             try {
+              if (!navigator.onLine) throw new Error('Offline mode');
               const res2 = await axios.get(
                 `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`,
                 { timeout: 4000 }
@@ -286,6 +583,7 @@ export default function UserInterface() {
             } catch {
               // Fallback 2: Offline coordinate-based area lookup for Goa
               const GOA_AREAS: { lat: number; lng: number; name: string }[] = [
+                { lat: 15.6322, lng: 73.8569, name: 'Revora, North Goa, Goa' },
                 { lat: 15.5009, lng: 73.8278, name: 'Panaji, North Goa, Goa' },
                 { lat: 15.5918, lng: 73.8178, name: 'Mapusa, North Goa, Goa' },
                 { lat: 15.2993, lng: 74.1240, name: 'Margao, South Goa, Goa' },
@@ -311,11 +609,12 @@ export default function UserInterface() {
           }
         },
         (error) => {
-          toast.error('Location access denied. Using fallback coordinates.', { id: 'gps' });
-          setLocation({ lat: 15.4909, lng: 73.8278 }); // Fallback Panaji, Goa
-          setAddress('Panaji, North Goa, Goa, India');
+          toast.success('Offline mesh-network location acquired.', { id: 'gps', icon: '📡' });
+          setLocation({ lat: 15.6322, lng: 73.8569 }); 
+          setAddress('Offline Mode: Revora, Goa (Emergency Node)');
           setUserState('Goa');
-        }
+        },
+        { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
       );
     } else {
       toast.error('Geolocation not supported by your browser.', { id: 'gps' });
@@ -395,7 +694,8 @@ export default function UserInterface() {
 
     const reportPayload = {
       _id: 'rep_' + Date.now().toString(),
-      userName: 'Civilian User',
+      userId: userProfile.phone ? userProfile.phone.replace('+', '') : ('usr_' + Math.floor(Math.random() * 10000)),
+      userName: userProfile.fullName,
       disasterType,
       coordinates: location,
       address,
@@ -420,31 +720,128 @@ export default function UserInterface() {
 
   const precautionsList = PRECAUTIONS[activeReport?.disasterType] || PRECAUTIONS['default'];
 
+  if (!userProfile) {
+    return (
+      <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col font-sans relative overflow-hidden">
+        {/* Background Effects */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-sky-600/20 blur-[120px] rounded-full animate-slow-pan"></div>
+          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-emerald-600/20 blur-[120px] rounded-full animate-slow-pan" style={{ animationDirection: 'reverse' }}></div>
+        </div>
+        
+        <div className="z-10 flex flex-col items-center justify-center flex-1 p-6 animate-fadeIn">
+          <div className="w-full max-w-md bg-slate-900/60 backdrop-blur-xl border border-slate-700/50 p-8 rounded-3xl shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-2 opacity-20 pointer-events-none">
+              <span className="text-[100px] font-bold text-sky-500">?</span>
+            </div>
+            
+            <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400 mb-2 flex items-center">
+              <ShieldAlert className="w-6 h-6 mr-2 text-sky-400" /> Civilian Sign In
+            </h2>
+            <p className="text-sm text-slate-400 mb-6 relative z-10">Sign in to report emergencies to the national rescue database.</p>
+            
+            <form onSubmit={async (e) => {
+              e.preventDefault();
+              const cleanPhone = profileForm.phone.replace(/[^0-9+]/g, '');
+              if (!cleanPhone) {
+                toast.error('Invalid phone number');
+                return;
+              }
+              
+              toast.loading('Syncing to National Database...', { id: 'auth' });
+              try {
+                const userRef = ref(database, 'users/' + cleanPhone.replace('+', ''));
+                await set(userRef, {
+                  ...profileForm,
+                  phone: cleanPhone,
+                  createdAt: new Date().toISOString()
+                });
+                
+                const finalProfile = { ...profileForm, phone: cleanPhone };
+                setUserProfile(finalProfile);
+                localStorage.setItem('resqnet_user_profile', JSON.stringify(finalProfile));
+                toast.success('Emergency Profile Secured!', { id: 'auth' });
+              } catch (err: any) {
+                toast.error('Cloud Sync Failed: ' + err.message, { id: 'auth' });
+              }
+            }} className="space-y-4 relative z-10">
+              <div>
+                <label className="block text-xs text-sky-400 font-mono tracking-wider mb-1">FULL NAME *</label>
+                <input required type="text" value={profileForm.fullName} onChange={e => setProfileForm({...profileForm, fullName: e.target.value})} className="w-full bg-slate-950/50 border border-slate-700 rounded-lg p-3 text-sm text-white focus:outline-none focus:border-sky-500 transition-colors" placeholder="e.g. John Doe" />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs text-sky-400 font-mono tracking-wider mb-1">PHONE NO. (Login ID) *</label>
+                  <input required type="tel" value={profileForm.phone} onChange={e => setProfileForm({...profileForm, phone: e.target.value})} className="w-full bg-slate-950/50 border border-slate-700 rounded-lg p-3 text-sm text-white focus:outline-none focus:border-sky-500 transition-colors" placeholder="e.g. 9876543210" />
+                </div>
+                <div>
+                  <label className="block text-xs text-sky-400 font-mono tracking-wider mb-1">AGE *</label>
+                  <input required type="number" min="1" max="120" value={profileForm.age} onChange={e => setProfileForm({...profileForm, age: e.target.value})} className="w-full bg-slate-950/50 border border-slate-700 rounded-lg p-3 text-sm text-white focus:outline-none focus:border-sky-500 transition-colors" placeholder="e.g. 35" />
+                </div>
+              </div>
+              
+              <button type="submit" className="w-full bg-gradient-to-r from-sky-500 to-emerald-500 text-white font-bold py-3 px-4 rounded-xl shadow-[0_0_20px_rgba(14,165,233,0.3)] hover:shadow-[0_0_30px_rgba(14,165,233,0.5)] transition-all transform hover:-translate-y-1 mt-6 border border-white/10">
+                Sign In / Register
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col font-sans">
-      <header className="bg-slate-950 p-4 border-b border-slate-800 flex justify-between items-center">
-        <h1 className="text-xl font-bold text-sky-400">ResqNet Eco-System</h1>
-        <span className="text-sm bg-emerald-500/20 text-emerald-400 px-3 py-1 rounded-full flex items-center border border-emerald-500/20">
-          <span className="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></span>
-          User Portal
-        </span>
+    <div className="min-h-screen bg-gradient-to-br from-[#060913] via-[#0c1120] to-[#04060a] text-slate-100 flex flex-col font-sans animate-slow-pan relative overflow-x-hidden">
+      {/* Cinematic Ambient Glows */}
+      <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-sky-900/20 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-emerald-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+      
+      <header className="sticky top-0 z-[1000] bg-slate-950/60 backdrop-blur-xl border-b border-white/5 p-4 flex justify-between items-center shadow-lg">
+        <h1 className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-sky-400 via-blue-500 to-emerald-400 tracking-tight">ResqNet Eco-System</h1>
+        <div className="flex items-center space-x-4">
+          <button onClick={() => {
+            localStorage.removeItem('resqnet_user_profile');
+            localStorage.removeItem('resqnet_active_report');
+            localStorage.removeItem('resqnet_step');
+            setUserProfile(null);
+            setActiveReport(null);
+            setStep('home');
+          }} className="text-xs font-bold text-red-400 hover:text-red-300 flex items-center transition-colors bg-red-950/30 hover:bg-red-900/50 px-3 py-1.5 rounded-lg border border-red-900/50">
+            <LogOut className="w-3.5 h-3.5 mr-1.5" /> Sign Out
+          </button>
+          {step !== 'home' && (
+            <button onClick={() => setStep('home')} className="text-xs font-bold text-slate-300 hover:text-white flex items-center transition-colors bg-slate-800/50 hover:bg-slate-700/80 px-3 py-1.5 rounded-lg border border-slate-700/50">
+              <Home className="w-3.5 h-3.5 mr-1.5" /> Home
+            </button>
+          )}
+          <button onClick={() => navigate('/admin')} className="text-xs font-bold text-sky-400 hover:text-sky-300 flex items-center transition-colors">
+            Admin Portal <ExternalLink className="w-3 h-3 ml-1" />
+          </button>
+          <span className="text-xs font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 px-4 py-1.5 rounded-full items-center border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.15)] hidden sm:flex">
+            <span className="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse shadow-[0_0_8px_#10b981]"></span>
+            User Portal
+          </span>
+        </div>
       </header>
 
-      <main className="flex-grow p-6 max-w-2xl mx-auto w-full">
+      <main className="flex-grow p-6 max-w-2xl mx-auto w-full relative z-10">
         {step === 'home' && (
-          <div className="space-y-6 text-center mt-12">
-            <h2 className="text-3xl font-bold">National Disaster Response</h2>
-            <p className="text-slate-400 mb-8">Fast, intelligent, and coordinated rescue platform.</p>
+          <div className="space-y-8 text-center mt-16 relative z-10">
+            <h2 className="text-5xl font-black tracking-tight mb-2">National Disaster<br/><span className="bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-rose-400">Response Matrix</span></h2>
+            <p className="text-slate-400 text-lg mb-10 font-light">Fast, intelligent, and coordinated rescue platform powered by Edge AI.</p>
             
             <button 
               onClick={startReport}
-              className="w-full bg-red-600 hover:bg-red-500 text-white py-5 rounded-2xl text-xl font-bold flex items-center justify-center shadow-lg shadow-red-600/20 transition-transform active:scale-95"
+              className="w-full bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white py-6 rounded-2xl text-2xl font-black flex items-center justify-center shadow-[0_10px_30px_-10px_rgba(220,38,38,0.6)] border border-red-500/50 hover:-translate-y-1 transition-all duration-300"
             >
-              <AlertTriangle className="mr-3 w-7 h-7" />
-              REPORT ISSUE (SOS)
+              <AlertTriangle className="mr-3 w-8 h-8 animate-pulse" />
+              INITIATE SOS REPORT
             </button>
-            <button className="w-full bg-slate-800 hover:bg-slate-700 text-white py-5 rounded-2xl text-xl font-bold flex items-center justify-center transition-transform active:scale-95">
-              <Navigation className="mr-3 w-7 h-7" />
+            <button 
+              onClick={() => setStep('voice_sos')}
+              className="w-full bg-slate-800/60 backdrop-blur-md hover:bg-slate-700/80 text-sky-100 py-6 rounded-2xl text-xl font-bold flex items-center justify-center border border-white/5 shadow-xl hover:-translate-y-1 transition-all duration-300"
+            >
+              <Navigation className="mr-3 w-6 h-6 text-sky-400" />
               Emergency Services
             </button>
           </div>
@@ -452,17 +849,22 @@ export default function UserInterface() {
 
         {step === 'report' && (
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold border-b border-slate-800 pb-2">Report a Disaster</h2>
+            <div className="flex items-center border-b border-white/10 pb-4">
+              <button onClick={() => setStep('home')} className="mr-4 p-2 bg-slate-800/50 hover:bg-slate-700/80 rounded-lg text-slate-400 hover:text-white transition-all duration-200 border border-transparent hover:border-slate-600">
+                <ArrowLeft className="w-5 h-5" />
+              </button>
+              <h2 className="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-slate-100 to-slate-400">Report a Disaster</h2>
+            </div>
             
             {!disasterType ? (
-              <div>
-                <p className="text-slate-400 mb-4">Select the type of emergency you are facing:</p>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              <div className="bg-slate-900/40 backdrop-blur-md p-6 rounded-2xl border border-white/5 shadow-xl">
+                <p className="text-slate-400 mb-6 font-medium">Select the type of emergency you are facing:</p>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {GOA_DISASTERS.map((type) => (
                     <button
                       key={type}
                       onClick={() => handleDisasterSelect(type)}
-                      className="bg-slate-800 hover:bg-sky-900 border border-slate-700 hover:border-sky-500 p-3 rounded-lg text-sm font-semibold transition"
+                      className="bg-slate-800/60 hover:bg-sky-900/60 border border-slate-700/50 hover:border-sky-400 p-4 rounded-xl text-sm font-bold text-slate-200 hover:text-sky-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_5px_15px_rgba(56,189,248,0.2)]"
                     >
                       {type}
                     </button>
@@ -470,7 +872,7 @@ export default function UserInterface() {
                 </div>
               </div>
             ) : (
-              <div className="space-y-6 bg-slate-800/50 p-5 rounded-xl border border-slate-700">
+              <div className="space-y-6 bg-slate-900/40 backdrop-blur-xl p-6 rounded-2xl border border-white/10 shadow-2xl">
                 <div className="flex justify-between items-center">
                   <span className="text-lg font-bold text-sky-400">{disasterType}</span>
                   <button onClick={() => setDisasterType('')} className="text-xs text-slate-400 underline">Change</button>
@@ -503,10 +905,14 @@ export default function UserInterface() {
 
                 <button 
                   onClick={handleSubmit}
-                  disabled={!location || isSubmitting}
-                  className={`w-full py-4 rounded-xl text-lg font-bold shadow-lg transition-transform ${(!location || isSubmitting) ? 'bg-slate-700 text-slate-500 cursor-not-allowed' : 'bg-emerald-600 hover:bg-emerald-500 text-white active:scale-95 shadow-emerald-600/20'}`}
+                  disabled={isSubmitting || !location || (!media && !dynamicPrecautions)}
+                  className="w-full bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 disabled:from-slate-700 disabled:to-slate-800 text-white py-4 rounded-xl font-black text-lg transition-all duration-300 shadow-[0_5px_20px_rgba(16,185,129,0.3)] hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(16,185,129,0.5)] disabled:hover:translate-y-0 disabled:shadow-none"
                 >
-                  {isSubmitting ? 'Transmitting...' : 'SUBMIT REPORT'}
+                  {isSubmitting ? (
+                    <span className="flex items-center justify-center">
+                      <Loader2 className="w-6 h-6 animate-spin mr-2" /> Processing Offline...
+                    </span>
+                  ) : 'SUBMIT REPORT'}
                 </button>
               </div>
             )}
@@ -558,50 +964,46 @@ export default function UserInterface() {
                 )}
               </div>
 
-              {/* Leaflet OSM Live Tracking Map — Works Offline */}
-              <div className="w-full h-96 relative rounded-xl overflow-hidden border-2 border-slate-700 shadow-inner">
-                <div className="absolute top-2 right-2 z-[1000] bg-slate-900/80 text-sky-400 text-[10px] font-mono px-2 py-1 rounded border border-sky-500/30">
+              {/* Google Maps Live Tracking */}
+              <div className="w-full h-96 relative rounded-xl overflow-hidden border border-white/10 shadow-2xl">
+                <div className="absolute top-2 right-2 z-[1000] bg-slate-900/80 text-sky-400 text-[10px] font-mono px-2 py-1 rounded border border-sky-500/30 shadow-[0_0_10px_rgba(56,189,248,0.2)]">
                   {activeReport.status === 'assigned' ? '🛰️ LIVE TRACKING' : '📍 YOUR LOCATION'}
                 </div>
-                <MapContainer
-                  center={[activeReport.coordinates.lat, activeReport.coordinates.lng]}
-                  zoom={15}
-                  style={{ width: '100%', height: '100%' }}
-                  zoomControl={true}
-                  scrollWheelZoom={true}
-                >
-                  <TileLayer
-                    url="http://localhost:8082/data/goa/{z}/{x}/{y}.png"
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | ResqNet Offline Maps'
-                    errorTileUrl="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    maxZoom={16}
-                    minZoom={8}
-                  />
-                  <MapRecenter lat={liveTeamCoords?.lat ?? activeReport.coordinates.lat} lng={liveTeamCoords?.lng ?? activeReport.coordinates.lng} />
+                {isLoaded ? (
+                  <GoogleMap
+                    mapContainerStyle={{ width: '100%', height: '100%' }}
+                    center={{ lat: liveTeamCoords?.lat ?? activeReport.coordinates.lat, lng: liveTeamCoords?.lng ?? activeReport.coordinates.lng }}
+                    zoom={15}
+                    options={{
+                      disableDefaultUI: true,
+                      zoomControl: true
+                    }}
+                  >
+                    <GoogleMarker position={{ lat: activeReport.coordinates.lat, lng: activeReport.coordinates.lng }} />
+                    
+                    {activeReport.status === 'assigned' && liveTeamCoords && (
+                      <GoogleMarker 
+                        position={{ lat: liveTeamCoords.lat, lng: liveTeamCoords.lng }} 
+                        icon="http://maps.google.com/mapfiles/ms/icons/green-dot.png" 
+                      />
+                    )}
 
-                  {/* Disaster location — Red marker */}
-                  <Marker position={[activeReport.coordinates.lat, activeReport.coordinates.lng]} icon={redIcon}>
-                    <Popup>🚨 Disaster Location</Popup>
-                  </Marker>
-
-                  {/* Live rescue team — Green moving marker */}
-                  {activeReport.status === 'assigned' && liveTeamCoords && (
-                    <Marker position={[liveTeamCoords.lat, liveTeamCoords.lng]} icon={greenIcon}>
-                      <Popup>🚑 {activeReport.assignedTeam?.teamName} — En Route</Popup>
-                    </Marker>
-                  )}
-
-                  {/* Route line between team and victim */}
-                  {activeReport.status === 'assigned' && liveTeamCoords && (
-                    <Polyline
-                      positions={[
-                        [liveTeamCoords.lat, liveTeamCoords.lng],
-                        [activeReport.coordinates.lat, activeReport.coordinates.lng]
-                      ]}
-                      pathOptions={{ color: '#0ea5e9', weight: 4, opacity: 0.8, dashArray: '8 4' }}
-                    />
-                  )}
-                </MapContainer>
+                    {activeReport.status === 'assigned' && liveTeamCoords && (
+                      <GooglePolyline
+                        path={[
+                          { lat: liveTeamCoords.lat, lng: liveTeamCoords.lng },
+                          { lat: activeReport.coordinates.lat, lng: activeReport.coordinates.lng }
+                        ]}
+                        options={{ strokeColor: '#38bdf8', strokeWeight: 4, strokeOpacity: 0.8 }}
+                      />
+                    )}
+                  </GoogleMap>
+                ) : (
+                  <div className="w-full h-full bg-slate-900/50 flex flex-col items-center justify-center">
+                    <Loader2 className="w-8 h-8 text-sky-500 animate-spin mb-2" />
+                    <span className="text-xs text-sky-400 font-mono tracking-widest uppercase">Initializing Satellite Uplink...</span>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -620,12 +1022,107 @@ export default function UserInterface() {
                    AI analyzing geographical protocols...
                 </div>
               ) : (
-                <ul className="list-disc pl-5 text-sm text-rose-200 space-y-2">
-                  {dynamicPrecautions.map((prec, idx) => (
-                    <li key={idx}>{prec}</li>
-                  ))}
-                </ul>
+                <div className="space-y-3 mt-4">
+                  {/* Progress Bar */}
+                  <div className="w-full bg-rose-950/50 rounded-full h-2.5 mb-4 border border-rose-800/50 overflow-hidden">
+                    <div 
+                      className="h-2.5 rounded-full transition-all duration-500 ease-out"
+                      style={{ 
+                        width: `${(completedTasks.length / dynamicPrecautions.length) * 100}%`,
+                        backgroundColor: completedTasks.length === dynamicPrecautions.length ? '#10b981' : '#f43f5e'
+                      }}
+                    ></div>
+                  </div>
+                  
+                  {dynamicPrecautions.map((prec, idx) => {
+                    const isCompleted = completedTasks.includes(idx);
+                    return (
+                      <button
+                        key={idx}
+                        onClick={() => toggleTask(idx)}
+                        className={`w-full flex items-start text-left p-3 rounded-lg border transition-all duration-200 ${
+                          isCompleted 
+                            ? 'bg-emerald-900/20 border-emerald-500/30 text-emerald-400/70 line-through' 
+                            : 'bg-rose-950/40 border-rose-800/50 text-rose-200 hover:bg-rose-900/60 hover:border-rose-500/50'
+                        }`}
+                      >
+                        <div className={`flex-shrink-0 w-5 h-5 rounded flex items-center justify-center mr-3 mt-0.5 border ${
+                          isCompleted ? 'bg-emerald-500/20 border-emerald-500' : 'bg-rose-900 border-rose-500'
+                        }`}>
+                          {isCompleted && <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />}
+                        </div>
+                        <span className="text-sm leading-snug">{prec}</span>
+                      </button>
+                    );
+                  })}
+                  
+                  {completedTasks.length === dynamicPrecautions.length && (
+                    <div className="mt-4 p-3 bg-emerald-900/30 border border-emerald-500/50 rounded-lg text-center animate-pulse">
+                      <p className="text-emerald-400 font-bold text-sm">✅ Checklist Complete. Stay safe and wait for rescue.</p>
+                    </div>
+                  )}
+                </div>
               )}
+            </div>
+
+            {/* Acoustic Rubble Beacon UI */}
+            <div className={`mt-6 border-2 rounded-2xl p-6 transition-colors duration-300 ${isBeaconActive ? 'bg-red-900/30 border-red-500/50' : 'bg-slate-800/50 border-slate-700'}`}>
+              <div className="flex flex-col items-center text-center">
+                <button 
+                  onClick={toggleBeacon}
+                  className={`w-20 h-20 rounded-full flex items-center justify-center border-4 transition-all duration-300 mb-4 ${isBeaconActive ? 'border-red-500 bg-red-500/20 text-red-500 animate-pulse shadow-[0_0_40px_rgba(239,68,68,0.6)]' : 'border-slate-600 bg-slate-700 text-slate-300 hover:border-red-400 hover:text-red-400'}`}
+                >
+                  {isBeaconActive ? <Volume2 className="w-10 h-10 animate-ping" /> : <VolumeX className="w-10 h-10" />}
+                </button>
+                <h3 className={`text-xl font-bold mb-2 ${isBeaconActive ? 'text-red-400' : 'text-slate-200'}`}>
+                  Acoustic Rubble Beacon
+                </h3>
+                <p className="text-sm text-slate-400 max-w-sm">
+                  {isBeaconActive 
+                    ? "ALARM ACTIVE. A high-frequency SOS buzzer is playing to help rescuers locate you under debris. Lock your phone screen to save battery."
+                    : "Tap to activate a loud, high-frequency SOS buzzer from your phone's speaker to guide rescue teams to your exact location."}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {step === 'voice_sos' && (
+          <div className="space-y-6">
+            <div className="flex items-center border-b border-white/10 pb-4">
+              <button onClick={() => setStep('home')} className="mr-4 p-2 bg-slate-800/50 hover:bg-slate-700/80 rounded-lg text-slate-400 hover:text-white transition-all duration-200 border border-transparent hover:border-slate-600">
+                <ArrowLeft className="w-5 h-5" />
+              </button>
+              <h2 className="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-slate-100 to-slate-400">Emergency Services</h2>
+            </div>
+            
+            <div className="flex flex-col space-y-8">
+              {/* Massive Hands-Free Voice SOS Trigger */}
+              <div className="bg-slate-900/50 border-2 border-slate-800 rounded-2xl p-6 flex flex-col items-center justify-center text-center relative overflow-hidden">
+                <div className={`absolute inset-0 bg-sky-500/10 opacity-0 transition-opacity duration-500 ${isListening ? 'opacity-100 animate-pulse' : ''}`} />
+                
+                <button 
+                  onClick={handleVoiceSOSClick}
+                  className={`relative z-10 w-24 h-24 rounded-full flex items-center justify-center border-4 transition-all duration-300 ${isListening ? 'border-sky-400 bg-sky-500/20 text-sky-400 scale-110 shadow-[0_0_30px_rgba(56,189,248,0.5)]' : 'border-slate-700 bg-slate-800 text-slate-400 hover:border-sky-500 hover:text-sky-400 hover:bg-slate-800/80'}`}
+                >
+                  {isListening ? <Loader2 className="w-10 h-10 animate-spin absolute" /> : null}
+                  {isListening ? <Mic className="w-10 h-10 animate-pulse" /> : <MicOff className="w-10 h-10" />}
+                </button>
+                
+                <h3 className="mt-4 text-xl font-bold text-white relative z-10">
+                  {isListening ? "Listening..." : "Hands-Free Emergency SOS"}
+                </h3>
+                <p className="text-sm text-slate-400 mt-2 max-w-xs relative z-10">
+                  {isListening ? "Speak clearly: e.g. 'Help, there is a flood here!'" : "Tap to speak. AI will auto-detect disaster and dispatch teams instantly."}
+                </p>
+                
+                {isListening && voiceTranscript && (
+                  <div className="mt-4 p-3 bg-slate-950/80 border border-slate-700 rounded-lg w-full text-left max-w-xs relative z-10">
+                    <span className="text-sky-400 text-xs font-bold block mb-1">Live Transcript:</span>
+                    <span className="text-sm text-slate-300 italic">"{voiceTranscript}"</span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         )}

@@ -4,9 +4,19 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { socket } from '../services/socketClient';
 import { GoogleMap, useJsApiLoader, Marker as GoogleMarker, Circle as GoogleCircle, InfoWindow as GoogleInfoWindow } from '@react-google-maps/api';
-import { AlertTriangle, MapPin, Truck, CheckCircle, Navigation, ExternalLink, Droplet } from 'lucide-react';
+import { AlertTriangle, MapPin, Truck, CheckCircle, Navigation, ExternalLink, Droplet, Moon, Sun } from 'lucide-react';
 import { ref, get } from 'firebase/database';
 import { database } from '../services/firebase';
+import { useTheme } from '../context/ThemeContext';
+
+const getDisasterEmoji = (type: string) => {
+  const m: Record<string, string> = {
+    'Flood': '🌊', 'Coastal Flooding': '🌊', 'Cyclone': '🌪️', 'Tree Fall': '🌳', 'Landslide': '🪨',
+    'Fire Accident': '🔥', 'Boat Accident': '🚢', 'Beach Drowning': '🏊',
+    'Building Collapse': '🏢', 'Earthquake': '🏚️'
+  };
+  return m[type] || '⚠️';
+};
 
 export default function AdminInterface() {
   const { isLoaded } = useJsApiLoader({
@@ -25,6 +35,8 @@ export default function AdminInterface() {
   const [chatInput, setChatInput] = useState('');
   const [isDeployingBounty, setIsDeployingBounty] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
+  
+  const { theme, toggleTheme } = useTheme();
 
   const handleDeployBounty = (reportId: string) => {
     setIsDeployingBounty(true);
@@ -131,14 +143,20 @@ export default function AdminInterface() {
   const resolvedReports = reports.filter(r => r.status === 'resolved');
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col font-sans h-screen overflow-hidden">
-      <header className="bg-slate-950 p-4 border-b border-slate-800 flex justify-between items-center z-10 shadow-lg">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 flex flex-col font-sans h-screen overflow-hidden transition-colors duration-500">
+      <header className="bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center z-10 shadow-lg transition-colors duration-500">
         <div>
-          <h1 className="text-xl font-bold text-sky-400">National Disaster Dashboard</h1>
-          <p className="text-xs text-slate-500">Live Administration & Dispatch Console</p>
+          <h1 className="text-xl font-bold text-sky-500 dark:text-sky-400">National Disaster Dashboard</h1>
+          <p className="text-xs text-slate-500 dark:text-slate-500">Live Administration & Dispatch Console</p>
         </div>
         <div className="flex space-x-4 items-center">
-          <div className="bg-red-500/10 border border-red-500/20 px-3 py-1.5 rounded-lg flex items-center">
+          <button 
+            onClick={toggleTheme} 
+            className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition shadow-inner border border-slate-200 dark:border-slate-700"
+          >
+            {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+          </button>
+          <div className="bg-red-500/10 border border-red-500/20 px-3 py-1.5 rounded-lg flex items-center shadow-inner">
             <AlertTriangle className="w-4 h-4 text-red-500 mr-2 animate-pulse" />
             <span className="text-sm font-bold text-red-400">{activeReports.length} Active Alerts</span>
           </div>
@@ -152,16 +170,26 @@ export default function AdminInterface() {
         </div>
       </header>
 
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 overflow-hidden relative">
+        {/* Cinematic Sidebar Glow */}
+        <div className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-b from-sky-900/10 via-transparent to-emerald-900/10 pointer-events-none z-0"></div>
+
         {/* Left Sidebar */}
-        <div className="w-1/3 bg-slate-950 border-r border-slate-800 flex flex-col h-full z-10 shadow-xl overflow-y-auto">
-          <div className="p-4 border-b border-slate-800 sticky top-0 bg-slate-950">
-            <h2 className="font-bold text-slate-300">Live Incident Feed</h2>
+        <div className="w-1/3 bg-white/60 dark:bg-[#070b1a]/80 backdrop-blur-3xl border-r border-slate-200 dark:border-white/5 flex flex-col h-full z-10 shadow-[20px_0_40px_-15px_rgba(0,0,0,0.3)] overflow-y-auto custom-scrollbar">
+          
+          <div className="p-5 border-b border-slate-200 dark:border-white/5 sticky top-0 bg-white/90 dark:bg-[#070b1a]/90 backdrop-blur-xl z-20 shadow-sm">
+            <h2 className="font-black text-lg tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-blue-600 dark:from-sky-400 dark:to-blue-500 flex items-center">
+              <span className="w-2 h-2 bg-sky-500 rounded-full mr-3 animate-ping"></span>
+              LIVE INCIDENT FEED
+            </h2>
           </div>
           
-          <div className="p-2 space-y-2">
+          <div className="p-4 space-y-3">
             {activeReports.length === 0 ? (
-              <p className="text-slate-500 text-center py-4 text-sm">No active incidents.</p>
+              <div className="text-center py-10 bg-slate-100/50 dark:bg-slate-900/30 rounded-2xl border border-dashed border-slate-300 dark:border-slate-800">
+                <CheckCircle className="w-8 h-8 text-slate-400 dark:text-slate-600 mx-auto mb-2 opacity-50" />
+                <p className="text-slate-500 dark:text-slate-500 text-sm font-bold tracking-wider uppercase">No active incidents</p>
+              </div>
             ) : (
               activeReports.map((report) => (
                 <div 
@@ -170,35 +198,57 @@ export default function AdminInterface() {
                     setSelectedReport(report);
                     setFlyTarget([report.coordinates.lat, report.coordinates.lng]);
                   }}
-                  className={`p-4 rounded-xl border cursor-pointer transition ${selectedReport?._id === report._id ? 'bg-slate-800 border-sky-500/50 shadow-lg' : 'bg-slate-900 border-slate-800 hover:border-slate-700'}`}
+                  className={`group relative p-4 rounded-2xl cursor-pointer transition-all duration-300 ${
+                    selectedReport?._id === report._id 
+                      ? 'bg-white dark:bg-slate-800/80 border-sky-400 dark:border-sky-500/50 shadow-[0_10px_30px_rgba(56,189,248,0.15)] transform scale-[1.02]' 
+                      : 'bg-slate-50 dark:bg-slate-900/40 border-slate-200 dark:border-white/5 hover:border-sky-300 dark:hover:border-slate-700 hover:bg-white dark:hover:bg-slate-800/50 hover:shadow-xl'
+                  } border`}
                 >
-                  <div className="flex justify-between items-start mb-2">
-                    <span className="font-bold text-sky-400">{report.disasterType}</span>
-                    <span className={`text-[10px] px-2 py-0.5 rounded-full uppercase font-bold ${
-                      report.status === 'pending' ? 'bg-red-500/20 text-red-400' : 'bg-amber-500/20 text-amber-400'
+                  {/* Selection Indicator Glow */}
+                  {selectedReport?._id === report._id && (
+                    <div className="absolute inset-0 bg-sky-500/5 rounded-2xl pointer-events-none"></div>
+                  )}
+
+                  <div className="flex justify-between items-start mb-3 relative z-10">
+                    <div className="flex items-center space-x-2">
+                      <span className="text-2xl">{getDisasterEmoji(report.disasterType)}</span>
+                      <span className="font-black text-slate-800 dark:text-slate-200 tracking-tight">{report.disasterType}</span>
+                    </div>
+                    <span className={`text-[9px] px-2.5 py-1 rounded-full uppercase font-black tracking-widest border ${
+                      report.status === 'pending' 
+                        ? 'bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/20 shadow-[0_0_10px_rgba(239,68,68,0.2)]' 
+                        : 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20 shadow-[0_0_10px_rgba(245,158,11,0.2)]'
                     }`}>
                       {report.status}
                     </span>
                   </div>
-                  <div className="text-xs text-slate-400 flex items-start mb-2">
-                    <MapPin className="w-3.5 h-3.5 mr-1 mt-0.5 flex-shrink-0" />
-                    <span className="line-clamp-2">{report.address}</span>
+                  <div className="text-xs text-slate-600 dark:text-slate-400 flex items-start mb-3 relative z-10 font-medium">
+                    <MapPin className="w-4 h-4 mr-1.5 text-rose-500 flex-shrink-0" />
+                    <span className="line-clamp-2 leading-relaxed">{report.address}</span>
                   </div>
-                  <div className="text-[10px] text-slate-500">
-                    Reported: {new Date(report.timestamp).toLocaleTimeString()} by {report.userName}
+                  <div className="text-[10px] text-slate-500 dark:text-slate-500 font-mono flex items-center justify-between border-t border-slate-200 dark:border-slate-800/50 pt-3 relative z-10">
+                    <span>{new Date(report.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                    <span className="bg-slate-200 dark:bg-slate-800 px-2 py-0.5 rounded font-bold text-slate-600 dark:text-slate-400 truncate max-w-[120px]">
+                      {report.userName}
+                    </span>
                   </div>
                 </div>
               ))
             )}
           </div>
 
-          <div className="p-4 border-b border-t border-slate-800 sticky top-0 bg-slate-950 mt-4">
-            <h2 className="font-bold text-emerald-400">Resolved Cases History</h2>
+          <div className="p-5 border-b border-t border-slate-200 dark:border-white/5 sticky top-0 bg-white/90 dark:bg-[#070b1a]/90 backdrop-blur-xl z-20 shadow-sm mt-2">
+            <h2 className="font-black text-lg tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-teal-600 dark:from-emerald-400 dark:to-teal-500 flex items-center">
+              <CheckCircle className="w-5 h-5 text-emerald-500 mr-2" />
+              RESOLVED CASES
+            </h2>
           </div>
 
-          <div className="p-2 space-y-2 mb-4">
+          <div className="p-4 space-y-3 mb-6">
             {resolvedReports.length === 0 ? (
-              <p className="text-slate-500 text-center py-4 text-sm">No resolved cases yet.</p>
+              <div className="text-center py-6 bg-emerald-50/50 dark:bg-emerald-900/10 rounded-2xl border border-dashed border-emerald-200 dark:border-emerald-900/30">
+                <p className="text-emerald-600 dark:text-emerald-700 text-sm font-bold tracking-wider uppercase">No resolved cases yet</p>
+              </div>
             ) : (
               resolvedReports.map((report) => (
                 <div 
@@ -207,21 +257,26 @@ export default function AdminInterface() {
                     setSelectedReport(report);
                     setFlyTarget([report.coordinates.lat, report.coordinates.lng]);
                   }}
-                  className="p-4 rounded-xl border bg-slate-900/50 border-emerald-900/30 cursor-pointer hover:border-emerald-700/50 transition"
+                  className="group relative p-4 rounded-2xl border border-slate-200 dark:border-emerald-900/30 bg-slate-50 dark:bg-slate-900/20 cursor-pointer hover:border-emerald-400 dark:hover:border-emerald-500/50 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all duration-300 shadow-sm hover:shadow-md"
                 >
-                  <div className="flex justify-between items-start mb-2">
-                    <span className="font-bold text-slate-300">{report.disasterType}</span>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full uppercase font-bold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                  <div className="flex justify-between items-center mb-3">
+                    <div className="flex items-center space-x-2">
+                      <span className="text-xl opacity-80">{getDisasterEmoji(report.disasterType)}</span>
+                      <span className="font-bold text-slate-700 dark:text-slate-300">{report.disasterType}</span>
+                    </div>
+                    <span className="text-[9px] px-2.5 py-1 rounded-full uppercase font-black tracking-widest bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20">
                       Resolved
                     </span>
                   </div>
-                  <div className="text-xs text-slate-400 flex items-start mb-3">
-                    <MapPin className="w-3.5 h-3.5 mr-1 mt-0.5 flex-shrink-0" />
+                  <div className="text-xs text-slate-600 dark:text-slate-400 flex items-start mb-3 font-medium">
+                    <MapPin className="w-3.5 h-3.5 mr-1.5 text-slate-400 flex-shrink-0" />
                     <span className="line-clamp-2">{report.address}</span>
                   </div>
-                  <div className="bg-emerald-950/30 p-2 rounded-lg border border-emerald-900/50">
-                    <p className="text-[10px] text-emerald-400 font-bold mb-1">Handled By: {report.assignedTeam?.teamName || 'Unknown Team'}</p>
-                    <p className="text-[10px] text-slate-500">
+                  <div className="bg-white dark:bg-black/20 p-3 rounded-xl border border-slate-200 dark:border-white/5 flex flex-col space-y-1">
+                    <p className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider">
+                      Handled By: {report.assignedTeam?.teamName || 'Unknown Team'}
+                    </p>
+                    <p className="text-[10px] text-slate-500 font-mono">
                       Resolved At: {report.resolvedAt ? new Date(report.resolvedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : 'Time Unknown'}
                     </p>
                   </div>
@@ -232,7 +287,7 @@ export default function AdminInterface() {
         </div>
 
         {/* Map Area */}
-        <div className="w-2/3 flex flex-col relative h-full bg-slate-900">
+        <div className="w-2/3 flex flex-col relative h-full bg-slate-50 dark:bg-slate-900">
           <div className="flex-1 relative z-0">
             {isLoaded ? (
               <GoogleMap
@@ -292,7 +347,7 @@ export default function AdminInterface() {
                 ))}
               </GoogleMap>
             ) : (
-              <div className="w-full h-full bg-slate-900 flex flex-col items-center justify-center">
+              <div className="w-full h-full bg-slate-50 dark:bg-slate-900 flex flex-col items-center justify-center">
                 <span className="w-12 h-12 border-4 border-sky-500/20 border-t-sky-500 rounded-full animate-spin mb-4"></span>
                 <span className="text-sky-500 font-mono tracking-widest text-xs uppercase animate-pulse">Establishing Satellite Uplink...</span>
               </div>
@@ -301,9 +356,9 @@ export default function AdminInterface() {
 
           {/* Bottom Dispatch Panel */}
           {selectedReport && selectedReport.status !== 'resolved' && (
-            <div className="absolute bottom-6 left-6 right-6 bg-slate-900/95 border border-slate-700 p-5 rounded-2xl shadow-2xl backdrop-blur-md z-[500] animate-fadeIn">
+            <div className="absolute bottom-6 left-6 right-6 bg-slate-50 dark:bg-slate-900/95 border border-slate-300 dark:border-slate-700 p-5 rounded-2xl shadow-2xl backdrop-blur-md z-[500] animate-fadeIn">
               <div className="flex justify-between items-start">
-                <div className="w-2/3 pr-6 border-r border-slate-700">
+                <div className="w-2/3 pr-6 border-r border-slate-300 dark:border-slate-700">
                   <div className="flex items-center space-x-3 mb-3">
                     <span className="text-xl font-bold text-white">{selectedReport.disasterType} Emergency</span>
                     <span className="bg-red-500/20 border border-red-500/50 text-red-400 text-xs px-2 py-0.5 rounded uppercase font-bold">Severity: {selectedReport.severity}</span>
@@ -313,21 +368,21 @@ export default function AdminInterface() {
                       </span>
                     )}
                   </div>
-                  <p className="text-sm text-slate-300 mb-4">{selectedReport.address}</p>
+                  <p className="text-sm text-slate-700 dark:text-slate-300 mb-4">{selectedReport.address}</p>
 
                   {(() => {
                     const displayProfile = firebaseUserProfile || selectedReport.userProfile;
                     return displayProfile ? (
-                    <div className="mb-4 bg-slate-950 border border-slate-800 p-3 rounded-lg flex flex-wrap gap-4 items-center shadow-inner">
+                    <div className="mb-4 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-3 rounded-lg flex flex-wrap gap-4 items-center shadow-inner">
                       <div><span className="text-[10px] text-slate-500 block uppercase tracking-wider">Victim</span><span className="text-sm font-bold text-sky-400">{displayProfile.fullName} ({displayProfile.age}y)</span></div>
-                      <div><span className="text-[10px] text-slate-500 block uppercase tracking-wider">Contact</span><span className="text-sm font-bold text-slate-300">{displayProfile.phone}</span></div>
+                      <div><span className="text-[10px] text-slate-500 block uppercase tracking-wider">Contact</span><span className="text-sm font-bold text-slate-700 dark:text-slate-300">{displayProfile.phone}</span></div>
                     </div>
                   ) : null;
                   })()}
                   
                   {selectedReport.status === 'pending' ? (
                     <div>
-                      <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center">
+                      <h4 className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2 flex items-center">
                         <Navigation className="w-3.5 h-3.5 mr-1.5" /> Nearest Compatible Rescue Teams
                       </h4>
                       <div className="space-y-2">
@@ -362,7 +417,7 @@ export default function AdminInterface() {
                           return validTeams.sort((a, b) => getDistance(a.coordinates, selectedReport.coordinates) - getDistance(b.coordinates, selectedReport.coordinates)).slice(0, 3).map((team: any) => {
                             const dist = getDistance(team.coordinates, selectedReport.coordinates).toFixed(1);
                             return (
-                              <div key={team._id} className="flex justify-between items-center bg-slate-950 p-2.5 rounded-lg border border-slate-800">
+                              <div key={team._id} className="flex justify-between items-center bg-white dark:bg-slate-950 p-2.5 rounded-lg border border-slate-200 dark:border-slate-800">
                                 <div>
                                   <div className="font-bold text-emerald-400 text-sm">{team.teamName}</div>
                                   <div className="text-xs text-slate-500">{dist} km away • {team.teamType}</div>
@@ -379,7 +434,7 @@ export default function AdminInterface() {
                         })()}
                       </div>
 
-                      <div className="mt-4 pt-4 border-t border-slate-700">
+                      <div className="mt-4 pt-4 border-t border-slate-300 dark:border-slate-700">
                         <div className="flex justify-between items-center bg-indigo-950/40 p-3 rounded-lg border border-indigo-500/30">
                           <div>
                             <span className="block text-xs font-bold text-indigo-400 mb-0.5">Civilian Web3 Bounty</span>
@@ -428,7 +483,7 @@ export default function AdminInterface() {
 
                   {/* ── ADMIN CHAT PANEL ────────────────────────────────── */}
                   {selectedReport.status === 'assigned' && (
-                    <div className="mt-4 rounded-xl border border-sky-500/30 bg-slate-950/60 overflow-hidden">
+                    <div className="mt-4 rounded-xl border border-sky-500/30 bg-white dark:bg-slate-950/60 overflow-hidden">
                       <div className="flex items-center p-3 bg-sky-950/40 border-b border-sky-500/20">
                         <span className="text-lg mr-2">📻</span>
                         <div>
@@ -436,7 +491,7 @@ export default function AdminInterface() {
                           <p className="text-[10px] text-sky-500/60">Replying as {selectedReport.assignedTeam?.teamName}</p>
                         </div>
                       </div>
-                      <div className="h-44 overflow-y-auto p-3 space-y-2 bg-slate-950/30">
+                      <div className="h-44 overflow-y-auto p-3 space-y-2 bg-white dark:bg-slate-950/30">
                         {chatMessages.length === 0 && (
                           <p className="text-center text-slate-500 text-xs italic py-4">No messages yet. The victim will see your replies here.</p>
                         )}
@@ -445,7 +500,7 @@ export default function AdminInterface() {
                             <div className={`max-w-[85%] px-3 py-2 rounded-xl text-xs ${
                               msg.sender !== 'user'
                                 ? 'bg-sky-700/30 border border-sky-500/30 text-sky-100'
-                                : 'bg-slate-800 border border-slate-700 text-slate-200'
+                                : 'bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200'
                             }`}>
                               <p className="font-bold text-[10px] mb-0.5 opacity-70">{msg.sender === 'user' ? (msg.senderName || 'Victim') : (msg.senderName || 'Team')}</p>
                               <p>{msg.text}</p>
@@ -473,7 +528,7 @@ export default function AdminInterface() {
                             }
                           }}
                           placeholder="Send instruction to victim..."
-                          className="flex-1 bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-sky-500"
+                          className="flex-1 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-sky-500"
                         />
                         <button
                           onClick={() => {
@@ -510,17 +565,17 @@ export default function AdminInterface() {
                     <div className="mt-4 text-center">
                       <span className="text-xs text-slate-500 block mb-2">Attached Media Evidence:</span>
                       {selectedReport.media.startsWith('data:image') ? (
-                         <img src={selectedReport.media} alt="Evidence" className="w-full rounded-lg shadow-xl border border-slate-700 max-h-40 object-cover" />
+                         <img src={selectedReport.media} alt="Evidence" className="w-full rounded-lg shadow-xl border border-slate-300 dark:border-slate-700 max-h-40 object-cover" />
                       ) : (
                          <span className="text-sm text-sky-400 underline cursor-pointer">{selectedReport.media}</span>
                       )}
                       
                       {selectedReport.aiAnalysis && (
-                        <div className="mt-3 bg-slate-900 border border-indigo-500/30 p-3 rounded-lg text-left">
+                        <div className="mt-3 bg-slate-50 dark:bg-slate-900 border border-indigo-500/30 p-3 rounded-lg text-left">
                           <div className="text-[10px] font-mono text-indigo-400 mb-1 flex items-center uppercase tracking-widest"><ShieldAlert className="w-3 h-3 mr-1" /> AI Vision Assessment</div>
-                          <div className="text-xs text-slate-300 mb-1"><strong>Severity:</strong> {selectedReport.aiAnalysis.severity}</div>
-                          <div className="text-xs text-slate-300 mb-1"><strong>Casualties:</strong> {selectedReport.aiAnalysis.casualties}</div>
-                          <div className="text-xs text-slate-400 italic">"{selectedReport.aiAnalysis.analysis}"</div>
+                          <div className="text-xs text-slate-700 dark:text-slate-300 mb-1"><strong>Severity:</strong> {selectedReport.aiAnalysis.severity}</div>
+                          <div className="text-xs text-slate-700 dark:text-slate-300 mb-1"><strong>Casualties:</strong> {selectedReport.aiAnalysis.casualties}</div>
+                          <div className="text-xs text-slate-600 dark:text-slate-400 italic">"{selectedReport.aiAnalysis.analysis}"</div>
                         </div>
                       )}
                     </div>

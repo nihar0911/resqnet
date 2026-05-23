@@ -4,12 +4,13 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { socket } from '../services/socketClient';
 import { GoogleMap, useJsApiLoader, Marker as GoogleMarker, Polyline as GooglePolyline } from '@react-google-maps/api';
-import { AlertTriangle, MapPin, Camera, CheckCircle, Navigation, ShieldAlert, Mic, MicOff, Loader2, Volume2, VolumeX, ArrowLeft, ExternalLink, Home, LogOut } from 'lucide-react';
+import { AlertTriangle, MapPin, Camera, CheckCircle, Navigation, ShieldAlert, Mic, MicOff, Loader2, Volume2, VolumeX, ArrowLeft, ExternalLink, Home, LogOut, Sun, Moon } from 'lucide-react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { initKNN, classifyBase64Image, getKNNStatus, TRAINED_DISASTERS, buildRejectionMessage } from '../services/offlineKNN';
 import { ref, set, get } from 'firebase/database';
 import { database } from '../services/firebase';
 import { getOfflineChatResponse } from '../services/offlineBot';
+import { useTheme } from '../context/ThemeContext';
 
 // Removed Leaflet helper
 
@@ -28,6 +29,16 @@ const PRECAUTIONS: Record<string, string[]> = {
   'Landslide': ['Evacuate immediately if cracks appear.', 'Stay away from unstable slopes.', 'Listen for falling rocks.', 'Avoid hill roads.'],
   'default': ['Stay calm and wait for the rescue team.', 'Keep your phone line free for emergency calls.', 'Follow instructions from local authorities.', 'Do not move if you are severely injured.']
 };
+
+const getDisasterEmoji = (type: string) => {
+  const m: Record<string, string> = {
+    'Flood': '🌊', 'Coastal Flooding': '🌊', 'Cyclone': '🌪️', 'Tree Fall': '🌳', 'Landslide': '🪨',
+    'Fire Accident': '🔥', 'Boat Accident': '🚢', 'Beach Drowning': '🏊',
+    'Building Collapse': '🏢', 'Earthquake': '🏚️'
+  };
+  return m[type] || '⚠️';
+};
+
 export default function UserInterface() {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -60,6 +71,8 @@ export default function UserInterface() {
     medicalConditions: ''
   });
   const [mapInstance, setMapInstance] = useState<google.maps.Map | null>(null);
+  
+  const { theme, toggleTheme } = useTheme();
 
   // Persist state
   useEffect(() => {
@@ -767,68 +780,114 @@ export default function UserInterface() {
 
   if (!userProfile) {
     return (
-      <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col font-sans relative overflow-hidden">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 flex flex-col font-sans relative overflow-hidden">
         {/* Background Effects */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
           <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-sky-600/20 blur-[120px] rounded-full animate-slow-pan"></div>
           <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-emerald-600/20 blur-[120px] rounded-full animate-slow-pan" style={{ animationDirection: 'reverse' }}></div>
         </div>
         
-        <div className="z-10 flex flex-col items-center justify-center flex-1 p-6 animate-fadeIn">
-          <div className="w-full max-w-md bg-slate-900/60 backdrop-blur-xl border border-slate-700/50 p-8 rounded-3xl shadow-2xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-2 opacity-20 pointer-events-none">
-              <span className="text-[100px] font-bold text-sky-500">?</span>
-            </div>
+        <div className="relative z-10 flex flex-col items-center justify-center flex-1 p-6 animate-fadeIn w-full overflow-hidden">
+          {/* Ambient Cinematic Background Glows */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-sky-500/20 via-indigo-500/10 to-emerald-500/20 blur-[120px] rounded-full pointer-events-none -z-10 animate-pulse-slow"></div>
+
+          <div className="w-full max-w-md relative group/login">
+            {/* Hover Glow Behind Container */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-sky-500/30 to-emerald-500/30 rounded-[2.5rem] blur-xl opacity-50 group-hover/login:opacity-100 transition duration-1000 -z-10"></div>
             
-            <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400 mb-2 flex items-center">
-              <ShieldAlert className="w-6 h-6 mr-2 text-sky-400" /> Civilian Sign In
-            </h2>
-            <p className="text-sm text-slate-400 mb-6 relative z-10">Sign in to report emergencies to the national rescue database.</p>
-            
-            <form onSubmit={async (e) => {
-              e.preventDefault();
-              const cleanPhone = profileForm.phone.replace(/[^0-9+]/g, '');
-              if (!cleanPhone) {
-                toast.error('Invalid phone number');
-                return;
-              }
+            <div className="bg-white/80 dark:bg-[#0a0f1d]/80 backdrop-blur-3xl border border-white/50 dark:border-slate-700/50 p-10 rounded-[2rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] dark:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)] relative overflow-hidden transition-all duration-500">
               
-              toast.loading('Syncing to National Database...', { id: 'auth' });
-              try {
-                const userRef = ref(database, 'users/' + cleanPhone.replace('+', ''));
-                await set(userRef, {
-                  ...profileForm,
-                  phone: cleanPhone,
-                  createdAt: new Date().toISOString()
-                });
+              {/* Decorative Question Mark */}
+              <div className="absolute -top-10 -right-10 opacity-10 pointer-events-none rotate-12">
+                <ShieldAlert className="w-48 h-48 text-sky-500 drop-shadow-2xl" />
+              </div>
+              
+              <div className="text-center mb-8 relative z-10">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-500/20 to-emerald-500/20 border border-white/50 dark:border-white/10 mb-6 shadow-inner">
+                  <ShieldAlert className="w-8 h-8 text-sky-500 dark:text-sky-400 drop-shadow-md" />
+                </div>
+                <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-600 to-emerald-600 dark:from-sky-400 dark:to-emerald-400 mb-2 tracking-tight">
+                  Civilian Portal
+                </h2>
+                <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Secure entry to the National Rescue Grid</p>
+              </div>
+              
+              <form onSubmit={async (e) => {
+                e.preventDefault();
+                const cleanPhone = profileForm.phone.replace(/[^0-9+]/g, '');
+                if (!cleanPhone) {
+                  toast.error('Invalid phone number');
+                  return;
+                }
                 
-                const finalProfile = { ...profileForm, phone: cleanPhone };
-                setUserProfile(finalProfile);
-                localStorage.setItem('resqnet_user_profile', JSON.stringify(finalProfile));
-                toast.success('Emergency Profile Secured!', { id: 'auth' });
-              } catch (err: any) {
-                toast.error('Cloud Sync Failed: ' + err.message, { id: 'auth' });
-              }
-            }} className="space-y-4 relative z-10">
-              <div>
-                <label className="block text-xs text-sky-400 font-mono tracking-wider mb-1">FULL NAME *</label>
-                <input required type="text" value={profileForm.fullName} onChange={e => setProfileForm({...profileForm, fullName: e.target.value})} className="w-full bg-slate-950/50 border border-slate-700 rounded-lg p-3 text-sm text-white focus:outline-none focus:border-sky-500 transition-colors" placeholder="e.g. John Doe" />
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs text-sky-400 font-mono tracking-wider mb-1">PHONE NO. (Login ID) *</label>
-                  <input required type="tel" value={profileForm.phone} onChange={e => setProfileForm({...profileForm, phone: e.target.value})} className="w-full bg-slate-950/50 border border-slate-700 rounded-lg p-3 text-sm text-white focus:outline-none focus:border-sky-500 transition-colors" placeholder="e.g. 9876543210" />
+                toast.loading('Syncing to National Database...', { id: 'auth' });
+                try {
+                  const userRef = ref(database, 'users/' + cleanPhone.replace('+', ''));
+                  await set(userRef, {
+                    ...profileForm,
+                    phone: cleanPhone,
+                    createdAt: new Date().toISOString()
+                  });
+                  
+                  const finalProfile = { ...profileForm, phone: cleanPhone };
+                  setUserProfile(finalProfile);
+                  localStorage.setItem('resqnet_user_profile', JSON.stringify(finalProfile));
+                  toast.success('Emergency Profile Secured!', { id: 'auth' });
+                } catch (err: any) {
+                  toast.error('Cloud Sync Failed: ' + err.message, { id: 'auth' });
+                }
+              }} className="space-y-5 relative z-10">
+                
+                <div className="space-y-1">
+                  <label className="block text-[10px] text-slate-500 dark:text-sky-400/80 font-black tracking-widest uppercase ml-1">Full Name *</label>
+                  <input 
+                    required 
+                    type="text" 
+                    value={profileForm.fullName} 
+                    onChange={e => setProfileForm({...profileForm, fullName: e.target.value})} 
+                    className="w-full bg-slate-100/80 dark:bg-black/40 border border-slate-200 dark:border-slate-800 rounded-xl p-3.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 transition-all shadow-inner placeholder-slate-400 dark:placeholder-slate-600 font-medium" 
+                    placeholder="e.g. John Doe" 
+                  />
                 </div>
-                <div>
-                  <label className="block text-xs text-sky-400 font-mono tracking-wider mb-1">AGE *</label>
-                  <input required type="number" min="1" max="120" value={profileForm.age} onChange={e => setProfileForm({...profileForm, age: e.target.value})} className="w-full bg-slate-950/50 border border-slate-700 rounded-lg p-3 text-sm text-white focus:outline-none focus:border-sky-500 transition-colors" placeholder="e.g. 35" />
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label className="block text-[10px] text-slate-500 dark:text-sky-400/80 font-black tracking-widest uppercase ml-1">Phone ID *</label>
+                    <input 
+                      required 
+                      type="tel" 
+                      value={profileForm.phone} 
+                      onChange={e => setProfileForm({...profileForm, phone: e.target.value})} 
+                      className="w-full bg-slate-100/80 dark:bg-black/40 border border-slate-200 dark:border-slate-800 rounded-xl p-3.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 transition-all shadow-inner placeholder-slate-400 dark:placeholder-slate-600 font-medium" 
+                      placeholder="9876543210" 
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="block text-[10px] text-slate-500 dark:text-sky-400/80 font-black tracking-widest uppercase ml-1">Age *</label>
+                    <input 
+                      required 
+                      type="number" 
+                      min="1" max="120" 
+                      value={profileForm.age} 
+                      onChange={e => setProfileForm({...profileForm, age: e.target.value})} 
+                      className="w-full bg-slate-100/80 dark:bg-black/40 border border-slate-200 dark:border-slate-800 rounded-xl p-3.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 transition-all shadow-inner placeholder-slate-400 dark:placeholder-slate-600 font-medium" 
+                      placeholder="e.g. 35" 
+                    />
+                  </div>
                 </div>
-              </div>
-              
-              <button type="submit" className="w-full bg-gradient-to-r from-sky-500 to-emerald-500 text-white font-bold py-3 px-4 rounded-xl shadow-[0_0_20px_rgba(14,165,233,0.3)] hover:shadow-[0_0_30px_rgba(14,165,233,0.5)] transition-all transform hover:-translate-y-1 mt-6 border border-white/10">
-                Sign In / Register
-              </button>
-            </form>
+                
+                <button 
+                  type="submit" 
+                  className="w-full relative overflow-hidden group bg-gradient-to-r from-sky-500 to-emerald-500 text-white font-black tracking-wider uppercase text-sm py-4 px-4 rounded-xl shadow-[0_10px_20px_rgba(14,165,233,0.3)] hover:shadow-[0_15px_30px_rgba(14,165,233,0.5)] transition-all transform hover:-translate-y-1 mt-8 border border-white/20"
+                >
+                  <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 mix-blend-overlay"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-sky-400 to-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <span className="relative z-10 flex items-center justify-center">
+                    Secure Login / Register <ExternalLink className="w-4 h-4 ml-2" />
+                  </span>
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -836,14 +895,20 @@ export default function UserInterface() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#060913] via-[#0c1120] to-[#04060a] text-slate-100 flex flex-col font-sans animate-slow-pan relative overflow-x-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-[#060913] via-[#0c1120] to-[#04060a] text-slate-900 dark:text-slate-100 flex flex-col font-sans animate-slow-pan relative overflow-x-hidden">
       {/* Cinematic Ambient Glows */}
       <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-sky-900/20 rounded-full blur-[120px] pointer-events-none"></div>
       <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-emerald-900/10 rounded-full blur-[120px] pointer-events-none"></div>
       
-      <header className="sticky top-0 z-[1000] bg-slate-950/60 backdrop-blur-xl border-b border-white/5 p-4 flex justify-between items-center shadow-lg">
+      <header className="sticky top-0 z-[1000] bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-b border-slate-200 dark:border-white/5 p-4 flex justify-between items-center shadow-lg transition-colors duration-500">
         <h1 className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-sky-400 via-blue-500 to-emerald-400 tracking-tight">ResqNet Eco-System</h1>
         <div className="flex items-center space-x-4">
+          <button 
+            onClick={toggleTheme} 
+            className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition shadow-inner border border-slate-200 dark:border-slate-700"
+          >
+            {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          </button>
           <button onClick={() => {
             localStorage.removeItem('resqnet_user_profile');
             localStorage.removeItem('resqnet_active_report');
@@ -855,7 +920,7 @@ export default function UserInterface() {
             <LogOut className="w-3.5 h-3.5 mr-1.5" /> Sign Out
           </button>
           {step !== 'home' && (
-            <button onClick={() => setStep('home')} className="text-xs font-bold text-slate-300 hover:text-white flex items-center transition-colors bg-slate-800/50 hover:bg-slate-700/80 px-3 py-1.5 rounded-lg border border-slate-700/50">
+            <button onClick={() => setStep('home')} className="text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-white flex items-center transition-colors bg-slate-100 dark:bg-slate-800/50 hover:bg-slate-200 dark:bg-slate-700/80 px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700/50">
               <Home className="w-3.5 h-3.5 mr-1.5" /> Home
             </button>
           )}
@@ -871,94 +936,181 @@ export default function UserInterface() {
 
       <main className="flex-grow p-6 max-w-2xl mx-auto w-full relative z-10">
         {step === 'home' && (
-          <div className="space-y-8 text-center mt-16 relative z-10">
-            <h2 className="text-5xl font-black tracking-tight mb-2">National Disaster<br/><span className="bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-rose-400">Response Matrix</span></h2>
-            <p className="text-slate-400 text-lg mb-10 font-light">Fast, intelligent, and coordinated rescue platform powered by Edge AI.</p>
+          <div className="space-y-12 text-center mt-20 relative z-10 max-w-xl mx-auto flex flex-col items-center">
+            {/* Ambient Background Flare */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-sky-500/10 via-transparent to-red-500/10 blur-[100px] -z-10 pointer-events-none"></div>
+
+            <div className="space-y-4">
+              <div className="inline-block px-4 py-1.5 rounded-full border border-sky-500/30 bg-sky-500/10 mb-2">
+                <span className="text-xs font-black tracking-widest uppercase text-sky-400 flex items-center">
+                  <span className="w-2 h-2 rounded-full bg-sky-400 mr-2 animate-ping"></span>
+                  Live Edge AI Network
+                </span>
+              </div>
+              <h2 className="text-5xl md:text-6xl font-black tracking-tighter leading-tight text-slate-800 dark:text-white drop-shadow-xl">
+                National Disaster<br/>
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-rose-500 to-orange-500 animate-gradient-x bg-[length:200%_auto]">Response Matrix</span>
+              </h2>
+              <p className="text-slate-600 dark:text-slate-400 text-lg font-medium leading-relaxed max-w-md mx-auto">
+                The world's fastest, intelligent, and coordinated civilian rescue platform powered by decentralized AI.
+              </p>
+            </div>
             
-            <button 
-              onClick={startReport}
-              className="w-full bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white py-6 rounded-2xl text-2xl font-black flex items-center justify-center shadow-[0_10px_30px_-10px_rgba(220,38,38,0.6)] border border-red-500/50 hover:-translate-y-1 transition-all duration-300"
-            >
-              <AlertTriangle className="mr-3 w-8 h-8 animate-pulse" />
-              INITIATE SOS REPORT
-            </button>
-            <button 
-              onClick={() => setStep('voice_sos')}
-              className="w-full bg-slate-800/60 backdrop-blur-md hover:bg-slate-700/80 text-sky-100 py-6 rounded-2xl text-xl font-bold flex items-center justify-center border border-white/5 shadow-xl hover:-translate-y-1 transition-all duration-300"
-            >
-              <Navigation className="mr-3 w-6 h-6 text-sky-400" />
-              Emergency Services
-            </button>
+            <div className="w-full space-y-5">
+              {/* Massive Primary SOS Button */}
+              <div className="relative group/sos w-full">
+                <div className="absolute -inset-2 bg-gradient-to-r from-red-600 to-rose-600 rounded-3xl blur-xl opacity-40 group-hover/sos:opacity-75 transition duration-500 group-hover/sos:duration-200"></div>
+                <button 
+                  onClick={startReport}
+                  className="relative w-full bg-gradient-to-b from-red-500 to-red-700 hover:from-red-400 hover:to-red-600 text-white py-6 rounded-2xl text-2xl font-black flex flex-col items-center justify-center border-t border-white/20 shadow-[0_20px_50px_-10px_rgba(220,38,38,0.7)] hover:shadow-[0_20px_60px_-10px_rgba(220,38,38,0.9)] hover:-translate-y-1 transition-all duration-300 overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 mix-blend-overlay"></div>
+                  <AlertTriangle className="mb-2 w-10 h-10 animate-bounce drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" />
+                  <span className="tracking-widest uppercase drop-shadow-md z-10">Initiate SOS Report</span>
+                </button>
+              </div>
+
+              {/* Sleek Secondary Services Button */}
+              <div className="relative group/services w-full">
+                <div className="absolute -inset-1 bg-gradient-to-r from-sky-500/20 to-blue-500/20 rounded-2xl blur-lg opacity-0 group-hover/services:opacity-100 transition duration-500"></div>
+                <button 
+                  onClick={() => setStep('voice_sos')}
+                  className="relative w-full bg-white/60 dark:bg-[#070b1a]/60 backdrop-blur-xl hover:bg-white dark:hover:bg-[#0a1128]/80 text-slate-700 dark:text-sky-100 py-5 rounded-2xl text-lg font-bold flex flex-col items-center justify-center border border-slate-200 dark:border-white/10 shadow-lg hover:shadow-[0_10px_30px_rgba(56,189,248,0.2)] hover:-translate-y-0.5 hover:border-sky-400 dark:hover:border-sky-500/50 transition-all duration-300"
+                >
+                  <Mic className="mb-2 w-7 h-7 text-sky-500 dark:text-sky-400 group-hover/services:animate-pulse" />
+                  <span className="tracking-widest uppercase">Hands-Free Emergency</span>
+                </button>
+              </div>
+            </div>
           </div>
         )}
 
         {step === 'report' && (
           <div className="space-y-6">
             <div className="flex items-center border-b border-white/10 pb-4">
-              <button onClick={() => setStep('home')} className="mr-4 p-2 bg-slate-800/50 hover:bg-slate-700/80 rounded-lg text-slate-400 hover:text-white transition-all duration-200 border border-transparent hover:border-slate-600">
+              <button onClick={() => setStep('home')} className="mr-4 p-2 bg-slate-100 dark:bg-slate-800/50 hover:bg-slate-200 dark:bg-slate-700/80 rounded-lg text-slate-600 dark:text-slate-400 hover:text-white transition-all duration-200 border border-transparent hover:border-slate-400 dark:border-slate-600">
                 <ArrowLeft className="w-5 h-5" />
               </button>
               <h2 className="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-slate-100 to-slate-400">Report a Disaster</h2>
             </div>
             
             {!disasterType ? (
-              <div className="bg-slate-900/40 backdrop-blur-md p-6 rounded-2xl border border-white/5 shadow-xl">
-                <p className="text-slate-400 mb-6 font-medium">Select the type of emergency you are facing:</p>
+              <div className="bg-slate-50 dark:bg-slate-900/40 backdrop-blur-md p-6 rounded-2xl border border-white/5 shadow-xl">
+                <p className="text-slate-600 dark:text-slate-400 mb-6 font-medium">Select the type of emergency you are facing:</p>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {GOA_DISASTERS.map((type) => (
-                    <button
-                      key={type}
-                      onClick={() => handleDisasterSelect(type)}
-                      className="bg-slate-800/60 hover:bg-sky-900/60 border border-slate-700/50 hover:border-sky-400 p-4 rounded-xl text-sm font-bold text-slate-200 hover:text-sky-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_5px_15px_rgba(56,189,248,0.2)]"
-                    >
-                      {type}
-                    </button>
-                  ))}
+                  {GOA_DISASTERS.map((type) => {
+                    return (
+                      <button
+                        key={type}
+                        onClick={() => handleDisasterSelect(type)}
+                        className="bg-white dark:bg-slate-800/60 hover:bg-sky-50 dark:hover:bg-sky-900/60 border border-slate-200 dark:border-slate-700/50 hover:border-sky-400 p-4 rounded-xl text-sm font-bold text-slate-800 dark:text-slate-200 hover:text-sky-500 dark:hover:text-sky-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(56,189,248,0.15)] flex flex-col items-center justify-center text-center shadow-sm"
+                      >
+                        <span className="text-3xl mb-2 drop-shadow-md">{getDisasterEmoji(type)}</span>
+                        <span className="tracking-wide">{type}</span>
+                      </button>
+                    )
+                  })}
                 </div>
               </div>
             ) : (
-              <div className="space-y-6 bg-slate-900/40 backdrop-blur-xl p-6 rounded-2xl border border-white/10 shadow-2xl">
-                <div className="flex justify-between items-center">
-                  <span className="text-lg font-bold text-sky-400">{disasterType}</span>
-                  <button onClick={() => setDisasterType('')} className="text-xs text-slate-400 underline">Change</button>
-                </div>
+              <div className="relative group">
+                {/* Animated Background Glow */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-sky-400 via-blue-500 to-emerald-400 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+                
+                <div className="relative space-y-6 bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl p-8 rounded-3xl border border-white/40 dark:border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
+                  {/* Header Row */}
+                  <div className="flex justify-between items-center pb-4 border-b border-slate-200 dark:border-white/10">
+                    <div className="flex items-center space-x-3">
+                      <span className="text-4xl drop-shadow-lg">{getDisasterEmoji(disasterType)}</span>
+                      <div>
+                        <span className="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-1">Selected Emergency</span>
+                        <span className="text-2xl font-black text-sky-600 dark:text-sky-400 tracking-tight">{disasterType}</span>
+                      </div>
+                    </div>
+                    <button 
+                      onClick={() => setDisasterType('')} 
+                      className="text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-4 py-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition shadow-inner border border-slate-200 dark:border-slate-700"
+                    >
+                      CHANGE
+                    </button>
+                  </div>
 
-                <div className="bg-slate-900 p-4 rounded-lg flex items-start">
-                  <MapPin className="text-rose-500 w-5 h-5 mr-3 mt-1 flex-shrink-0" />
+                  {/* Location Radar Box */}
+                  <div className="bg-slate-50 dark:bg-[#070b1a] p-5 rounded-2xl flex items-start border border-slate-200 dark:border-sky-500/20 shadow-inner relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-sky-500/10 rounded-full blur-2xl pointer-events-none"></div>
+                    <div className="relative z-10 flex w-full">
+                      <div className="w-10 h-10 bg-red-500/10 rounded-full flex items-center justify-center mr-4 flex-shrink-0 animate-pulse border border-red-500/20">
+                        <MapPin className="text-red-500 w-5 h-5" />
+                      </div>
+                      <div className="flex-grow">
+                        <h3 className="text-sm font-black text-slate-800 dark:text-slate-200 uppercase tracking-wider mb-1 flex items-center">
+                          Live Coordinates Locked
+                          <span className="ml-2 w-2 h-2 bg-emerald-500 rounded-full animate-ping"></span>
+                        </h3>
+                        <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-medium">{address}</p>
+                        {location && (
+                          <div className="mt-2 inline-flex items-center bg-white dark:bg-slate-900 px-2 py-1 rounded border border-slate-200 dark:border-slate-800">
+                            <Navigation className="w-3 h-3 text-sky-500 mr-1.5" />
+                            <p className="text-[10px] text-sky-600 dark:text-sky-400 font-mono tracking-widest">
+                              {location.lat.toFixed(6)}, {location.lng.toFixed(6)}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Visual Evidence Upload */}
                   <div>
-                    <h3 className="text-sm font-bold text-slate-300">Live Location Detected</h3>
-                    <p className="text-xs text-slate-400 mt-1 leading-relaxed">{address}</p>
-                    {location && (
-                      <p className="text-[10px] text-slate-500 mt-1 font-mono">
-                        {location.lat.toFixed(6)}, {location.lng.toFixed(6)}
-                      </p>
-                    )}
+                    <h3 className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3 flex items-center uppercase tracking-widest">
+                      <Camera className="w-4 h-4 mr-2 text-sky-500" /> Visual Evidence
+                    </h3>
+                    <div className="relative group/upload">
+                      <div className="absolute inset-0 bg-gradient-to-r from-sky-500/10 to-blue-500/10 rounded-2xl blur opacity-0 group-hover/upload:opacity-100 transition-opacity"></div>
+                      <div className="relative border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-sky-400 dark:hover:border-sky-500 bg-white dark:bg-slate-900/50 p-6 rounded-2xl transition-colors text-center cursor-pointer">
+                        <input 
+                          type="file" 
+                          accept="image/*,video/*"
+                          onChange={handleFileChange}
+                          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                        />
+                        <Camera className="w-8 h-8 mx-auto text-slate-400 dark:text-slate-500 mb-3 group-hover/upload:text-sky-500 transition-colors" />
+                        <span className="block text-sm font-bold text-slate-700 dark:text-slate-200 mb-1">Click or drag media here</span>
+                        <span className="block text-xs text-slate-500 dark:text-slate-400">Supports Images & Video</span>
+                        {media && (
+                          <div className="mt-4 inline-flex items-center bg-emerald-50 dark:bg-emerald-500/10 px-3 py-1.5 rounded-full border border-emerald-200 dark:border-emerald-500/30">
+                            <CheckCircle className="w-4 h-4 text-emerald-500 mr-2" />
+                            <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">{media.name}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Submit Button */}
+                  <div className="pt-2">
+                    <button 
+                      onClick={handleSubmit}
+                      disabled={isSubmitting || !location || (!media && !dynamicPrecautions)}
+                      className="relative w-full overflow-hidden rounded-2xl group/btn disabled:opacity-70 disabled:cursor-not-allowed"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-500 group-hover/btn:bg-[length:200%_auto] animate-gradient-x transition-all duration-500"></div>
+                      <div className="relative bg-white/10 dark:bg-black/10 backdrop-blur-sm text-white py-5 px-6 flex items-center justify-center border border-white/20">
+                        {isSubmitting ? (
+                          <>
+                            <Loader2 className="w-6 h-6 animate-spin mr-3" /> 
+                            <span className="font-black tracking-widest uppercase">Processing Request...</span>
+                          </>
+                        ) : (
+                          <>
+                            <span className="font-black text-xl tracking-widest uppercase drop-shadow-md">SUBMIT EMERGENCY REPORT</span>
+                            <Navigation className="w-6 h-6 ml-3 drop-shadow-md group-hover/btn:translate-x-1 transition-transform" />
+                          </>
+                        )}
+                      </div>
+                    </button>
                   </div>
                 </div>
-
-                <div>
-                  <h3 className="text-sm font-bold text-slate-300 mb-2 flex items-center">
-                    <Camera className="w-4 h-4 mr-2" /> Upload Visual Evidence
-                  </h3>
-                  <input 
-                    type="file" 
-                    accept="image/*,video/*"
-                    onChange={handleFileChange}
-                    className="block w-full text-sm text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-sky-500/10 file:text-sky-400 hover:file:bg-sky-500/20"
-                  />
-                </div>
-
-                <button 
-                  onClick={handleSubmit}
-                  disabled={isSubmitting || !location || (!media && !dynamicPrecautions)}
-                  className="w-full bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 disabled:from-slate-700 disabled:to-slate-800 text-white py-4 rounded-xl font-black text-lg transition-all duration-300 shadow-[0_5px_20px_rgba(16,185,129,0.3)] hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(16,185,129,0.5)] disabled:hover:translate-y-0 disabled:shadow-none"
-                >
-                  {isSubmitting ? (
-                    <span className="flex items-center justify-center">
-                      <Loader2 className="w-6 h-6 animate-spin mr-2" /> Processing Offline...
-                    </span>
-                  ) : 'SUBMIT REPORT'}
-                </button>
               </div>
             )}
           </div>
@@ -972,13 +1124,13 @@ export default function UserInterface() {
               <p className="text-sky-200 text-xs">National Dashboard is monitoring your location.</p>
             </div>
 
-            <div className="bg-slate-800 p-5 rounded-xl border border-slate-700 overflow-hidden">
-              <h3 className="font-bold text-slate-300 mb-4 border-b border-slate-700 pb-2">Live Rescue Tracking</h3>
+            <div className="bg-slate-100 dark:bg-slate-800 p-5 rounded-xl border border-slate-300 dark:border-slate-700 overflow-hidden">
+              <h3 className="font-bold text-slate-700 dark:text-slate-300 mb-4 border-b border-slate-300 dark:border-slate-700 pb-2">Live Rescue Tracking</h3>
               
               <div className="space-y-4 mb-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-400 text-sm">Status</span>
-                  <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase ${activeReport.status === 'assigned' ? 'bg-amber-500/20 border border-amber-500/30 text-amber-400 animate-pulse' : 'bg-slate-700 text-slate-300'}`}>
+                  <span className="text-slate-600 dark:text-slate-400 text-sm">Status</span>
+                  <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase ${activeReport.status === 'assigned' ? 'bg-amber-500/20 border border-amber-500/30 text-amber-400 animate-pulse' : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300'}`}>
                     {activeReport.status}
                   </span>
                 </div>
@@ -993,7 +1145,7 @@ export default function UserInterface() {
                 
                 {activeReport.status === 'assigned' && activeReport.assignedTeam ? (
                   <>
-                    <div className="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                    <div className="flex justify-between items-center bg-slate-50 dark:bg-slate-900/50 p-3 rounded-lg border border-slate-300 dark:border-slate-700/50">
                       <div>
                         <span className="block text-xs text-slate-500 mb-0.5">Dispatched Team</span>
                         <span className="font-bold text-emerald-400">{activeReport.assignedTeam.teamName}</span>
@@ -1015,8 +1167,8 @@ export default function UserInterface() {
                     Broadcasting Web3 Bounty to nearby Private Rescuers...
                   </div>
                 ) : (
-                  <div className="text-center py-6 text-slate-500 text-sm italic bg-slate-900/30 rounded-lg">
-                    <span className="block w-6 h-6 border-2 border-slate-600 border-t-sky-500 rounded-full animate-spin mx-auto mb-2"></span>
+                  <div className="text-center py-6 text-slate-500 text-sm italic bg-slate-50 dark:bg-slate-900/30 rounded-lg">
+                    <span className="block w-6 h-6 border-2 border-slate-400 dark:border-slate-600 border-t-sky-500 rounded-full animate-spin mx-auto mb-2"></span>
                     Waiting for Admin to assign the nearest rescue team...
                   </div>
                 )}
@@ -1024,7 +1176,7 @@ export default function UserInterface() {
 
               {/* Google Maps Live Tracking */}
               <div className="w-full h-96 relative rounded-xl overflow-hidden border border-white/10 shadow-2xl">
-                <div className="absolute top-2 right-2 z-[1000] bg-slate-900/80 text-sky-400 text-[10px] font-mono px-2 py-1 rounded border border-sky-500/30 shadow-[0_0_10px_rgba(56,189,248,0.2)]">
+                <div className="absolute top-2 right-2 z-[1000] bg-slate-50 dark:bg-slate-900/80 text-sky-400 text-[10px] font-mono px-2 py-1 rounded border border-sky-500/30 shadow-[0_0_10px_rgba(56,189,248,0.2)]">
                   {activeReport.status === 'assigned' ? '🛰️ LIVE TRACKING' : '📍 YOUR LOCATION'}
                 </div>
                 {isLoaded ? (
@@ -1066,7 +1218,7 @@ export default function UserInterface() {
                     )}
                   </GoogleMap>
                 ) : (
-                  <div className="w-full h-full bg-slate-900/50 flex flex-col items-center justify-center">
+                  <div className="w-full h-full bg-slate-50 dark:bg-slate-900/50 flex flex-col items-center justify-center">
                     <Loader2 className="w-8 h-8 text-sky-500 animate-spin mb-2" />
                     <span className="text-xs text-sky-400 font-mono tracking-widest uppercase">Initializing Satellite Uplink...</span>
                   </div>
@@ -1103,7 +1255,7 @@ export default function UserInterface() {
 
             {/* ── LIVE RESCUE TEAM CHAT ──────────────────────────────────────── */}
             {activeReport.status === 'assigned' && (
-              <div className="rounded-2xl border border-emerald-500/30 bg-slate-900/60 backdrop-blur-md overflow-hidden shadow-[0_0_30px_rgba(16,185,129,0.1)]">
+              <div className="rounded-2xl border border-emerald-500/30 bg-slate-50 dark:bg-slate-900/60 backdrop-blur-md overflow-hidden shadow-[0_0_30px_rgba(16,185,129,0.1)]">
                 {/* Chat Header */}
                 <button
                   onClick={() => setIsChatOpen(!isChatOpen)}
@@ -1132,7 +1284,7 @@ export default function UserInterface() {
                 {isChatOpen && (
                   <div className="flex flex-col">
                     {/* Messages */}
-                    <div className="h-64 overflow-y-auto p-4 space-y-3 bg-slate-950/40">
+                    <div className="h-64 overflow-y-auto p-4 space-y-3 bg-white dark:bg-slate-950/40">
                       {chatMessages.length === 0 && (
                         <div className="text-center text-slate-500 text-xs italic py-8">
                           Radio channel open. Type a message to contact your rescue team.
@@ -1147,7 +1299,7 @@ export default function UserInterface() {
                             {msg.sender !== 'user' && (
                               <p className="text-[10px] font-bold text-emerald-400 mb-1 uppercase tracking-wider">{msg.senderName || 'Rescue Team'}</p>
                             )}
-                            <p className="text-sm text-slate-100 leading-relaxed">{msg.text}</p>
+                            <p className="text-sm text-slate-900 dark:text-slate-100 leading-relaxed">{msg.text}</p>
                             <p className="text-[9px] text-slate-500 mt-1 text-right">{new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
                           </div>
                         </div>
@@ -1156,7 +1308,7 @@ export default function UserInterface() {
                     </div>
 
                     {/* Input */}
-                    <div className="p-3 border-t border-emerald-500/20 bg-slate-950/60 flex space-x-2">
+                    <div className="p-3 border-t border-emerald-500/20 bg-white dark:bg-slate-950/60 flex space-x-2">
                       <input
                         type="text"
                         value={chatInput}
@@ -1207,7 +1359,7 @@ export default function UserInterface() {
                           }
                         }}
                         placeholder="Type a message to your rescue team..."
-                        className="flex-1 bg-slate-800/50 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-colors"
+                        className="flex-1 bg-slate-100 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-colors"
                       />
                       <button
                         onClick={() => {
@@ -1261,77 +1413,102 @@ export default function UserInterface() {
             )}
             {/* ── END CHAT ──────────────────────────────────────────────────── */}
 
-            <div className="bg-rose-900/20 border border-rose-500/30 p-5 rounded-xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-2 opacity-30 pointer-events-none">
-                <span className="text-[10px] font-mono tracking-widest text-rose-300">AI GENERATED FOR {activeReport.state.toUpperCase()}</span>
-              </div>
-              <h3 className="font-bold text-rose-400 mb-3 flex items-center">
-                <ShieldAlert className="w-5 h-5 mr-2" /> 10-Minute Emergency Action Plan
-              </h3>
-              <p className="text-xs text-rose-300 mb-3 italic">Please follow these state-specific instructions until {activeReport.assignedTeam?.teamName || 'the rescue team'} arrives:</p>
+            <div className="relative group">
+              {/* Cinematic Glow Behind Checklist */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-rose-500/20 via-red-500/10 to-orange-500/20 rounded-3xl blur-xl opacity-50 group-hover:opacity-70 transition duration-1000"></div>
               
-              {!dynamicPrecautions ? (
-                <div className="flex items-center text-xs text-rose-300/50">
-                   <span className="animate-spin w-4 h-4 border-2 border-rose-500/30 border-t-rose-400 rounded-full mr-2"></span>
-                   AI analyzing geographical protocols...
+              <div className="relative bg-white/70 dark:bg-[#11050a]/80 backdrop-blur-3xl border border-rose-100 dark:border-rose-500/20 p-8 rounded-3xl shadow-[0_8px_30px_rgb(225,29,72,0.08)] overflow-hidden">
+                <div className="absolute top-0 right-0 p-3 opacity-40 pointer-events-none flex items-center">
+                  <div className="w-1.5 h-1.5 bg-rose-500 rounded-full animate-ping mr-2"></div>
+                  <span className="text-[9px] font-mono font-black tracking-widest text-rose-500 uppercase">AI PROTOCOL: {activeReport.state}</span>
                 </div>
-              ) : (
-                <div className="space-y-3 mt-4">
-                  {/* Progress Bar */}
-                  <div className="w-full bg-rose-950/50 rounded-full h-2.5 mb-4 border border-rose-800/50 overflow-hidden">
-                    <div 
-                      className="h-2.5 rounded-full transition-all duration-500 ease-out"
-                      style={{ 
-                        width: `${(completedTasks.length / dynamicPrecautions.length) * 100}%`,
-                        backgroundColor: completedTasks.length === dynamicPrecautions.length ? '#10b981' : '#f43f5e'
-                      }}
-                    ></div>
+                
+                <h3 className="font-black text-2xl text-rose-600 dark:text-rose-400 mb-2 flex items-center tracking-tight drop-shadow-sm">
+                  <ShieldAlert className="w-6 h-6 mr-3 text-rose-500 animate-pulse" /> 10-Minute Action Plan
+                </h3>
+                <p className="text-sm font-medium text-slate-600 dark:text-rose-200/70 mb-6 flex items-center">
+                  <span className="w-1 h-4 bg-rose-500 rounded-full mr-2"></span>
+                  Follow these survival instructions until {activeReport.assignedTeam?.teamName || 'rescue'} arrives
+                </p>
+                
+                {!dynamicPrecautions ? (
+                  <div className="flex items-center justify-center py-10 bg-white/50 dark:bg-black/20 rounded-2xl border border-dashed border-rose-200 dark:border-rose-900/50">
+                     <span className="animate-spin w-5 h-5 border-2 border-rose-500/30 border-t-rose-500 rounded-full mr-3"></span>
+                     <span className="text-sm font-bold text-rose-500/80 tracking-widest uppercase animate-pulse">Computing Geographic Protocols...</span>
                   </div>
-                  
-                  {dynamicPrecautions.map((prec, idx) => {
-                    const isCompleted = completedTasks.includes(idx);
-                    return (
-                      <button
-                        key={idx}
-                        onClick={() => toggleTask(idx)}
-                        className={`w-full flex items-start text-left p-3 rounded-lg border transition-all duration-200 ${
-                          isCompleted 
-                            ? 'bg-emerald-900/20 border-emerald-500/30 text-emerald-400/70 line-through' 
-                            : 'bg-rose-950/40 border-rose-800/50 text-rose-200 hover:bg-rose-900/60 hover:border-rose-500/50'
-                        }`}
-                      >
-                        <div className={`flex-shrink-0 w-5 h-5 rounded flex items-center justify-center mr-3 mt-0.5 border ${
-                          isCompleted ? 'bg-emerald-500/20 border-emerald-500' : 'bg-rose-900 border-rose-500'
-                        }`}>
-                          {isCompleted && <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />}
-                        </div>
-                        <span className="text-sm leading-snug">{prec}</span>
-                      </button>
-                    );
-                  })}
-                  
-                  {completedTasks.length === dynamicPrecautions.length && (
-                    <div className="mt-4 p-3 bg-emerald-900/30 border border-emerald-500/50 rounded-lg text-center animate-pulse">
-                      <p className="text-emerald-400 font-bold text-sm">✅ Checklist Complete. Stay safe and wait for rescue.</p>
+                ) : (
+                  <div className="space-y-4">
+                    {/* Glowing Progress Bar */}
+                    <div className="mb-6 relative">
+                      <div className="flex justify-between items-end mb-2">
+                        <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-rose-300/50">Completion</span>
+                        <span className="text-[10px] font-black font-mono text-rose-600 dark:text-rose-400">{Math.round((completedTasks.length / dynamicPrecautions.length) * 100)}%</span>
+                      </div>
+                      <div className="w-full bg-slate-200/50 dark:bg-rose-950/50 rounded-full h-2 border border-white dark:border-rose-900/50 overflow-hidden shadow-inner relative">
+                        <div 
+                          className="absolute top-0 left-0 h-full rounded-full transition-all duration-700 ease-out shadow-[0_0_10px_rgba(225,29,72,0.5)]"
+                          style={{ 
+                            width: `${(completedTasks.length / dynamicPrecautions.length) * 100}%`,
+                            backgroundImage: completedTasks.length === dynamicPrecautions.length ? 'linear-gradient(to right, #10b981, #34d399)' : 'linear-gradient(to right, #e11d48, #fb7185)'
+                          }}
+                        ></div>
+                      </div>
                     </div>
-                  )}
-                </div>
-              )}
+                    
+                    {/* Interactive Protocol Checkboxes */}
+                    <div className="space-y-3">
+                      {dynamicPrecautions.map((prec, idx) => {
+                        const isCompleted = completedTasks.includes(idx);
+                        return (
+                          <button
+                            key={idx}
+                            onClick={() => toggleTask(idx)}
+                            className={`w-full flex items-center text-left p-4 rounded-2xl border transition-all duration-300 group/task shadow-sm hover:shadow-md ${
+                              isCompleted 
+                                ? 'bg-emerald-50 dark:bg-emerald-900/10 border-emerald-200 dark:border-emerald-500/20 hover:border-emerald-300 dark:hover:border-emerald-500/40' 
+                                : 'bg-white/80 dark:bg-rose-950/20 border-slate-200 dark:border-rose-500/20 hover:border-rose-400 dark:hover:border-rose-500/50 hover:-translate-y-0.5 hover:bg-white dark:hover:bg-rose-900/30'
+                            }`}
+                          >
+                            <div className={`flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center mr-4 transition-all duration-300 border-2 ${
+                              isCompleted 
+                                ? 'bg-emerald-500 border-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.3)] scale-110' 
+                                : 'bg-transparent border-slate-300 dark:border-rose-500/50 group-hover/task:border-rose-500'
+                            }`}>
+                              <CheckCircle className={`w-4 h-4 text-white transition-opacity duration-300 ${isCompleted ? 'opacity-100' : 'opacity-0'}`} />
+                            </div>
+                            <span className={`text-sm font-medium leading-relaxed transition-colors duration-300 ${
+                              isCompleted ? 'text-emerald-700 dark:text-emerald-400/80 line-through' : 'text-slate-700 dark:text-rose-100'
+                            }`}>{prec}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                    
+                    {/* Success Badge */}
+                    <div className={`overflow-hidden transition-all duration-500 ease-in-out ${completedTasks.length === dynamicPrecautions.length ? 'max-h-24 opacity-100 mt-4' : 'max-h-0 opacity-0'}`}>
+                      <div className="p-4 bg-emerald-100/50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-500/30 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+                        <CheckCircle className="w-5 h-5 text-emerald-500 mr-2 animate-bounce" />
+                        <p className="text-emerald-700 dark:text-emerald-400 font-black text-sm uppercase tracking-wider">Protocol Complete. Await Evacuation.</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Acoustic Rubble Beacon UI */}
-            <div className={`mt-6 border-2 rounded-2xl p-6 transition-colors duration-300 ${isBeaconActive ? 'bg-red-900/30 border-red-500/50' : 'bg-slate-800/50 border-slate-700'}`}>
+            <div className={`mt-6 border-2 rounded-2xl p-6 transition-colors duration-300 ${isBeaconActive ? 'bg-red-900/30 border-red-500/50' : 'bg-slate-100 dark:bg-slate-800/50 border-slate-300 dark:border-slate-700'}`}>
               <div className="flex flex-col items-center text-center">
                 <button 
                   onClick={toggleBeacon}
-                  className={`w-20 h-20 rounded-full flex items-center justify-center border-4 transition-all duration-300 mb-4 ${isBeaconActive ? 'border-red-500 bg-red-500/20 text-red-500 animate-pulse shadow-[0_0_40px_rgba(239,68,68,0.6)]' : 'border-slate-600 bg-slate-700 text-slate-300 hover:border-red-400 hover:text-red-400'}`}
+                  className={`w-20 h-20 rounded-full flex items-center justify-center border-4 transition-all duration-300 mb-4 ${isBeaconActive ? 'border-red-500 bg-red-500/20 text-red-500 animate-pulse shadow-[0_0_40px_rgba(239,68,68,0.6)]' : 'border-slate-400 dark:border-slate-600 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:border-red-400 hover:text-red-400'}`}
                 >
                   {isBeaconActive ? <Volume2 className="w-10 h-10 animate-ping" /> : <VolumeX className="w-10 h-10" />}
                 </button>
-                <h3 className={`text-xl font-bold mb-2 ${isBeaconActive ? 'text-red-400' : 'text-slate-200'}`}>
+                <h3 className={`text-xl font-bold mb-2 ${isBeaconActive ? 'text-red-400' : 'text-slate-800 dark:text-slate-200'}`}>
                   Acoustic Rubble Beacon
                 </h3>
-                <p className="text-sm text-slate-400 max-w-sm">
+                <p className="text-sm text-slate-600 dark:text-slate-400 max-w-sm">
                   {isBeaconActive 
                     ? "ALARM ACTIVE. A high-frequency SOS buzzer is playing to help rescuers locate you under debris. Lock your phone screen to save battery."
                     : "Tap to activate a loud, high-frequency SOS buzzer from your phone's speaker to guide rescue teams to your exact location."}
@@ -1344,38 +1521,72 @@ export default function UserInterface() {
         {step === 'voice_sos' && (
           <div className="space-y-6">
             <div className="flex items-center border-b border-white/10 pb-4">
-              <button onClick={() => setStep('home')} className="mr-4 p-2 bg-slate-800/50 hover:bg-slate-700/80 rounded-lg text-slate-400 hover:text-white transition-all duration-200 border border-transparent hover:border-slate-600">
+              <button onClick={() => setStep('home')} className="mr-4 p-2 bg-slate-100 dark:bg-slate-800/50 hover:bg-slate-200 dark:bg-slate-700/80 rounded-lg text-slate-600 dark:text-slate-400 hover:text-white transition-all duration-200 border border-transparent hover:border-slate-400 dark:border-slate-600">
                 <ArrowLeft className="w-5 h-5" />
               </button>
               <h2 className="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-slate-100 to-slate-400">Emergency Services</h2>
             </div>
             
-            <div className="flex flex-col space-y-8">
+            <div className="flex flex-col space-y-8 max-w-md mx-auto w-full pt-8">
               {/* Massive Hands-Free Voice SOS Trigger */}
-              <div className="bg-slate-900/50 border-2 border-slate-800 rounded-2xl p-6 flex flex-col items-center justify-center text-center relative overflow-hidden">
-                <div className={`absolute inset-0 bg-sky-500/10 opacity-0 transition-opacity duration-500 ${isListening ? 'opacity-100 animate-pulse' : ''}`} />
+              <div className="relative group/sos">
+                {/* AI Aura Glowing Background */}
+                <div className={`absolute -inset-4 rounded-[3rem] blur-2xl transition-all duration-1000 ${isListening ? 'bg-gradient-to-r from-sky-500/40 via-indigo-500/40 to-emerald-500/40 opacity-100 animate-pulse' : 'bg-sky-500/10 opacity-0 group-hover/sos:opacity-50'}`}></div>
                 
-                <button 
-                  onClick={handleVoiceSOSClick}
-                  className={`relative z-10 w-24 h-24 rounded-full flex items-center justify-center border-4 transition-all duration-300 ${isListening ? 'border-sky-400 bg-sky-500/20 text-sky-400 scale-110 shadow-[0_0_30px_rgba(56,189,248,0.5)]' : 'border-slate-700 bg-slate-800 text-slate-400 hover:border-sky-500 hover:text-sky-400 hover:bg-slate-800/80'}`}
-                >
-                  {isListening ? <Loader2 className="w-10 h-10 animate-spin absolute" /> : null}
-                  {isListening ? <Mic className="w-10 h-10 animate-pulse" /> : <MicOff className="w-10 h-10" />}
-                </button>
-                
-                <h3 className="mt-4 text-xl font-bold text-white relative z-10">
-                  {isListening ? "Listening..." : "Hands-Free Emergency SOS"}
-                </h3>
-                <p className="text-sm text-slate-400 mt-2 max-w-xs relative z-10">
-                  {isListening ? "Speak clearly: e.g. 'Help, there is a flood here!'" : "Tap to speak. AI will auto-detect disaster and dispatch teams instantly."}
-                </p>
-                
-                {isListening && voiceTranscript && (
-                  <div className="mt-4 p-3 bg-slate-950/80 border border-slate-700 rounded-lg w-full text-left max-w-xs relative z-10">
-                    <span className="text-sky-400 text-xs font-bold block mb-1">Live Transcript:</span>
-                    <span className="text-sm text-slate-300 italic">"{voiceTranscript}"</span>
+                <div className="relative bg-white/60 dark:bg-[#070b1a]/80 backdrop-blur-3xl border border-white/50 dark:border-white/10 rounded-[2.5rem] p-10 flex flex-col items-center justify-center text-center shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] overflow-hidden">
+                  
+                  {/* Siri-like active wave effect */}
+                  {isListening && (
+                    <div className="absolute inset-0 flex items-center justify-center opacity-30 pointer-events-none">
+                      <div className="w-full h-1/2 bg-gradient-to-b from-transparent via-sky-500 to-transparent animate-scan"></div>
+                    </div>
+                  )}
+
+                  {/* The Microphone Button */}
+                  <div className="relative w-32 h-32 flex items-center justify-center mb-8">
+                    {/* Ripple Rings */}
+                    <div className={`absolute inset-0 rounded-full border-2 border-sky-400 transition-all duration-1000 ${isListening ? 'scale-[1.8] opacity-0 animate-ping' : 'scale-100 opacity-20'}`}></div>
+                    <div className={`absolute inset-0 rounded-full border-2 border-indigo-400 transition-all duration-1000 delay-150 ${isListening ? 'scale-[1.4] opacity-0 animate-ping' : 'scale-100 opacity-0'}`}></div>
+                    
+                    <button 
+                      onClick={handleVoiceSOSClick}
+                      className={`relative z-10 w-28 h-28 rounded-full flex items-center justify-center transition-all duration-500 shadow-2xl ${
+                        isListening 
+                          ? 'bg-gradient-to-br from-sky-400 to-indigo-500 text-white scale-110 shadow-[0_0_50px_rgba(56,189,248,0.6)]' 
+                          : 'bg-gradient-to-b from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 border border-white/50 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:text-sky-500 hover:border-sky-500/50 hover:shadow-[0_0_30px_rgba(56,189,248,0.2)]'
+                      }`}
+                    >
+                      {isListening ? (
+                        <div className="relative flex items-center justify-center w-full h-full">
+                          <Loader2 className="w-14 h-14 animate-spin opacity-20 absolute" />
+                          <Mic className="w-12 h-12 animate-pulse drop-shadow-md" />
+                        </div>
+                      ) : (
+                        <MicOff className="w-12 h-12 transition-transform duration-300 group-hover/sos:scale-110" />
+                      )}
+                    </button>
                   </div>
-                )}
+                  
+                  <h3 className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-slate-800 to-slate-500 dark:from-white dark:to-slate-400 relative z-10 tracking-tight">
+                    {isListening ? "Listening to Emergency..." : "Hands-Free SOS"}
+                  </h3>
+                  
+                  <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mt-3 max-w-[250px] relative z-10 leading-relaxed">
+                    {isListening 
+                      ? <span className="text-sky-500 dark:text-sky-400 animate-pulse">"Speak clearly: e.g. 'Help, I am trapped in a fire!'"</span>
+                      : "Tap the microphone. AI will auto-detect the disaster and dispatch teams instantly."}
+                  </p>
+                  
+                  {isListening && voiceTranscript && (
+                    <div className="mt-8 p-5 bg-white dark:bg-black/40 border border-slate-200 dark:border-white/10 rounded-2xl w-full text-left relative z-10 backdrop-blur-md shadow-inner">
+                      <div className="flex items-center mb-2">
+                        <div className="w-2 h-2 bg-emerald-500 rounded-full animate-ping mr-2"></div>
+                        <span className="text-emerald-600 dark:text-emerald-400 text-[10px] font-black uppercase tracking-widest">Live Transcript</span>
+                      </div>
+                      <span className="text-base text-slate-800 dark:text-white font-medium leading-relaxed italic">"{voiceTranscript}"</span>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
